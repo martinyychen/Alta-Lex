@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    input::placeholder,textarea::placeholder{color:#b8b0a6;font-family:'Victor Serif',serif;font-style:italic}
+    @keyframes alx-shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-3px)}40%,60%{transform:translateX(3px)}}
+    @keyframes alx-clip{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+    @keyframes alx-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-40Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-45RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif;color:#191919">
+  <sc-if value="{{ formShown }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;gap:26px;flex-wrap:wrap">
+        <div data-st="1" style="flex:1 1 180px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+          <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">FIRST NAME *</label>
+          <input ref="{{ fRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onKeyDown="{{ onK }}" onInput="{{ onIn }}" placeholder="First name" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0">
+          <div style="position:relative;height:1px;margin-top:-8px">
+            <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+            <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+          </div>
+        </div>
+        <div data-st="1" style="flex:1 1 180px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+          <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">LAST NAME *</label>
+          <input ref="{{ lRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onKeyDown="{{ onK }}" onInput="{{ onIn }}" placeholder="Last name" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0">
+          <div style="position:relative;height:1px;margin-top:-8px">
+            <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+            <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+          </div>
+        </div>
+      </div>
+      <div data-st="1" style="display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+        <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">ORGANIZATION NAME *</label>
+        <input ref="{{ oRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onKeyDown="{{ onK }}" onInput="{{ onIn }}" placeholder="Firm or company" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0">
+        <div style="position:relative;height:1px;margin-top:-8px">
+          <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+          <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:26px;flex-wrap:wrap">
+        <div data-st="1" style="flex:1 1 180px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+          <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">ROLE *</label>
+          <select ref="{{ rRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onChange="{{ onIn }}" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0;cursor:pointer">
+            <option value="">Select</option>
+            <option value="In-house counsel">In-house counsel</option>
+            <option value="Law-firm professional">Law-firm professional</option>
+            <option value="Other legal professional">Other legal professional</option>
+          </select>
+          <div style="position:relative;height:1px;margin-top:-8px">
+            <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+            <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+          </div>
+        </div>
+        <div data-st="1" style="flex:1 1 180px;display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+          <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">COUNTRY / REGION *</label>
+          <select ref="{{ cRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onChange="{{ onIn }}" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0;cursor:pointer">
+            <option value="">Select</option>
+            <option value="Singapore">Singapore</option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Germany">Germany</option>
+            <option value="France">France</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="Mainland China">Mainland China</option>
+            <option value="Hong Kong SAR">Hong Kong SAR</option>
+            <option value="Japan">Japan</option>
+            <option value="South Korea">South Korea</option>
+            <option value="Australia">Australia</option>
+            <option value="Other">Other</option>
+          </select>
+          <div style="position:relative;height:1px;margin-top:-8px">
+            <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+            <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+          </div>
+        </div>
+      </div>
+      <div data-st="1" style="display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+        <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">BUSINESS MAIL *</label>
+        <input ref="{{ eRef }}" onFocus="{{ onF }}" onBlur="{{ onB }}" onKeyDown="{{ onK }}" onInput="{{ onIn }}" placeholder="you@firm.com" style="background:transparent;border:none;padding:8px 0;font-size:15px;font-family:inherit;color:#191919;outline:none;border-radius:0">
+        <div style="position:relative;height:1px;margin-top:-8px">
+          <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+          <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+        </div>
+        <div ref="{{ eErrRef }}" style="display:none;font-size:12px;letter-spacing:0.02em;color:#D9260B">Please enter a valid business email.</div>
+      </div>
+      <div data-st="1" style="display:flex;flex-direction:column;gap:8px;opacity:0;transform:translateY(12px)">
+        <label style="font-size:11px;letter-spacing:0.2em;color:#969696;transition:color 0.3s ease,transform 0.3s ease;transform:translateY(0)">THE MATTER</label>
+        <textarea rows="1" onFocus="{{ onF }}" onBlur="{{ onB }}" onKeyDown="{{ onK }}" onInput="{{ onIn }}" placeholder="One line is enough" style="background:transparent;border:none;padding:8px 0;font-size:15px;line-height:1.6;font-family:inherit;color:#191919;outline:none;border-radius:0;resize:none;overflow:hidden"></textarea>
+        <div style="position:relative;height:1px;margin-top:-8px">
+          <div data-bl="1" style="position:absolute;inset:0;background:#BCADA2;transform:scaleX(0);transform-origin:left center;transition:background 0.3s ease"></div>
+          <div data-fl="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div>
+        </div>
+      </div>
+      <div data-st="1" onClick="{{ agreeToggle }}" style="display:flex;align-items:center;gap:12px;font-size:13px;color:#282828;cursor:pointer;user-select:none;margin-top:2px;opacity:0;transform:translateY(12px)">
+        <span style="width:16px;height:16px;border:1px solid #191919;display:flex;align-items:center;justify-content:center;flex:0 0 auto">
+          <span ref="{{ agBoxRef }}" style="width:8px;height:8px;background:currentColor;color:#FF6842;transform:scale({{ agS }});transition:transform 0.25s cubic-bezier(0.22,1,0.36,1)"></span>
+        </span>
+        <span ref="{{ aglRef }}" style="transition:color 0.3s ease">Agree to our <span style="text-decoration:underline">Privacy Policy</span></span>
+      </div>
+      <div data-st="1" onClick="{{ send }}" onMouseEnter="{{ btnOn }}" onMouseLeave="{{ btnOff }}" style="position:relative;margin-top:4px;border:1px solid #191919;color:#191919;text-align:center;padding:14px;font-size:12px;letter-spacing:0.18em;cursor:pointer;overflow:hidden;transition:color 0.3s ease,border-color 0.3s ease;opacity:0;transform:translateY(12px)">
+        <div data-wipe="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span ref="{{ sendLblRef }}" style="position:relative">SEND</span>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ sentShown }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'Victor Serif',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2vw,24px);color:#191919;animation:alx-clip 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s both">Received. It&rsquo;s in the file.</div>
+      <p style="font-size:15px;line-height:1.8;letter-spacing:0.02em;color:#282828;margin:0;animation:alx-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.4s both">We&rsquo;ll come back within two working days with the team and the plan.</p>
+      <div onClick="{{ resetForm }}" style="align-self:flex-start;font-size:12px;letter-spacing:0.18em;color:#969696;cursor:pointer;margin-top:6px;border-bottom:1px solid transparent;animation:alx-up 0.7s cubic-bezier(0.22,1,0.36,1) 0.6s both" style-hover="color:#191919;border-bottom-color:currentColor">SEND ANOTHER</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 660, &quot;height&quot;: 920 },
+  &quot;accentColor&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FF6842&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FF6842&quot;, &quot;#953519&quot;, &quot;#35567C&quot;], &quot;section&quot;: &quot;Brand&quot; },
+  &quot;onSent&quot;: { &quot;editor&quot;: null, &quot;tsType&quot;: &quot;() =&gt; void&quot; }
+}">
+class Component extends DCLogic {
+  state = { sent: false, agree: false };
+  fRef = React.createRef(); lRef = React.createRef(); oRef = React.createRef(); rRef = React.createRef();
+  eRef = React.createRef(); cRef = React.createRef(); aglRef = React.createRef(); agBoxRef = React.createRef();
+  eErrRef = React.createRef(); sendLblRef = React.createRef(); rootRef = React.createRef();
+  accent() { return this.props.accentColor ?? '#FF6842'; }
+  componentDidMount() {
+    this.syncAccent();
+    this.check();
+    this.visTimer = setInterval(this.check, 150);
+  }
+  componentWillUnmount() { clearInterval(this.visTimer); clearTimeout(this.sentTimer); }
+  componentDidUpdate(prevProps, prevState) {
+    this.syncAccent();
+    // after SEND ANOTHER (or auto-reset) the form remounts hidden — replay the entrance
+    if (prevState && prevState.sent && !this.state.sent && this.vis) requestAnimationFrame(() => { this.syncAccent(); this.reveal(); });
+  }
+  syncAccent() {
+    const a = this.accent();
+    if (this.agBoxRef.current) this.agBoxRef.current.style.color = a;
+    const r = this.rootRef.current;
+    if (r) r.querySelectorAll('[data-fl],[data-wipe]').forEach((el) => { el.style.background = a; });
+  }
+  // visibility watcher: papers/overlays hide us via ancestor opacity — replay entrance each time we're shown
+  check = () => {
+    const r = this.rootRef.current; if (!r) return;
+    let vis = true;
+    if (r.checkVisibility) { try { vis = r.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, opacityProperty: true, visibilityProperty: true }); } catch (e9) {} }
+    if (vis && !this.vis) { this.vis = true; if (!this.state.sent) requestAnimationFrame(() => this.reveal()); }
+    else if (!vis && this.vis) {
+      this.vis = false; clearTimeout(this.sentTimer);
+      if (this.state.sent) this.setState({ sent: false, agree: false }); else this.prep();
+    }
+  };
+  prep() { // rewind to hidden so the next open replays
+    const r = this.rootRef.current; if (!r) return;
+    r.querySelectorAll('[data-st]').forEach((el) => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(12px)'; });
+    r.querySelectorAll('[data-bl]').forEach((el) => { el.style.transition = 'background 0.3s ease'; el.style.transform = 'scaleX(0)'; });
+  }
+  reveal() { // 1: staggered rise down the spine, 2: underlines draw in just behind each field
+    const r = this.rootRef.current; if (!r) return;
+    r.querySelectorAll('[data-st]').forEach((el, i) => {
+      el.style.transition = 'opacity 0.6s ease ' + (i * 70) + 'ms,transform 0.7s cubic-bezier(0.22,1,0.36,1) ' + (i * 70) + 'ms';
+      el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+    });
+    r.querySelectorAll('[data-bl]').forEach((el, i) => {
+      el.style.transition = 'transform 0.8s cubic-bezier(0.22,1,0.36,1) ' + (140 + i * 70) + 'ms,background 0.3s ease';
+      el.style.transform = 'scaleX(1)';
+    });
+  }
+  wrapOf(el) { return el ? el.closest('[data-st]') : null; }
+  errC = '#D9260B';
+  onF = (e) => { // 3: accent line wipes in from the left; 4: label lifts and darkens
+    const w = this.wrapOf(e.currentTarget); if (!w) return;
+    const fl = w.querySelector('[data-fl]'); if (fl) { fl.style.transformOrigin = 'left center'; fl.style.transform = 'scaleX(1)'; }
+    const lb = w.querySelector('label'); if (lb) { lb.style.color = '#191919'; lb.style.transform = 'translateY(-2px)'; }
+  };
+  onB = (e) => { // retract to the right; error red on the base line stays until typing
+    const w = this.wrapOf(e.currentTarget); if (!w) return;
+    const fl = w.querySelector('[data-fl]');
+    if (fl) { fl.style.transformOrigin = 'right center'; fl.style.transform = 'scaleX(0)'; setTimeout(() => { if (fl) fl.style.transformOrigin = 'left center'; }, 460); }
+    const lb = w.querySelector('label'); if (lb) { lb.style.color = '#969696'; lb.style.transform = 'translateY(0)'; }
+  };
+  onK = (e) => { if (e.key === 'Enter' && e.currentTarget.tagName !== 'TEXTAREA') this.send(); };
+  onIn = (e) => { // typing recovers an error field immediately; textareas grow with their content
+    const el = e.currentTarget, w = this.wrapOf(el);
+    if (w) { const bl = w.querySelector('[data-bl]'); if (bl) bl.style.background = '#BCADA2'; }
+    if (el === this.eRef.current && this.eErrRef.current) this.eErrRef.current.style.display = 'none';
+    if (el.tagName === 'TEXTAREA') { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+  };
+  markBad(el) { // 5: red line + a short shake on the whole field
+    const w = this.wrapOf(el); if (!w) return;
+    const bl = w.querySelector('[data-bl]'); if (bl) bl.style.background = this.errC;
+    this.shake(w);
+  }
+  shake(w) {
+    if (!w) return;
+    w.style.animation = 'none'; void w.offsetWidth;
+    w.style.animation = 'alx-shake 0.45s cubic-bezier(0.36,0.07,0.19,0.97)';
+    setTimeout(() => { if (w) w.style.animation = ''; }, 500);
+  }
+  resetForm = () => { clearTimeout(this.sentTimer); this.setState({ sent: false, agree: false }); };
+  agreeToggle = () => { if (this.aglRef.current) this.aglRef.current.style.color = ''; this.setState((s) => ({ agree: !s.agree })); };
+  btnOn = (e) => {
+    const el = e.currentTarget, a = this.accent();
+    el.style.color = '#f7f5f0'; el.style.borderColor = a;
+    const w = el.querySelector('[data-wipe]'); if (w) { w.style.background = a; w.style.transformOrigin = 'left center'; w.style.transform = 'scaleX(1)'; }
+  };
+  btnOff = (e) => {
+    const el = e.currentTarget;
+    el.style.color = '#191919'; el.style.borderColor = '#191919';
+    const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'right center'; w.style.transform = 'scaleX(0)'; setTimeout(() => { if (w) w.style.transformOrigin = 'left center'; }, 460); }
+  };
+  send = () => {
+    if (this.sending) return;
+    let bad = null;
+    [this.fRef, this.lRef, this.oRef, this.rRef, this.eRef, this.cRef].forEach((r9) => {
+      const el = r9.current; if (!el) return;
+      if (!el.value || !el.value.trim()) { this.markBad(el); if (!bad) bad = el; }
+    });
+    const em = this.eRef.current, err = this.eErrRef.current, v = em ? em.value.trim() : '';
+    if (v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      this.markBad(em);
+      if (err) err.style.display = 'block';
+      if (!bad) bad = em;
+    } else if (err) err.style.display = 'none';
+    const agl = this.aglRef.current;
+    if (!this.state.agree) { if (agl) { agl.style.color = this.errC; this.shake(this.wrapOf(agl)); } bad = bad || agl; }
+    else if (agl) agl.style.color = '';
+    if (bad) { if (bad.focus) bad.focus(); return; }
+    this.sending = true;
+    if (this.sendLblRef.current) this.sendLblRef.current.textContent = 'SENDING\u2026';
+    setTimeout(() => {
+      this.sending = false; this.setState({ sent: true });
+      // 8: give the confirmation a beat, then let the parent fold the paper / drop the overlay
+      if (this.props.onSent) this.sentTimer = setTimeout(() => { if (this.props.onSent) this.props.onSent(); }, 3000);
+    }, 700);
+  };
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      fRef: this.fRef, lRef: this.lRef, oRef: this.oRef, rRef: this.rRef, eRef: this.eRef, cRef: this.cRef, aglRef: this.aglRef, agBoxRef: this.agBoxRef,
+      onF: this.onF, onB: this.onB, onK: this.onK, onIn: this.onIn, agreeToggle: this.agreeToggle, btnOn: this.btnOn, btnOff: this.btnOff, send: this.send,
+      resetForm: this.resetForm, eErrRef: this.eErrRef, sendLblRef: this.sendLblRef,
+      agS: this.state.agree ? '1' : '0', formShown: !this.state.sent, sentShown: this.state.sent
+    };
+  }
+}
+</script>
+</body>
+</html>

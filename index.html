@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    html,body{margin:0;padding:0;background:#04070d}
+    a{color:#b0813a;text-decoration:none}a:hover{color:#8f6624}
+    input::placeholder,textarea::placeholder{color:#b6ab9b;font-family:'Victor Serif',serif;font-style:italic}
+    @keyframes hintBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+    @keyframes hintSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes hintTapRing{0%{transform:scale(0.35);opacity:0.9}70%{transform:scale(1);opacity:0}100%{transform:scale(1);opacity:0}}
+    @keyframes hintTapDot{0%,100%{transform:scale(1)}18%{transform:scale(0.72)}36%{transform:scale(1)}}
+    @keyframes hintIconIn{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+    @keyframes hintLeadIn{to{transform:scaleY(1)}}
+    @keyframes hintLabelIn{to{opacity:0.85}}
+  </style>
+  <style>
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-30Light.otf') format('opentype');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-40Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-45RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-50Medium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-60Semibold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLightItalic.ttf') format('truetype');font-weight:300;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRomanItalic.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayBold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+  </style>
+  <link rel="prefetch" href="pricing.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&amp;display=swap">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+      "three/addons/loaders/GLTFLoader.js": "https://unpkg.com/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
+      "three/addons/lights/RectAreaLightUniformsLib.js": "https://unpkg.com/three@0.184.0/examples/jsm/lights/RectAreaLightUniformsLib.js",
+      "three/addons/environments/RoomEnvironment.js": "https://unpkg.com/three@0.184.0/examples/jsm/environments/RoomEnvironment.js"
+    },
+    "integrity": {
+      "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+      "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT"
+    }
+  }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    window.__three = { THREE, GLTFLoader, RectAreaLightUniformsLib, RoomEnvironment };
+    window.dispatchEvent(new Event('three-ready'));
+  </script>
+</helmet>
+<div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif">
+  <div ref="{{ scrollerRef }}" style="height:1250vh;position:relative">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#f2efe9">
+      <div ref="{{ wrapRef }}" style="position:absolute;inset:0;cursor:grab;touch-action:pan-y;user-select:none">
+        <canvas ref="{{ canvasRef }}" style="display:block;width:100%;height:100%"></canvas>
+      </div>
+      <video ref="{{ videoRef }}" src="uploads/19145119-hd_1920_1080_24fps.mp4" muted="{{ true }}" playsinline="{{ true }}" preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;pointer-events:none"></video>
+      <canvas ref="{{ glCanvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;opacity:0;pointer-events:none"></canvas>
+      <div ref="{{ vigRef }}" style="position:absolute;inset:0;z-index:2;opacity:0;pointer-events:none;background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%)"></div>
+      <div ref="{{ pv0Ref }}" style="position:absolute;inset:0;z-index:8;opacity:0;pointer-events:none;background:#f7f5f0;overflow:auto;overscroll-behavior:contain">
+        <div style="max-width:720px;margin:0 auto;padding:14vh 6vw 12vh;display:flex;flex-direction:column;gap:26px">
+          <div style="font-size:12px;letter-spacing:0.3em;color:#8A7C6A">ALTA LEX — 01 PRODUCTS</div>
+          <h2 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(36px,4vw,58px);line-height:1.08;margin:0;color:#2A251E">Cross-border work, held in one file.</h2>
+          <p style="font-size:16px;line-height:1.8;color:#5A5346;margin:0">Corporate, disputes, regulatory and tax — coordinated by a single team so nothing is re-explained at every border.</p>
+          <p style="font-size:16px;line-height:1.8;color:#5A5346;margin:0">One matter, one working file: every filing, translation and deadline lives in the same context, whichever office touches it next.</p>
+        </div>
+        <div onClick="{{ closePaper }}" style="position:absolute;top:26px;right:32px;font-size:12px;letter-spacing:0.18em;color:#8A7C6A;cursor:pointer;padding:8px 10px" style-hover="color:#2A251E">CLOSE</div>
+      </div>
+      <div ref="{{ pv1Ref }}" style="position:absolute;inset:0;z-index:8;opacity:0;pointer-events:none;background:#f7f5f0"></div>
+      <div ref="{{ pv2Ref }}" style="position:absolute;inset:0;z-index:8;opacity:0;pointer-events:none;background:#f7f5f0;overflow:auto;overscroll-behavior:contain">
+        <div style="max-width:720px;margin:0 auto;padding:14vh 6vw 12vh;display:flex;flex-direction:column;gap:26px">
+          <h2 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(36px,4vw,58px);line-height:1.08;margin:0;color:#2A251E">Tell us where the matter sits.</h2>
+          <p style="font-size:16px;line-height:1.8;color:#5A5346;margin:0">Leave your details and a line about the matter. We come back with the team and the plan.</p>
+          <div style="margin-top:4px">
+            <dc-import name="ContactForm" accent-color="{{ hintAccent }}" on-sent="{{ closePaper }}" hint-size="100%,820px"></dc-import>
+          </div>
+        </div>
+        <div onClick="{{ closePaper }}" style="position:absolute;top:22px;right:28px;color:#8A7C6A;cursor:pointer;padding:10px;line-height:0;transition:color 0.3s ease" style-hover="color:#2A251E"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2" fill="none"></path></svg></div>
+      </div>
+      <div ref="{{ hintRef }}" style="position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:4;pointer-events:none;opacity:0;color:#f2f1ec">
+        <div ref="{{ hintScrollRef }}" style="display:flex;flex-direction:row;align-items:center;gap:12px">
+          <div style="position:relative;width:34px;height:34px">
+            <svg viewBox="0 0 34 34" style="position:absolute;inset:0;animation:hintSpin 9s linear infinite">
+              <circle cx="17" cy="17" r="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.5 4.736" opacity="0.85"></circle>
+            </svg>
+            <svg viewBox="0 0 34 34" style="position:absolute;inset:0;animation:hintBob 1.8s ease-in-out infinite">
+              <path d="M11.5 14.5 L17 20 L22.5 14.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div style="font-size:13px;letter-spacing:0.18em;opacity:0.85">Scroll</div>
+        </div>
+        <div ref="{{ hintTapRef }}" style="display:none;position:relative">
+          <div style="position:absolute;left:-17px;top:-17px;width:34px;height:34px;color:{{ hintAccent }};animation:hintIconIn 0.35s cubic-bezier(0.22,1,0.36,1) both">
+            <svg viewBox="0 0 34 34" style="position:absolute;inset:0">
+              <circle cx="17" cy="17" r="13" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.9" style="transform-origin:17px 17px;animation:hintTapRing 1.8s ease-out infinite"></circle>
+              <circle cx="17" cy="17" r="4.5" fill="currentColor" style="transform-origin:17px 17px;animation:hintTapDot 1.8s ease-in-out infinite"></circle>
+            </svg>
+          </div>
+          <div ref="{{ hintLineRef }}" style="position:absolute;left:-0.5px;top:17px;width:1px;height:60px;background:currentColor;opacity:0.55;transform:scaleY(0);transform-origin:top center;animation:hintLeadIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.45s forwards"></div>
+          <div ref="{{ hintLabelRef }}" style="position:absolute;left:0;top:85px;transform:translateX(-50%);white-space:nowrap;opacity:0;animation:hintLabelIn 0.45s ease 0.95s forwards;font-size:13px;letter-spacing:0.18em">Tap folder to continue</div>
+        </div>
+      </div>
+      <div ref="{{ navRef }}" style="position:absolute;top:0;left:0;right:0;z-index:9;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(14px,2.2vh,22px) clamp(18px,7vw,120px);color:#f2f1ec;opacity:0;pointer-events:none">
+        <div style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(6,9,14,0.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:{{ menuO }};transition:opacity 0.28s ease;pointer-events:none"></div>
+        <img ref="{{ logoRef }}" onClick="{{ goTop }}" src="uploads/Brand mark Pos-dea6eb77.svg" alt="Alta Lex" style="height:clamp(13px,1.7vw,17px);flex:0 0 auto;width:auto;display:block;cursor:pointer;opacity:0.9" style-hover="opacity:1">
+        <div ref="{{ navMenuRef }}" style="display:{{ rowDisp }};align-items:center;gap:clamp(0px,0.4vw,6px);font-size:clamp(13px,calc(0.55vw + 10px),16px);letter-spacing:0.04em;white-space:nowrap">
+          <div onClick="{{ goProducts }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+            <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+            <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+            <span style="position:relative">Products</span>
+          </div>
+          <div onClick="{{ goPricing }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+            <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+            <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+            <span style="position:relative">Pricing</span>
+          </div>
+          <div ref="{{ loginRef }}" onClick="{{ goLogin }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+            <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+            <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+            <span style="position:relative">Log in</span>
+          </div>
+          <div ref="{{ ctaRef }}" onClick="{{ goContact }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+            <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+            <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+            <span style="position:relative">Contact</span>
+          </div>
+        </div>
+        <div ref="{{ burgerRef }}" onClick="{{ toggleMenu }}" style="display:{{ burgerDisp }};flex:0 0 auto;cursor:pointer;padding:10px 0;flex-direction:column;gap:5px">
+          <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar1T }}"></div>
+          <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar2T }}"></div>
+        </div>
+        <div ref="{{ sheetRef }}" style="position:absolute;top:100%;left:0;right:0;display:{{ sheetDisp }};flex-direction:column;padding:6px clamp(18px,7vw,120px) 16px;background:rgba(6,9,14,0.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:16px;letter-spacing:0.04em;opacity:{{ menuO }};pointer-events:{{ menuPE }};transition:opacity 0.28s ease">
+          <div onClick="{{ goProducts }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Products</span></div>
+          <div onClick="{{ goPricing }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Pricing</span></div>
+          <div onClick="{{ goLogin }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Log in</span></div>
+          <div onClick="{{ goContact }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Contact</span></div>
+        </div>
+      </div>
+      <div ref="{{ heroRef }}" style="position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:480px;z-index:4;pointer-events:none;color:#f2f1ec">
+        <h1 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(40px,4.6vw,64px);line-height:1.05;margin:0">One world.<br>Many laws.</h1>
+        <p style="font-size:15px;line-height:1.7;opacity:0.72;margin:20px 0 0">The cost was never in the clauses. It's in everything that has to happen between them.</p>
+      </div>
+      <div ref="{{ netRef }}" style="position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:420px;z-index:4;pointer-events:none;color:#1d1c19;opacity:0">
+        <h2 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(34px,3.4vw,48px);line-height:1.1;margin:0">We draw the lines between them.</h2>
+        <p style="font-size:14px;line-height:1.7;color:#55534d;margin:18px 0 0">Every jurisdiction, every language, linked into one working context.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FF6842&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FF6842&quot;, &quot;#953519&quot;, &quot;#35567C&quot;], &quot;section&quot;: &quot;Look&quot;},
+  &quot;scrollBoost&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot;},
+  &quot;rotateSpeed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.1, &quot;min&quot;: 0, &quot;max&quot;: 0.6, &quot;step&quot;: 0.02, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;},
+  &quot;arcRate&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1.2, &quot;min&quot;: 0.2, &quot;max&quot;: 3, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;}
+}">
+class Component extends DCLogic {
+  scrollerRef = React.createRef(); wrapRef = React.createRef(); canvasRef = React.createRef();
+  heroRef = React.createRef(); netRef = React.createRef(); videoRef = React.createRef();
+  glCanvasRef = React.createRef(); vigRef = React.createRef(); hintRef = React.createRef(); navRef = React.createRef();
+  hintScrollRef = React.createRef(); hintTapRef = React.createRef(); hintLineRef = React.createRef(); hintLabelRef = React.createRef();
+  logoRef = React.createRef(); ctaRef = React.createRef(); loginRef = React.createRef(); navMenuRef = React.createRef();
+  burgerRef = React.createRef(); sheetRef = React.createRef();
+  state = { menu: false, compact: typeof window !== 'undefined' && window.innerWidth < 620 };
+
+  toggleMenu = () => this.setState((s) => ({ menu: !s.menu }));
+  closeMenu = () => { if (this.state.menu) this.setState({ menu: false }); };
+  syncNav = () => { // phones can't hold four nowrap labels beside the wordmark — swap the row for a menu sheet
+    const compact = window.innerWidth < 620;
+    if (compact !== this.state.compact) this.setState({ compact, menu: false });
+  };
+  // nav: skip the story — jump to the desk, then open the matching tab
+  jumpTo = (tabIdx) => {
+    this.closeMenu();
+    const sc = this.scrollerRef.current; if (!sc) return;
+    if (!this.videoDone) { const v = this.videoRef.current; if (v) { try { v.currentTime = Math.max(0, (v.duration || 1) - 0.05); } catch (e) {} } this.onEnded(); }
+    this.rewind = 0;
+    const total = Math.max(1, sc.offsetHeight - window.innerHeight);
+    window.scrollTo({ top: total, behavior: 'auto' }); // no long smooth ride — the nav is a shortcut, not part of the story
+    this.camSm = 1; // snap the shot to the desk instead of easing over ~1s
+    if (this.folder3d) { this.folder3d.inT = 1; this.folder3d.obj.visible = true; if (this.folder3d.restX !== undefined) this.folder3d.obj.position.x = this.folder3d.restX; }
+    if (tabIdx === null) return;
+    clearTimeout(this.navTimer);
+    this.navTimer = setTimeout(() => { this.focus = { tab: tabIdx, t: 0, closing: false, nav: tabIdx === 1 }; this.focusScrollY = window.scrollY || 0; }, 60);
+  };
+  goTop = () => { this.focus = null; window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  navOn = (e) => { // hover: a rule wipes through the label, the plate lifts, ink goes brass
+    const el = e.currentTarget;
+    el.style.opacity = '1'; el.style.color = this.props.accentColor ?? '#FF6842';
+    const r = el.querySelector('[data-rule]'); if (r) r.style.transform = 'scaleX(1)';
+    const pl = el.querySelector('[data-plate]'); if (pl) pl.style.opacity = '0.1';
+  };
+  navOff = (e) => {
+    const el = e.currentTarget;
+    el.style.opacity = el.getAttribute('data-rest') || '0.72';
+    el.style.color = '';
+    const r = el.querySelector('[data-rule]');
+    if (r) { r.style.transformOrigin = 'right center'; r.style.transform = 'scaleX(0)'; setTimeout(() => { if (r) r.style.transformOrigin = 'left center'; }, 460); }
+    const pl = el.querySelector('[data-plate]'); if (pl) pl.style.opacity = '0';
+  };
+  goLogin = () => this.jumpTo(2); // login lives with the contact sheet for now
+  goProducts = () => this.jumpTo(0);
+  goPricing = () => this.jumpTo(1);
+  goContact = () => this.jumpTo(2);
+  pv0Ref = React.createRef(); pv1Ref = React.createRef(); pv2Ref = React.createRef();
+  closePaper = () => { if (this.focus) this.focus.closing = true; };
+  camSm = 0; glReady = false;
+  // camera stations from stations.ts (three.js Y-up, metres); focus/fstop unused (no DOF here)
+  STATIONS = [
+    { id: 'paper', position: [0.055, 0.25, -0.045], target: [0.055, 0, -0.045], lensMM: 45, roll: -33 },
+    { id: 'intro', position: [-0.045, 0.6, 0.115], target: [-0.03, 0, -0.02], lensMM: 45, roll: 0 },
+    { id: 'features', position: [-0.29, 0.135, 0.235], target: [-0.115, 0.006, 0.075], lensMM: 45, roll: 1.5 },
+    { id: 'product', position: [0.075, 0.42, 0.02], target: [0.06, 0, -0.05], lensMM: 42, roll: 18 },
+    { id: 'contact', position: [0.3, 0.22, 0.34], target: [0.02, 0.01, -0.02], lensMM: 40, roll: 0 }
+  ];
+  yaw = 2.2; pitchU = 0; vyaw = 0; dragging = false; lastX = 0; lastY = 0;
+  arcs = []; pulses = []; nextSpawn = 0; last = 0;
+  videoDone = false; boost = 1; rewind = 0; frames = [];
+
+  componentDidMount() {
+    const el = this.wrapRef.current, cv = this.canvasRef.current;
+    this.el = el; this.cv = cv; this.ctx = cv.getContext('2d');
+    this.ro = new ResizeObserver(() => this.resize()); this.ro.observe(el); this.resize();
+    this.buildWire();
+    this.initGL();
+    el.addEventListener('pointerdown', this.onDown);
+    el.addEventListener('pointermove', this.onMove);
+    el.addEventListener('pointerup', this.onUp);
+    el.addEventListener('pointercancel', this.onUp);
+    this.lockScroll();
+    window.addEventListener('wheel', this.onScrollIntent, { passive: false });
+    window.addEventListener('touchmove', this.onScrollIntent, { passive: false });
+    window.addEventListener('keydown', this.onKeyIntent);
+    const v = this.videoRef.current;
+    if (v) {
+      v.addEventListener('ended', this.onEnded);
+      v.addEventListener('error', this.onEnded);
+      const go = () => { const p = v.play(); if (p && p.catch) p.catch(this.onEnded); };
+      if (v.readyState >= 3) go(); else v.addEventListener('canplay', go, { once: true });
+      this.armWatchdog();
+      this.captureFrames();
+    }
+    this.raf = requestAnimationFrame(this.tick);
+    this.syncNav();
+    window.addEventListener('resize', this.syncNav);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.syncNav);
+    cancelAnimationFrame(this.raf);
+    if (this.ro) this.ro.disconnect();
+    this.unlockScroll();
+    window.removeEventListener('wheel', this.onScrollIntent);
+    window.removeEventListener('touchmove', this.onScrollIntent);
+    window.removeEventListener('keydown', this.onKeyIntent);
+    clearInterval(this.guard); clearTimeout(this.failsafe); cancelAnimationFrame(this.capRaf); clearTimeout(this.navTimer);
+    if (this.gl) { try { this.gl.renderer.dispose(); } catch (e) {} }
+    const v = this.videoRef.current;
+    if (v) { v.removeEventListener('ended', this.onEnded); v.removeEventListener('error', this.onEnded); }
+    const el = this.el;
+    if (el) {
+      el.removeEventListener('pointerdown', this.onDown);
+      el.removeEventListener('pointermove', this.onMove);
+      el.removeEventListener('pointerup', this.onUp);
+      el.removeEventListener('pointercancel', this.onUp);
+    }
+  }
+  lockScroll() {
+    this.prevOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+  unlockScroll() {
+    document.documentElement.style.overflow = this.prevOverflow || '';
+    document.body.style.overflow = '';
+  }
+  onEnded = () => {
+    if (this.videoDone) return;
+    const v = this.videoRef.current;
+    if (v) { v.playbackRate = 1; try { v.pause(); } catch (e) {} }
+    this.videoDone = true;
+    this.resuming = false; this.frameResume = false; this.rewind = 0;
+    clearInterval(this.guard); clearTimeout(this.failsafe); clearTimeout(this.resumeFallback);
+    this.unlockScroll();
+  };
+  bump(amount) {
+    if (this.videoDone) return;
+    this.boost = Math.min(6, this.boost + amount);
+  }
+  // cache low-res frames during the forward playthrough so scroll-up can rewind
+  captureFrames() {
+    const v = this.videoRef.current;
+    if (!v) return;
+    const CAP = 40;
+    let next = 0, step = 0;
+    const grab = () => {
+      const cw = 720, ch = Math.max(1, Math.round(720 * (v.videoHeight || 1080) / (v.videoWidth || 1920)));
+      const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+      c.getContext('2d').drawImage(v, 0, 0, cw, ch);
+      this.frames.push(c);
+    };
+    const loop = () => {
+      if (this.frames.length >= CAP) return;
+      if (this.videoDone && this.frames.length) return;
+      if (!step && isFinite(v.duration) && v.duration) step = v.duration / CAP;
+      if (v.readyState >= 2 && v.currentTime > 0 && v.currentTime + 1e-3 >= next) { grab(); next += step || 0.25; }
+      if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(loop);
+      else this.capRaf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+  armWatchdog() { // never leave scroll locked if playback stalls
+    const v = this.videoRef.current;
+    if (!v) return;
+    clearInterval(this.guard); clearTimeout(this.failsafe);
+    this.watchTime = -1; this.stalled = 0;
+    this.guard = setInterval(() => {
+      if (this.videoDone) return;
+      const t = v.currentTime;
+      if (t > this.watchTime + 0.02) { this.watchTime = t; this.stalled = 0; }
+      else if (++this.stalled >= 6) this.onEnded();
+    }, 500);
+    this.failsafe = setTimeout(() => { if (!this.videoDone) this.onEnded(); }, 30000);
+  }
+  onResumed = () => {
+    clearTimeout(this.resumeFallback);
+    this.rewind = 0; this.frameResume = false; this.resuming = false;
+    const v = this.videoRef.current;
+    if (v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+  };
+  onScrollIntent = (e) => {
+    if (this.focus) { // paper open: only the overlay may scroll, and only if it actually overflows
+      const pvs = [this.pv0Ref, this.pv1Ref, this.pv2Ref];
+      const pv = pvs.map((r) => r.current).find((el) => el && el.contains(e.target));
+      if ((!pv || pv.scrollHeight <= pv.clientHeight + 1) && e.cancelable) e.preventDefault();
+      return;
+    }
+    if (this.videoDone) { // at the top, scroll-up rewinds through the cached frames
+      const d = e.deltaY;
+      if (d === undefined) return;
+      const atTop = (window.scrollY || document.documentElement.scrollTop || 0) <= 1;
+      if (!atTop || !this.frames.length) return;
+      if (d < 0 || this.rewind > 0) {
+        if (e.cancelable) e.preventDefault();
+        if (this.resuming) { // user took over again: stop the auto-resume
+          clearTimeout(this.resumeFallback);
+          this.resuming = false; this.frameResume = false;
+          const v = this.videoRef.current;
+          if (v) { v.removeEventListener('seeked', this.onResumed); try { v.pause(); } catch (er) {} }
+        }
+        this.rewind = Math.max(0, Math.min(1, this.rewind - d / 1500));
+        this.lastIntent = performance.now() / 1000;
+      }
+      return;
+    }
+    if (e.cancelable) e.preventDefault();
+    const d = e.deltaY !== undefined ? Math.abs(e.deltaY) : 60;
+    this.bump(Math.min(1.2, d / 260));
+  };
+  onKeyIntent = (e) => {
+    if (this.focus) {
+      const typing = e.target && /INPUT|TEXTAREA/.test(e.target.tagName); // let people write in the paper form
+      if (e.key === 'Escape') this.focus.closing = true;
+      else if (!typing && ['ArrowDown', 'PageDown', 'Space', ' ', 'ArrowUp', 'PageUp'].indexOf(e.key) >= 0) e.preventDefault();
+      return;
+    }
+    if (['ArrowDown', 'PageDown', 'Space', ' ', 'ArrowUp', 'PageUp'].indexOf(e.key) >= 0) this.bump(0.9);
+  };
+  resize() {
+    const el = this.el, cv = this.cv, dpr = window.devicePixelRatio || 1;
+    this.w = el.clientWidth; this.h = el.clientHeight; this.dpr = dpr;
+    cv.width = Math.round(this.w * dpr); cv.height = Math.round(this.h * dpr);
+    // match the globe in the video's final frame (measured in 1920x1080 source px,
+    // mapped through object-fit: cover) so the wipe reveals an identical sphere
+    const VW = 1920, VH = 1080, GX = 956, GY = 549, GR = 448;
+    const scale = Math.max(this.w / VW, this.h / VH);
+    const ox = (this.w - VW * scale) / 2, oy = (this.h - VH * scale) / 2;
+    this.cx = ox + GX * scale; this.cy = oy + GY * scale;
+    const f = 3.6;
+    this.R = GR * scale * Math.sqrt(f * f - 1) / f; // silhouette → unit-sphere radius
+  }
+  buildWire() { // graticule stored as lat/lon so it can flatten into a mat grid
+    const D2R = Math.PI / 180, majors = [], minors = [];
+    for (let lon = -180; lon <= 180; lon += 15) {
+      const pts = [];
+      for (let lat = -90; lat <= 90; lat += 3) pts.push([lat * D2R, lon * D2R]);
+      majors.push(pts);
+    }
+    for (let lat = -75; lat <= 75; lat += 15) {
+      const pts = [];
+      for (let lon = -180; lon <= 180; lon += 3) pts.push([lat * D2R, lon * D2R]);
+      majors.push(pts);
+    }
+    // minors every 3.75° = 4 subdivisions per 15° major, matching the mat's 5mm/20mm grid exactly
+    for (let lon = -180 + 3.75; lon < 180; lon += 3.75) {
+      if (Math.abs(lon % 15) < 0.01) continue;
+      const pts = [];
+      for (let lat = -90; lat <= 90; lat += 6) pts.push([lat * D2R, lon * D2R]);
+      minors.push(pts);
+    }
+    for (let lat = -90 + 3.75; lat < 90; lat += 3.75) {
+      if (Math.abs(lat % 15) < 0.01) continue;
+      const pts = [];
+      for (let lon = -180; lon <= 180; lon += 6) pts.push([lat * D2R, lon * D2R]);
+      minors.push(pts);
+    }
+    this.grat = majors; this.gratMinor = minors;
+  }
+  onDown = (e) => {
+    this.dragging = true; this.lastX = e.clientX; this.lastY = e.clientY;
+    this.pdX = e.clientX; this.pdY = e.clientY;
+    this.vyaw = 0;
+    this.el.setPointerCapture(e.pointerId);
+    if ((this.glTLive || 0) < 0.9) this.el.style.cursor = 'grabbing';
+  };
+  onMove = (e) => {
+    this.ptrX = e.clientX; this.ptrY = e.clientY;
+    if (!this.dragging) return;
+    const dx = e.clientX - this.lastX, dy = e.clientY - this.lastY;
+    this.lastX = e.clientX; this.lastY = e.clientY;
+    this.yaw += dx * 0.005;
+    this.pitchU = Math.max(-1.15, Math.min(1.15, this.pitchU + dy * 0.005));
+    this.vyaw = 0.7 * this.vyaw + 0.3 * dx * 0.005;
+  };
+  onUp = (e) => {
+    this.dragging = false;
+    if ((this.glTLive || 0) > 0.9) {
+      if (Math.hypot(e.clientX - this.pdX, e.clientY - this.pdY) < 6) this.onPick(e);
+    } else this.el.style.cursor = 'grab';
+  };
+  castAt(cx2, cy2) {
+    const t = window.__three.THREE, g = this.gl;
+    const r = this.el.getBoundingClientRect();
+    if (!this.ray) this.ray = new t.Raycaster();
+    this.ray.setFromCamera({ x: ((cx2 - r.left) / r.width) * 2 - 1, y: -((cy2 - r.top) / r.height) * 2 + 1 }, g.cam);
+    return this.ray;
+  }
+  surfaceYAt(x, z) {
+    const t = window.__three.THREE;
+    if (!this.downRay) this.downRay = new t.Raycaster();
+    this.downRay.set(new t.Vector3(x, 1, z), new t.Vector3(0, -1, 0));
+    const surf = (this.surfaces || []).slice();
+    if (this.folder3d && this.folder3d.obj.visible && !this.focus && this.folderBodyHit) surf.push(this.folderBodyHit); // things can rest ON the folder (cheap proxy)
+    const hits = this.downRay.intersectObjects(surf, true);
+    return hits.length ? hits[0].point.y : 0;
+  }
+  onPick(e) {
+    const g = this.gl; if (!g || !this.glReady || !this.pickables) return;
+    if (this.focus) return; // a paper is open — CLOSE button / Esc handle exit
+    if (this.held) { // second click anywhere: put it down where it hovers, with a bounce
+      const p = this.held;
+      let px = p.obj.position.x, pz = p.obj.position.z;
+      if (this.folder3d && this.folder3d.obj.visible) { // never let it land hidden behind the folder
+        const t9 = window.__three.THREE;
+        const box9 = new t9.Box3().setFromObject(this.folder3d.obj); box9.expandByScalar(0.008);
+        const cam9 = g.cam;
+        this.folderTop9 = box9.max.y - 0.008; // real cover height — the collision proxy is smaller than the model
+        const inFoot9 = (x, z) => x > box9.min.x - 0.004 && x < box9.max.x + 0.004 && z > box9.min.z - 0.004 && z < box9.max.z + 0.004;
+        const clear9 = (x, z) => {
+          if (inFoot9(x, z)) return true; // over the folder's footprint — it lands on top of it, in full view
+          const sy0 = this.surfaceYAt(x, z);
+          if (sy0 > this.folder3d.restY + 0.004) return true; // resting ON the folder — visible
+          const pt9 = new t9.Vector3(x, sy0 + (p.surfOff || 0) + 0.008, z);
+          const d9 = pt9.clone().sub(cam9.position), len9 = d9.length();
+          const hit9 = new t9.Ray(cam9.position, d9.normalize()).intersectBox(box9, new t9.Vector3());
+          return !hit9 || hit9.distanceTo(cam9.position) > len9 - 0.004;
+        };
+        this.onFoot9 = inFoot9(px, pz);
+        if (!clear9(px, pz)) {
+          const dir9 = new t9.Vector3(cam9.position.x - px, 0, cam9.position.z - pz);
+          if (dir9.lengthSq() < 1e-6) dir9.set(0, 0, 1);
+          dir9.normalize();
+          for (let s9 = 1; s9 <= 6; s9++) { // short nudge only — a long push reads as the object sliding off-screen
+            const nx9 = Math.max(-0.42, Math.min(0.45, px + dir9.x * 0.028 * s9));
+            const nz9 = Math.max(-0.3, Math.min(0.38, pz + dir9.z * 0.028 * s9));
+            if (clear9(nx9, nz9) || s9 === 6) { px = nx9; pz = nz9; break; }
+          }
+          p.slideFrom = { x: p.obj.position.x, z: p.obj.position.z };
+          p.slideTo = { x: px, z: pz };
+          this.onFoot9 = inFoot9(px, pz);
+        }
+      } else this.onFoot9 = false;
+      for (const q of this.pickables) { // don't set it down inside another object — nudge to a clear spot
+        if (q === p || q.state !== 'idle') continue;
+        const ddx = px - q.obj.position.x, ddz = pz - q.obj.position.z;
+        const dd = Math.hypot(ddx, ddz), minD = 0.05;
+        if (dd < minD) {
+          const ux = dd > 1e-4 ? ddx / dd : 1, uz = dd > 1e-4 ? ddz / dd : 0;
+          px = Math.max(-0.42, Math.min(0.45, q.obj.position.x + ux * minD));
+          pz = Math.max(-0.3, Math.min(0.38, q.obj.position.z + uz * minD));
+        }
+      }
+      let sy = this.surfaceYAt(px, pz); // land on the mat, not inside it
+      if (this.onFoot9 && isFinite(this.folderTop9)) sy = Math.max(sy, this.folderTop9); // on the folder: rest on the cover, not under it
+      p.floorY = p.surfOff === undefined || !isFinite(sy + p.surfOff) ? p.baseY : sy + p.surfOff;
+      p.state = 'drop'; p.t = 0; p.dropFrom = p.obj.position.y;
+      this.held = null;
+      return;
+    }
+    const hits = this.castAt(e.clientX, e.clientY).intersectObjects(this.pickables.map((p) => p.obj), true);
+    if (hits.length) {
+      let o = hits[0].object, root = null;
+      while (o) { root = this.pickables.find((p) => p.obj === o) || root; o = o.parent; }
+      if (root) { this.held = root; root.state = 'held'; return; }
+    }
+    if (this.folder3d && this.folder3d.inT >= 1) { // clicked a folder tab (or the folder) → dive in and flip it open
+      const ph = this.folderHit ? this.castAt(e.clientX, e.clientY).intersectObjects(this.folderHit, false) : [];
+      if (ph.length) {
+        let hitTab9 = -1; // a tab hit anywhere in the ray's path wins over the padded body proxy
+        for (const h9 of ph) { const j9 = this.tabs.findIndex((tb) => tb.hit === h9.object); if (j9 >= 0) { hitTab9 = j9; break; } }
+        const idx = hitTab9 >= 0 ? hitTab9 : 0;
+        this.focus = { tab: idx, t: 0, closing: false, nav: idx === 1 }; // pricing dives in, then hands off to its own page
+        this.focusScrollY = window.scrollY || 0;
+        this.shoveOffFolder(true); // anything resting on the folder tumbles off before the cover opens
+      }
+    }
+  }
+  // push idle objects out of the folder's footprint; includeRiders also clears things resting on its cover
+  shoveOffFolder(includeRiders) {
+    if (!this.folder3d || !this.folder3d.obj.visible || !this.pickables) return;
+    const fp = this.folder3d.obj.position, th9 = this.folder3d.obj.rotation.y;
+    const c9 = Math.cos(-th9), s9 = Math.sin(-th9), HX = 0.155, HZ = 0.175;
+    for (const p of this.pickables) {
+      if (p.state !== 'idle') continue;
+      const onTop = p.obj.position.y - (p.surfOff || 0) > this.folder3d.restY + 0.003;
+      if (onTop && !includeRiders) continue;
+      const dx = p.obj.position.x - fp.x, dz = p.obj.position.z - fp.z;
+      let lx = dx * c9 + dz * s9, lz = -dx * s9 + dz * c9;
+      if (Math.abs(lx) > HX || Math.abs(lz) > HZ) continue;
+      // exit through the nearest edge, with a margin
+      if (HX - Math.abs(lx) < HZ - Math.abs(lz)) lx = (lx >= 0 ? 1 : -1) * (HX + 0.06);
+      else lz = (lz >= 0 ? 1 : -1) * (HZ + 0.06);
+      const wx = fp.x + lx * Math.cos(th9) + lz * Math.sin(th9);
+      const wz = fp.z - lx * Math.sin(th9) + lz * Math.cos(th9);
+      p.state = 'drop'; p.t = 0;
+      p.dropFrom = p.obj.position.y + 0.02; // a little hop as it's shoved off
+      p.slideFrom = { x: p.obj.position.x, z: p.obj.position.z };
+      p.slideTo = { x: wx, z: wz };
+      p.floorY = this.surfaceYAt(wx, wz) + (p.surfOff || 0);
+    }
+  }
+  updatePicks(dt, now) {
+    if (!this.pickables || !this.gl) return;
+    const LIFT = 0.07;
+    for (const p of this.pickables) {
+      const o = p.obj;
+      if (p.state === 'held') {
+        if (this.ptrX !== undefined) { // follow the pointer on a plane LIFT above the rest height
+          const ray = this.castAt(this.ptrX, this.ptrY).ray;
+          if (Math.abs(ray.direction.y) > 1e-4) {
+            const tt = (p.baseY + LIFT - ray.origin.y) / ray.direction.y;
+            if (tt > 0) {
+              const px2 = Math.max(-0.42, Math.min(0.45, ray.origin.x + ray.direction.x * tt));
+              const pz2 = Math.max(-0.3, Math.min(0.38, ray.origin.z + ray.direction.z * tt));
+              const k = 1 - Math.exp(-10 * dt);
+              o.position.x += (px2 - o.position.x) * k;
+              o.position.z += (pz2 - o.position.z) * k;
+            }
+          }
+        }
+        const yT = p.baseY + LIFT + 0.006 * Math.sin(now * 2.2 + p.bob); // gentle hover bob
+        o.position.y += (yT - o.position.y) * (1 - Math.exp(-8 * dt));
+      } else if (p.state === 'drop') {
+        // keyframed fall + two subtle damped bounces (16% / 4% of the drop height)
+        p.t = (p.t || 0) + dt;
+        const fl = isFinite(p.floorY) ? p.floorY : p.baseY;
+        const k = Math.min(1, p.t / 0.62);
+        let b;
+        if (k < 0.5) { const u = k / 0.5; b = u * u; }
+        else if (k < 0.82) { const u = (k - 0.5) / 0.32; b = 1 - 0.16 * 4 * u * (1 - u); }
+        else { const u = (k - 0.82) / 0.18; b = 1 - 0.04 * 4 * u * (1 - u); }
+        const from = isFinite(p.dropFrom) ? p.dropFrom : fl + 0.07;
+        o.position.y = from + (fl - from) * b;
+        if (p.slideTo) { // sliding off the folder while falling
+          const es = k * k * (3 - 2 * k);
+          o.position.x = p.slideFrom.x + (p.slideTo.x - p.slideFrom.x) * es;
+          o.position.z = p.slideFrom.z + (p.slideTo.z - p.slideFrom.z) * es;
+        }
+        if (k >= 1) { o.position.y = fl; p.state = 'idle'; p.restP = o.position.clone(); p.slideTo = null; }
+      } else { // idle: slight twist on hover, about the object's own centre (not its pivot)
+        const t2 = window.__three.THREE;
+        const tg = this.hoverP === p ? 1 : 0;
+        p.hovT = (p.hovT || 0) + (tg - (p.hovT || 0)) * (1 - Math.exp(-10 * dt));
+        if (!p.q0) p.q0 = o.quaternion.clone();
+        if (!this.upAxis) this.upAxis = new t2.Vector3(0, 1, 0);
+        if (!p.restP) p.restP = o.position.clone();
+        o.quaternion.copy(p.q0);
+        o.position.copy(p.restP);
+        if (!p.cOff) { // pivot → bounding-box centre offset, measured in the rest pose
+          const bb = new t2.Box3().setFromObject(o);
+          p.cOff = bb.getCenter(new t2.Vector3()).sub(o.position);
+        }
+        const th = 0.09 * p.hovT;
+        if (th > 0.001) {
+          o.rotateOnWorldAxis(this.upAxis, th);
+          const v = p.cOff.clone().applyAxisAngle(this.upAxis, th);
+          o.position.x = p.restP.x + p.cOff.x - v.x;
+          o.position.z = p.restP.z + p.cOff.z - v.z;
+        }
+      }
+    }
+    if (this.tabs && this.folder3d) { // hover: whole folder lifts a touch, as if nudged from below
+      let lift = 0;
+      for (const tb of this.tabs) {
+        const tg2 = this.hoverTab === tb && !this.focus ? 1 : 0;
+        tb.hovT += (tg2 - tb.hovT) * (1 - Math.exp(-10 * dt));
+        if (tb.tabMat) tb.tabMat.emissiveIntensity = 0.12 * tb.hovT; // tab brightens…
+        if (tb.lpMat) tb.lpMat.color.setScalar(1 - 0.5 * tb.hovT);   // …text deepens
+        lift = Math.max(lift, tb.hovT);
+        tb.obj.position.x = tb.baseX; // tabs stay flush
+      }
+      const fd2 = this.folder3d;
+      if (fd2.inT >= 1 && !this.focus) fd2.obj.position.y = fd2.restY + 0.0035 * lift;
+      if (!fd2.shadow) { // soft contact shadow that grows with the lift
+        const t3 = window.__three.THREE;
+        const scv = document.createElement('canvas'); scv.width = scv.height = 128;
+        const sc2 = scv.getContext('2d');
+        const g2 = sc2.createRadialGradient(64, 64, 8, 64, 64, 64);
+        g2.addColorStop(0, 'rgba(30,25,18,0.45)'); g2.addColorStop(1, 'rgba(30,25,18,0)');
+        sc2.fillStyle = g2; sc2.fillRect(0, 0, 128, 128);
+        const stex = new t3.CanvasTexture(scv);
+        const sm = new t3.Mesh(new t3.PlaneGeometry(0.3, 0.38), new t3.MeshBasicMaterial({ map: stex, transparent: true, opacity: 0, depthWrite: false }));
+        sm.rotation.x = -Math.PI / 2;
+        sm.position.set(fd2.obj.position.x, this.surfaceYAt(fd2.obj.position.x, fd2.obj.position.z) + 0.0006, fd2.obj.position.z);
+        sm.rotation.z = fd2.rotDeg * Math.PI / 180;
+        fd2.obj.parent.add(sm);
+        fd2.shadow = sm;
+      }
+      fd2.shadow.visible = fd2.obj.visible;
+      fd2.shadow.position.x = fd2.obj.position.x; fd2.shadow.position.z = fd2.obj.position.z;
+      fd2.shadow.material.opacity = 0.55 * lift * (this.focus ? 0 : 1);
+    }
+    this.hoverN = (this.hoverN || 0) + 1;
+    if (this.hoverN % 5 === 0 && this.ptrX !== undefined) {
+      if (this.held) { this.hoverP = null; this.el.style.cursor = 'grabbing'; }
+      else {
+        // raycast against the REST pose — otherwise the hover twist swings the object
+        // out from under the cursor and the hit flickers (visible as wild jitter)
+        const saved = [];
+        for (const p of this.pickables) {
+          if (p.state === 'idle' && p.q0) {
+            saved.push([p.obj, p.obj.quaternion.clone(), p.obj.position.clone()]);
+            p.obj.quaternion.copy(p.q0);
+            if (p.restP) p.obj.position.copy(p.restP);
+            p.obj.updateMatrixWorld(true);
+          }
+        }
+        const hits = this.castAt(this.ptrX, this.ptrY).intersectObjects(this.pickables.map((p) => p.obj), true);
+        for (const [o3, q3, ps3] of saved) { o3.quaternion.copy(q3); o3.position.copy(ps3); o3.updateMatrixWorld(true); }
+        let root = null;
+        if (hits.length) { let o2 = hits[0].object; while (o2) { root = this.pickables.find((p) => p.obj === o2) || root; o2 = o2.parent; } }
+        this.hoverP = root;
+        let cur = root ? 'pointer' : 'default';
+        this.hoverTab = null;
+        if (!root && this.folder3d && this.folderHit) {
+          const th2 = this.castAt(this.ptrX, this.ptrY).intersectObjects(this.folderHit, false);
+          if (th2.length) {
+            cur = 'pointer';
+            this.hoverTab = null;
+            for (const h2 of th2) { const tb2 = this.tabs.find((tb) => tb.hit === h2.object); if (tb2) { this.hoverTab = tb2; break; } }
+          }
+        }
+        this.el.style.cursor = this.focus ? 'default' : cur;
+      }
+    }
+  }
+  randomUnit() {
+    let x, y, z, l;
+    do { x = Math.random() * 2 - 1; y = Math.random() * 2 - 1; z = Math.random() * 2 - 1; l = x * x + y * y + z * z; }
+    while (l < 1e-4 || l > 1);
+    l = Math.sqrt(l); return [x / l, y / l, z / l];
+  }
+  spawnArc(now) {
+    const a = this.randomUnit();
+    let b, omega, tries = 0;
+    do {
+      b = this.randomUnit();
+      omega = Math.acos(Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2])));
+    } while ((omega < 0.55 || omega > 2.5) && ++tries < 20);
+    this.arcs.push({ a, b, omega, lift: 0.14 + 0.32 * (omega / Math.PI), t0: now, grow: 0.8 + Math.random() * 0.7, hold: 0.9 + Math.random() * 1.7, fade: 0.9, reached: false });
+    this.pulses.push({ p: a, t0: now });
+  }
+  slerp(a, b, omega, t) {
+    const so = Math.sin(omega);
+    if (so < 1e-5) return a.slice();
+    const k1 = Math.sin((1 - t) * omega) / so, k2 = Math.sin(t * omega) / so;
+    return [a[0] * k1 + b[0] * k2, a[1] * k1 + b[1] * k2, a[2] * k1 + b[2] * k2];
+  }
+  hexRgb(hex) {
+    const h = (hex || '#b0813a').replace('#', '');
+    const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  initGL() {
+    const boot = () => {
+      if (this.gl || !this.glCanvasRef.current || !window.__three) return;
+      const { THREE: t, GLTFLoader, RectAreaLightUniformsLib, RoomEnvironment } = window.__three;
+      const renderer = new t.WebGLRenderer({ canvas: this.glCanvasRef.current, antialias: (window.devicePixelRatio || 1) < 1.5, powerPreference: 'high-performance' });
+      renderer.toneMapping = t.AgXToneMapping;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = t.PCFSoftShadowMap;
+      const scene = new t.Scene();
+      scene.background = new t.Color('#0d0f12');
+      const pm = new t.PMREMGenerator(renderer);
+      scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+      scene.environmentIntensity = 0.25;
+      RectAreaLightUniformsLib.init();
+      const rig = [
+        [[2.4, 2.7, -1.6], 2, 2, 12, '#fff4e6'],
+        [[-1.8, 1.3, 1.3], 2.6, 2.6, 3, '#dce6ff'],
+      ];
+      for (const [lp, lw, lh, li, lc] of rig) {
+        const l = new t.RectAreaLight(lc, li, lw, lh);
+        l.position.set(lp[0], lp[1], lp[2]); l.lookAt(0, 0, 0); scene.add(l);
+      }
+      scene.add(new t.HemisphereLight('#b6c2d2', '#2a2018', 0.35));
+      { // key light with real soft shadows — one consistent shadow direction for every object
+        const sun = new t.DirectionalLight('#fff2e2', 1.4);
+        sun.position.set(0.55, 0.85, -0.4);
+        sun.castShadow = true;
+        sun.shadow.mapSize.set(1024, 1024);
+        sun.shadow.camera.left = -0.5; sun.shadow.camera.right = 0.5;
+        sun.shadow.camera.top = 0.5; sun.shadow.camera.bottom = -0.5;
+        sun.shadow.camera.near = 0.2; sun.shadow.camera.far = 3;
+        sun.shadow.bias = -0.0002; sun.shadow.normalBias = 0.015;
+        scene.add(sun);
+      }
+      const cam = new t.PerspectiveCamera(37, 1, 0.01, 50);
+      new GLTFLoader().load('uploads/oryzo_desk.glb', (res) => {
+        res.scene.traverse((o) => {
+          if (!o.isMesh || !o.material) return;
+          const mats = Array.isArray(o.material) ? o.material : [o.material];
+          for (const m of mats) {
+            if (m.name === 'MAT_Pencil_Paint' && m.map && m.map.image) {
+              // the barrel texture carries a faint grid that reads as broken black dashes;
+              // flatten it to the average paint colour, keeping only the near-black logo marks
+              const img = m.map.image;
+              const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+              const cc = c.getContext('2d'); cc.drawImage(img, 0, 0);
+              const d = cc.getImageData(0, 0, c.width, c.height), px = d.data;
+              let ar2 = 0, ag2 = 0, ab2 = 0, n2 = 0;
+              for (let i = 0; i < px.length; i += 4) {
+                if (0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2] > 70) { ar2 += px[i]; ag2 += px[i + 1]; ab2 += px[i + 2]; n2++; }
+              }
+              ar2 = Math.round(ar2 / n2); ag2 = Math.round(ag2 / n2); ab2 = Math.round(ab2 / n2);
+              for (let i = 0; i < px.length; i += 4) {
+                if (0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2] > 70) { px[i] = ar2; px[i + 1] = ag2; px[i + 2] = ab2; }
+              }
+              cc.putImageData(d, 0, 0);
+              const tex = new t.CanvasTexture(c);
+              tex.colorSpace = m.map.colorSpace; tex.flipY = m.map.flipY;
+              tex.wrapS = m.map.wrapS; tex.wrapT = m.map.wrapT; tex.anisotropy = 8;
+              m.map = tex;
+              m.normalMap = null; m.roughnessMap = null; m.metalnessMap = null; // the bump/roughness maps carry the same grid
+              m.metalness = 0; m.roughness = 0.4;
+              m.needsUpdate = true;
+            } else if (m.map) { m.map.anisotropy = 8; m.map.needsUpdate = true; }
+          }
+          o.castShadow = true; o.receiveShadow = true;
+        });
+        scene.add(res.scene);
+        { // table: warm wood → smoked grey oak (desaturated cool brown, grain preserved)
+          const tw = res.scene.getObjectByName('Table_Wood');
+          if (tw) tw.traverse((o8) => {
+            if (!o8.isMesh || !o8.material) return;
+            const mats8 = Array.isArray(o8.material) ? o8.material : [o8.material];
+            for (const m8 of mats8) {
+              if (m8.map && m8.map.image) {
+                const img8 = m8.map.image;
+                const c8 = document.createElement('canvas'); c8.width = img8.width; c8.height = img8.height;
+                const cc8 = c8.getContext('2d');
+                cc8.drawImage(img8, 0, 0);
+                cc8.globalCompositeOperation = 'saturation'; // knock the warmth down, keep some hue
+                cc8.fillStyle = '#8c8680'; cc8.fillRect(0, 0, c8.width, c8.height);
+                cc8.globalCompositeOperation = 'multiply';   // …then cool it toward smoked oak
+                cc8.fillStyle = '#9a938c'; cc8.fillRect(0, 0, c8.width, c8.height);
+                const tex8 = new t.CanvasTexture(c8);
+                tex8.colorSpace = m8.map.colorSpace; tex8.flipY = m8.map.flipY;
+                tex8.wrapS = m8.map.wrapS; tex8.wrapT = m8.map.wrapT;
+                tex8.repeat.copy(m8.map.repeat); tex8.offset.copy(m8.map.offset);
+                tex8.anisotropy = 8;
+                m8.map = tex8;
+              } else m8.color = new t.Color('#6b6259');
+              m8.roughness = Math.max(0, Math.min(1, m8.roughness ?? 0.8)); // keep the matte wood finish
+              m8.needsUpdate = true;
+            }
+          });
+        }
+        this.surfaces = ['CuttingMat', 'Table_Wood'].map((n) => res.scene.getObjectByName(n)).filter(Boolean);
+        this.pickables = ['Paperclip', 'Paperclip_2', 'Paperclip_3', 'Pencil', 'Eraser']
+          .map((n) => res.scene.getObjectByName(n)).filter(Boolean)
+          .map((obj) => ({ obj, state: 'idle', baseY: obj.position.y, floorY: obj.position.y, vy: 0, bob: Math.random() * 6 }));
+        for (const p of this.pickables) { // rest height above whatever surface (mat vs table) the object sits on
+          p.surfOff = p.baseY - this.surfaceYAt(p.obj.position.x, p.obj.position.z);
+        }
+        // the manila folder — Blender-built GLB; cover and dividers pivot at the spine (-x edge)
+        const FROT = 6;
+        new GLTFLoader().load('uploads/alta_lex_folder_web.glb', (fres) => {
+          const fold = fres.scene; fold.name = 'folder';
+          const cover = fold.getObjectByName('Folder_Cover');
+          const dHinges = [3, 2, 1].map((n9) => fold.getObjectByName('Folder_Divider_' + n9)); // [0] = top divider
+          fold.traverse((o9) => {
+            if (!o9.isMesh) return;
+            o9.castShadow = !(o9.material && o9.material.transparent); o9.receiveShadow = true;
+            const ms9 = Array.isArray(o9.material) ? o9.material : [o9.material];
+            for (const m9 of ms9) { m9.side = t.FrontSide; if (m9.map) { m9.map.anisotropy = 8; m9.map.needsUpdate = true; } }
+          });
+          // tabs: top divider carries Tab_1 (Products), matching the paper overlays' order
+          this.tabs = [['products', 'Products'], ['pricing', 'Pricing'], ['contact', 'Contact']].map(([id, label], i) => {
+            const tabObj = fold.getObjectByName('Tab_' + (i + 1));
+            const lbl = fold.getObjectByName('TabLabel_' + (i + 1));
+            const tabMat = tabObj.material.clone(); tabMat.emissive = new t.Color('#ffffff'); tabMat.emissiveIntensity = 0; // hover brighten
+            tabObj.material = tabMat;
+            if (lbl) lbl.visible = false; // model's label plane has inconsistent UVs — use our own
+            const cvt = document.createElement('canvas'); cvt.width = 384; cvt.height = 96;
+            const tex = new t.CanvasTexture(cvt);
+            tex.colorSpace = t.SRGBColorSpace; tex.anisotropy = 8;
+            const lpMat = new t.MeshStandardMaterial({ map: tex, roughness: 0.88, transparent: true });
+            const lgGeo = new t.PlaneGeometry(0.06, 0.015);
+            lgGeo.rotateX(-Math.PI / 2); lgGeo.rotateY(-Math.PI / 2); // lies flat, reads along the tab edge
+            const lp = new t.Mesh(lgGeo, lpMat);
+            lp.position.set(0.2505, -0.0002, -0.1 + i * 0.1);
+            lp.castShadow = false;
+            tabObj.add(lp);
+            return { id, label, obj: tabObj, cv: cvt, tex, tabMat, lpMat, hovT: 0, baseX: tabObj.position.x };
+          });
+          { // invisible raycast proxies — clicks/hover test 4 simple boxes, not 28k triangles
+            const hitMat = new t.MeshBasicMaterial({ colorWrite: false, depthWrite: false });
+            const mkHit = (w9, h9, d9, x9, y9, z9) => {
+              const hm = new t.Mesh(new t.BoxGeometry(w9, h9, d9), hitMat);
+              hm.position.set(x9, y9, z9); hm.castShadow = false; hm.receiveShadow = false;
+              fold.add(hm); return hm;
+            };
+            // measured fold-local geometry: cover x -0.117..0.117, z ±0.185; tabs protrude x 0.115..0.14 at z centers -0.1/0/0.1
+            this.folderBodyHit = mkHit(0.234, 0.013, 0.37, 0, 0.0065, 0);
+            this.folderHit = [this.folderBodyHit].concat(this.tabs.map((tb, i9) => {
+              // tab targets: cover edge to past the tab tip, a hair taller/deeper for fingers; tabs win over body in the ray test
+              const hm = mkHit(0.07, 0.03, 0.1, 0.135, 0.006, -0.1 + i9 * 0.1);
+              tb.hit = hm; return hm;
+            }));
+          }
+          { // Alta Lex wordmark, foot of the cover, near the spine (cover-local: spine at x=0)
+            const lgCv = document.createElement('canvas'); lgCv.width = 988; lgCv.height = 132;
+            const lgTex = new t.CanvasTexture(lgCv); lgTex.colorSpace = t.SRGBColorSpace; lgTex.anisotropy = 8;
+            const lg = new t.Mesh(new t.PlaneGeometry(0.104, 0.0139), new t.MeshStandardMaterial({ map: lgTex, roughness: 0.9, transparent: true }));
+            lg.rotation.x = -Math.PI / 2;
+            lg.position.set(0.066, 0.0036, 0.138);
+            lg.castShadow = false;
+            cover.add(lg);
+            fetch('uploads/Brand mark Pos-dea6eb77.svg').then((r) => r.text()).then((svg) => {
+              const im = new Image();
+              im.onload = () => {
+                const c9 = lgCv.getContext('2d');
+                c9.clearRect(0, 0, 988, 132);
+                c9.drawImage(im, 0, 0, 988, 132);
+                c9.globalCompositeOperation = 'source-in'; // ink it in the folder's own dark brown
+                c9.fillStyle = '#4a4238'; c9.fillRect(0, 0, 988, 132);
+                lgTex.needsUpdate = true;
+              };
+              im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+            });
+          }
+          // place the folder as far as possible from the desk objects so it covers none of them
+          const cands = [[0, 0.03], [0, 0.1], [-0.07, 0.06], [0.07, 0.06], [0, -0.05], [-0.06, -0.02], [0.06, -0.02]];
+          let best = cands[0], bd = -1;
+          for (const c2 of cands) {
+            let dmin = 1e9;
+            for (const p of this.pickables) {
+              const dx = p.obj.position.x - c2[0], dz = p.obj.position.z - c2[1];
+              dmin = Math.min(dmin, dx * dx + dz * dz);
+            }
+            if (dmin > bd) { bd = dmin; best = c2; }
+          }
+          fold.position.set(best[0], this.surfaceYAt(best[0], best[1]) + 0.0012, best[1]);
+          fold.rotation.y = FROT * Math.PI / 180;
+          fold.visible = false; // enters only after the camera has settled on the desk
+          scene.add(fold);
+          this.folder3d = { obj: fold, hinge: cover, dHinges, rotDeg: FROT, restY: fold.position.y, inT: 0 };
+          const drawFolderText = () => {
+            this.tabs.forEach((tb, i8) => {
+              const cc = tb.cv.getContext('2d');
+              cc.setTransform(1, 0, 0, 1, 0, 0);
+              cc.clearRect(0, 0, 384, 96); // transparent — no white plate behind the text
+              cc.translate(192, 50);
+              cc.rotate((i8 === 0 ? -0.6 : i8 === 1 ? 0.45 : -0.3) * Math.PI / 180);
+              cc.translate(0, i8 === 1 ? 1.5 : -1);
+              try { cc.letterSpacing = '5px'; } catch (e8) {}
+              cc.fillStyle = 'rgba(32,26,18,0.95)'; // near-black typewriter ink — clear contrast on manila
+              cc.font = '400 34px "IBM Plex Mono", "Courier New", monospace';
+              cc.textAlign = 'center'; cc.textBaseline = 'middle';
+              cc.shadowColor = 'rgba(32,26,18,0.5)'; cc.shadowBlur = 1.2; // ink soaking into the card
+              cc.fillText(tb.label, 0, 0);
+              tb.tex.needsUpdate = true;
+            });
+          };
+          drawFolderText();
+          if (document.fonts && document.fonts.load) document.fonts.load('400 34px "IBM Plex Mono"').then(drawFolderText).catch(() => {});
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawFolderText);
+        });
+        this.glReady = true;
+      });
+      const S = this.STATIONS;
+      this.gl = {
+        renderer, scene, cam,
+        posCurve: new t.CatmullRomCurve3(S.map((x) => new t.Vector3(x.position[0], x.position[1], x.position[2])), false, 'centripetal', 0.4),
+        tgtCurve: new t.CatmullRomCurve3(S.map((x) => new t.Vector3(x.target[0], x.target[1], x.target[2])), false, 'centripetal', 0.4),
+        lens: S.map((x) => x.lensMM), roll: S.map((x) => x.roll)
+      };
+    };
+    if (window.__three) boot(); else window.addEventListener('three-ready', boot, { once: true });
+  }
+  fovFromLens(lensMM, aspect) { // Blender 36mm-sensor lens → vertical FOV, 'cover' fit (never crops the authored frame)
+    const hHalf = Math.atan(18 / lensMM);
+    const vA = Math.atan(Math.tan(hHalf) / (1920 / 1620));
+    // portrait phones: full cover-fit blows the FOV up and shrinks the desk — crop the sides instead of zooming out
+    const vH = Math.atan(Math.tan(hHalf) / Math.max(aspect, 0.72));
+    return Math.max(vH, vA) * 360 / Math.PI;
+  }
+  tick = (ms) => {
+    const now = ms / 1000;
+    const dt = Math.min(0.05, now - (this.last || now)); this.last = now;
+    if (this.focus && this.focusScrollY !== undefined) { // pin the story while a paper is open — chained/momentum scroll can't drift the scene away
+      const sy = window.scrollY || document.documentElement.scrollTop || 0;
+      if (Math.abs(sy - this.focusScrollY) > 1) window.scrollTo(0, this.focusScrollY);
+    }
+    const p = this.props;
+    const speed = p.rotateSpeed ?? 0.1, rate = p.arcRate ?? 1.2;
+    const [ar, ag, ab] = this.hexRgb(p.accentColor ?? '#FF6842');
+    const st = (x) => { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * (3 - 2 * x); };
+
+    // playback: normal speed, accelerated while the user pushes to scroll
+    const vid = this.videoRef.current;
+    if (vid && !this.videoDone) {
+      this.boost = Math.max(1, this.boost - 2.2 * dt);
+      const target = (p.scrollBoost ?? true) ? this.boost : 1;
+      if (Math.abs(vid.playbackRate - target) > 0.02) { try { vid.playbackRate = target; } catch (e) {} }
+      if (isFinite(vid.duration) && vid.duration && vid.currentTime >= vid.duration - 0.05) this.onEnded();
+    }
+
+    // scroll story starts only after the video has finished
+    const sc = this.scrollerRef.current;
+    const total = sc ? Math.max(1, sc.offsetHeight - window.innerHeight) : 1;
+    const top = sc ? sc.getBoundingClientRect().top : 0;
+    const sAll = this.videoDone ? Math.max(0, Math.min(1, -top / total)) : 0;
+    const s = Math.min(1, sAll / 0.55); // the original globe story, compressed into the first 55% of scroll
+    const matT = st((sAll - 0.56) / 0.09); // graticule settles into cutting-mat graph paper
+    const glT = st((sAll - 0.66) / 0.06);  // 2D paper ↔ 3D 'paper' station crossfade (the seam)
+    const camP = Math.max(0, Math.min(1, (sAll - 0.74) / 0.24)); // single move: paper → intro, then hold
+    const gFade = 1 - matT;
+    const peelT = st(s / 0.28);
+    const cT = st((s - 0.24) / 0.32);
+    const flatT = st((s - 0.6) / 0.35); // globe unrolls into a flat cutting-mat grid — the final frame
+
+    // after 2s of no scrolling, hand back to the real video and let it play forward
+    if (this.rewind > 0 && now - (this.lastIntent || 0) > 2) {
+      const dur = (vid && isFinite(vid.duration) && vid.duration) || 10;
+      if (vid && !this.resuming) {
+        this.resuming = true;
+        this.videoDone = false; // must reach the last frame again before the wipe
+        this.boost = 1;
+        this.lockScroll();
+        this.armWatchdog();
+        try {
+          vid.currentTime = Math.max(0, (1 - this.rewind) * dur - 0.05);
+          const p = vid.play(); if (p && p.catch) p.catch(() => {});
+          vid.addEventListener('seeked', this.onResumed, { once: true });
+          this.resumeFallback = setTimeout(() => { this.frameResume = true; }, 1200);
+        } catch (e) { this.frameResume = true; }
+      }
+      if (this.frameResume) this.rewind = Math.max(0, this.rewind - dt / dur); // cached-frame fallback
+    }
+    const rw = this.rewind;
+    if (vid) {
+      vid.style.clipPath = peelT <= 0 ? 'none' : 'inset(0 ' + (peelT * 100).toFixed(2) + '% 0 0)';
+      vid.style.opacity = (peelT >= 1 || rw > 0) ? '0' : '1';
+    }
+    if (this.hintRef.current) { // scroll hint rides the journey; at the desk it becomes a 'tap folder' prompt
+      if (this.hintT0 === undefined) this.hintT0 = now;
+      const tapMode = this.videoDone && sAll >= 0.96 && this.rewind <= 0 && !this.focus;
+      const want = tapMode ? 'tap' : 'scroll';
+      if ((this.hintMode || 'scroll') !== want && (this.hintO || 0) < 0.05) { // swap only while faded out
+        this.hintMode = want;
+        const sEl = this.hintScrollRef.current, tEl = this.hintTapRef.current, hr8 = this.hintRef.current;
+        if (sEl) sEl.style.display = want === 'scroll' ? 'flex' : 'none';
+        if (tEl) tEl.style.display = want === 'tap' ? 'block' : 'none'; // display toggle restarts the icon→line→label entrance
+        if (hr8 && want === 'scroll') { hr8.style.left = '50%'; hr8.style.top = 'auto'; hr8.style.bottom = '28px'; hr8.style.transform = 'translateX(-50%)'; }
+      }
+      if (this.hintMode === 'tap' && this.folder3d && this.gl) { // icon anchors on the folder cover; a line drops to the label pinned at the screen bottom
+        const v7 = this.folder3d.obj.position.clone(); v7.y += 0.015; v7.z += 0.06; // sit lower on the cover
+        v7.project(this.gl.cam);
+        const hr7 = this.hintRef.current;
+        const iy7 = (-v7.y * 0.5 + 0.5) * window.innerHeight;
+        hr7.style.left = ((v7.x * 0.5 + 0.5) * window.innerWidth).toFixed(1) + 'px';
+        hr7.style.top = iy7.toFixed(1) + 'px';
+        hr7.style.bottom = 'auto'; hr7.style.transform = 'none';
+        const labelY7 = window.innerHeight - 46; // label baseline zone, mirrors the scroll hint's bottom:28px
+        const lh7 = Math.max(20, labelY7 - iy7 - 17 - 10); // icon edge → 10px shy of the label
+        if (this.hintLineRef.current) this.hintLineRef.current.style.height = lh7.toFixed(1) + 'px';
+        if (this.hintLabelRef.current) this.hintLabelRef.current.style.top = (labelY7 - iy7).toFixed(1) + 'px';
+      }
+      const modeReady = (this.hintMode || 'scroll') === want;
+      const shown9 = this.rewind <= 0 && !this.focus && now - this.hintT0 > 1.2 && modeReady && (!this.videoDone || sAll < 0.96 || tapMode);
+      this.hintO = (this.hintO || 0) + ((shown9 ? 0.9 : 0) - (this.hintO || 0)) * (1 - Math.exp(-3 * dt));
+      this.hintRef.current.style.opacity = this.hintO.toFixed(3);
+      // ink flips with the backdrop: light on video / 3D desk, dark on the paper-white stages
+      this.hintRef.current.style.color = (!this.videoDone || peelT < 1 || glT > 0.6) ? '#f2f1ec' : '#4a443a';
+    }
+    if (this.navRef.current) { // nav rides along the whole journey, hides while a paper is open
+      const tgtN = (this.rewind <= 0 && !this.focus) ? 1 : 0;
+      this.navO = (this.navO || 0) + (tgtN - (this.navO || 0)) * (1 - Math.exp(-4 * dt));
+      const nv = this.navRef.current;
+      nv.style.opacity = this.navO.toFixed(3);
+      nv.style.pointerEvents = this.navO > 0.5 ? 'auto' : 'none';
+      const lightInk = (!this.videoDone || peelT < 1 || glT > 0.6);
+      nv.style.color = lightInk ? '#f2f1ec' : '#4a443a';
+      if (this.logoRef.current) this.logoRef.current.style.filter = lightInk ? 'invert(1) brightness(1.35)' : 'none'; // positive mark is dark ink
+    }
+    if (this.heroRef.current) {
+      const o = 1 - st(s / 0.12);
+      this.heroRef.current.style.opacity = o.toFixed(3);
+      this.heroRef.current.style.transform = 'translateY(calc(-50% - ' + (40 * (1 - o)).toFixed(1) + 'px))';
+    }
+    if (this.netRef.current) this.netRef.current.style.opacity = (st((s - 0.4) / 0.14) * (1 - st((s - 0.58) / 0.1))).toFixed(3);
+
+    if (!this.dragging && flatT < 0.999) { // the mat comes to rest once unrolled
+      this.yaw += speed * dt * (1 - flatT) + this.vyaw * (1 - flatT);
+      this.vyaw *= 0.95;
+    }
+    if (flatT > 0.4 && !this.dragging) { // settle yaw on a 15° multiple so the flattened lines land exactly on the mat grid
+      const stp = Math.PI / 12, snap = Math.round(this.yaw / stp) * stp;
+      this.yaw += (snap - this.yaw) * st((flatT - 0.4) / 0.5) * Math.min(1, 8 * dt);
+    }
+    if (flatT > 0.05) { this.arcs.length = 0; this.pulses.length = 0; } // arcs retire once flat
+    if (cT > 0.02 && flatT < 0.05 && now >= this.nextSpawn && this.arcs.length < 8) {
+      this.spawnArc(now);
+      this.nextSpawn = now + (0.4 + Math.random() * 1.4) / Math.max(0.2, rate);
+    }
+
+    const ctx = this.ctx, dpr = this.dpr, w = this.w, h = this.h;
+    const cx = this.cx, cy = this.cy, R = this.R, f = 3.6;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // paper white eases into the mat's tone as the sheet lies flat, so the matT crossfade is invisible
+    const bk = st((flatT - 0.5) / 0.5);
+    ctx.fillStyle = 'rgb(' + Math.round(242 - 8 * bk) + ',' + Math.round(239 - 7 * bk) + ',' + Math.round(233 - 5 * bk) + ')';
+    ctx.fillRect(0, 0, w, h);
+
+    if (rw > 0 && this.frames.length) { // rewound playback drawn from the frame cache
+      ctx.fillStyle = '#04070d'; ctx.fillRect(0, 0, w, h);
+      const img = this.frames[Math.max(0, Math.round((1 - rw) * (this.frames.length - 1)))];
+      const scF = Math.max(w / img.width, h / img.height);
+      const dw = img.width * scF, dh = img.height * scF;
+      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
+
+    const cyw = Math.cos(this.yaw), syw = Math.sin(this.yaw);
+    const flatK = 1 - flatT;
+    const pitch = this.pitchU * cT * flatK, cp = Math.cos(pitch), sp = Math.sin(pitch);
+    const TILT = -0.32 * cT * flatK, ct = Math.cos(TILT), sst = Math.sin(TILT);
+    const xf = (v) => {
+      let x = v[0] * cyw + v[2] * syw, y = v[1], z = -v[0] * syw + v[2] * cyw;
+      let y2 = y * cp - z * sp, z2 = y * sp + z * cp;
+      return [x * ct - y2 * sst, x * sst + y2 * ct, z2];
+    };
+    const proj = (v) => { const k = f / (f - v[2]); return [cx + v[0] * R * k, cy - v[1] * R * k]; };
+
+    // flat mat geometry: equirectangular sheet, unrolled from the facing meridian
+    const matW = Math.max(w * 2.4, h * 2.05), matH = matW / 2; // 24 graticule majors across 2.4w → pitch w/10, exactly the cutting-mat major grid
+    const mx = w / 2, my = h / 2;
+    const TWO_PI = Math.PI * 2;
+    const wrap = (a) => { a = (a + Math.PI) % TWO_PI; return (a < 0 ? a + TWO_PI : a) - Math.PI; };
+    // map a lat/lon (+ radial lift) to screen, blending sphere → mat
+    const mapLL = (lat, lon, lift) => {
+      const cl = Math.cos(lat), r = 1 + (lift || 0) * flatK;
+      const t = xf([cl * Math.sin(lon) * r, Math.sin(lat) * r, cl * Math.cos(lon) * r]);
+      const sPt = proj(t);
+      const lr = wrap(lon + this.yaw);
+      let e = flatT * 1.4 - 0.4 * Math.abs(lr) / Math.PI;
+      e = e < 0 ? 0 : e > 1 ? 1 : e; e = e * e * (3 - 2 * e);
+      if (e <= 0) return [sPt[0], sPt[1], t[2], 0];
+      const fx = mx + (lr / TWO_PI) * matW, fy = my - (lat / Math.PI) * matH;
+      return [sPt[0] + (fx - sPt[0]) * e, sPt[1] + (fy - sPt[1]) * e, t[2], e];
+    };
+    const v2ll = (v) => [Math.asin(Math.max(-1, Math.min(1, v[1]))), Math.atan2(v[0], v[2])];
+    const faceA = (za, e) => { // e=1 ≈ the mat's major-line contrast; back-face lines retire as the sheet flattens (kills the double-image)
+      const fr = 0.10 + 0.30 * (za + 1) / 2;
+      const back = 1 - (za + 1) / 2;
+      return (fr + (0.42 - fr) * e) * (1 - flatT * (1 - e) * back * 0.95);
+    };
+    const seamOK = (a9, b9) => Math.abs(a9[0] - b9[0]) < w * 0.5; // skip segments that wrap across the sheet seam
+
+    if (peelT > 0.001 && gFade > 0.001) {
+      ctx.lineWidth = 1;
+      if (flatT > 0.12) { // fine sub-grid, only once the sheet starts to lie flat
+        for (const line of this.gratMinor) {
+          let prev = null;
+          for (const [lat, lon] of line) {
+            const q = mapLL(lat, lon, 0);
+            if (prev && seamOK(q, prev)) {
+              ctx.strokeStyle = 'rgba(58,52,42,' + (gFade * flatT * 0.2 * (0.4 + 0.6 * q[3])).toFixed(3) + ')';
+              ctx.beginPath(); ctx.moveTo(prev[0], prev[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+            }
+            prev = q;
+          }
+        }
+      }
+      for (const line of this.grat) {
+        let prev = null;
+        for (const [lat, lon] of line) {
+          const q = mapLL(lat, lon, 0);
+          if (prev && seamOK(q, prev)) {
+            ctx.strokeStyle = 'rgba(58,52,42,' + (gFade * Math.max(0, faceA((q[2] + prev[2]) / 2, (q[3] + prev[3]) / 2))).toFixed(3) + ')';
+            ctx.beginPath(); ctx.moveTo(prev[0], prev[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+          }
+          prev = q;
+        }
+      }
+
+      const ease = (t) => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+      ctx.lineWidth = 1.5;
+      const aGate = cT;
+      this.arcs = this.arcs.filter((arc) => {
+        const age = now - arc.t0;
+        const head = ease(age / arc.grow);
+        const tail = age > arc.grow + arc.hold ? ease((age - arc.grow - arc.hold) / arc.fade) : 0;
+        if (tail >= 1) return false;
+        if (head >= 1 && !arc.reached) { arc.reached = true; this.pulses.push({ p: arc.b, t0: now }); }
+        const n = 40; let prev = null;
+        for (let i = 0; i <= n; i++) {
+          const tt = tail + (head - tail) * i / n;
+          const u = this.slerp(arc.a, arc.b, arc.omega, tt);
+          const ll = v2ll(u);
+          const q = mapLL(ll[0], ll[1], arc.lift * Math.sin(Math.PI * tt));
+          if (prev) {
+            const al = aGate * (0.22 + 0.68 * ((q[2] + prev[2]) / 2 + 1) / 2);
+            const alF = aGate * 0.8;
+            const e = (q[3] + prev[3]) / 2;
+            ctx.strokeStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + (al + (alF - al) * e).toFixed(3) + ')';
+            ctx.beginPath(); ctx.moveTo(prev[0], prev[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+          }
+          prev = q;
+          if (i === n && head < 1 && head > tail) {
+            ctx.fillStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + (0.95 * aGate).toFixed(3) + ')';
+            ctx.beginPath(); ctx.arc(q[0], q[1], 2.4, 0, 7); ctx.fill();
+          }
+        }
+        for (const [pt, on] of [[arc.a, tail <= 0.01], [arc.b, arc.reached]]) {
+          if (!on) continue;
+          const ll = v2ll(pt), q = mapLL(ll[0], ll[1], 0);
+          const al = 0.35 + 0.6 * (q[2] + 1) / 2;
+          ctx.fillStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + (aGate * (al + (0.9 - al) * q[3])).toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(q[0], q[1], 2, 0, 7); ctx.fill();
+        }
+        return true;
+      });
+      this.pulses = this.pulses.filter((pl) => {
+        const age = now - pl.t0;
+        if (age > 0.9) return false;
+        const ll = v2ll(pl.p), q = mapLL(ll[0], ll[1], 0);
+        const base = 0.4 + 0.6 * (q[2] + 1) / 2;
+        ctx.strokeStyle = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + (aGate * 0.5 * (1 - age / 0.9) * (base + (1 - base) * q[3])).toFixed(3) + ')';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(q[0], q[1], (3 + age * 34) * (R / 380), 0, 7); ctx.stroke();
+        ctx.lineWidth = 1.5;
+        return true;
+      });
+    }
+
+    if (matT > 0.001) { // mat-spec graph paper: 5mm/20mm pitch at 0.2m visible width — matches the 3D mat exactly
+      ctx.globalAlpha = matT;
+      ctx.fillStyle = '#eae8e4'; ctx.fillRect(0, 0, w, h);
+      const mnr = w / 40;
+      ctx.lineWidth = 1;
+      for (let k = -Math.ceil(w / 2 / mnr); k <= Math.ceil(w / 2 / mnr); k++) {
+        const x = w / 2 + k * mnr;
+        ctx.strokeStyle = k % 4 === 0 ? '#928f87' : '#cbc8c2';
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      }
+      for (let k = -Math.ceil(h / 2 / mnr); k <= Math.ceil(h / 2 / mnr); k++) {
+        const y = h / 2 + k * mnr;
+        ctx.strokeStyle = k % 4 === 0 ? '#928f87' : '#cbc8c2';
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    const g = this.gl, cvG = this.glCanvasRef.current;
+    this.glTLive = glT;
+    if (cvG) cvG.style.opacity = glT.toFixed(3);
+    if (this.vigRef.current) this.vigRef.current.style.opacity = (glT * st((camP - 0.02) / 0.1) * 0.9).toFixed(3);
+    this.camSm += (camP - this.camSm) * (1 - Math.exp(-4.5 * dt));
+    if (g && cvG && glT > 0 && this.glReady) {
+      const li = 0; // only the paper → intro leg; the shot holds there
+      let tt = Math.max(0, Math.min(1, this.camSm));
+      tt = tt < 0.5 ? 4 * tt * tt * tt : 1 - Math.pow(-2 * tt + 2, 3) / 2; // easeInOutCubic → settles at intro
+      const u = tt / 4, cam = g.cam;
+      const T4 = window.__three.THREE;
+      if (!g.qPaper) { // fixed start/end orientations, slerped — lookAt is degenerate straight-down and wobbles
+        const mkQ = (p9, t9, rollDeg) => {
+          const m9 = new T4.Matrix4().lookAt(new T4.Vector3(p9[0], p9[1], p9[2]), new T4.Vector3(t9[0], t9[1], t9[2]), new T4.Vector3(0, 1, 0));
+          return new T4.Quaternion().setFromRotationMatrix(m9)
+            .multiply(new T4.Quaternion().setFromAxisAngle(new T4.Vector3(0, 0, 1), rollDeg * Math.PI / 180));
+        };
+        g.mkQ = mkQ;
+        g.qPaper = mkQ(this.STATIONS[0].position, this.STATIONS[0].target, this.STATIONS[0].roll);
+        g.qIntro = mkQ(this.STATIONS[1].position, this.STATIONS[1].target, this.STATIONS[1].roll);
+        g.qTmp = new T4.Quaternion();
+      }
+      let cpos = g.posCurve.getPoint(u);
+      let lens = g.lens[li] + (g.lens[li + 1] - g.lens[li]) * tt;
+      g.qTmp.slerpQuaternions(g.qPaper, g.qIntro, tt);
+      if (this.focus && this.folder3d) { // dive onto the folder; the cover flips open under the camera
+        const f = this.focus;
+        f.t = Math.max(0, Math.min(1, f.t + (f.closing ? -dt : dt) / 1.9));
+        const e2 = f.t < 0.5 ? 4 * f.t * f.t * f.t : 1 - Math.pow(-2 * f.t + 2, 3) / 2;
+        const pc = this.folder3d.obj.position;
+        if (!f.q) {
+          const eye = [pc.x, pc.y + 0.33, pc.z];
+          f.q = g.mkQ(eye, [pc.x, pc.y, pc.z], this.folder3d.rotDeg);
+        }
+        cpos = cpos.lerp(pc.clone().setY(pc.y + 0.33), e2);
+        g.qTmp.slerp(f.q, e2);
+        lens += (45 - lens) * e2;
+        if (f.closing && f.t <= 0) this.focus = null;
+        if (f && f.nav && !f.closing && f.t >= 0.82 && !this.navFired) { this.navFired = true; window.location.href = 'pricing.html'; } // hand off once the white cover is fully in
+      }
+      if (this.folder3d) {
+        { // cover flips first, then each divider above the chosen section, staggered
+          const ft5 = this.focus ? this.focus.t : 0, idx5 = this.focus ? this.focus.tab : 0;
+          const openP = st((ft5 - 0.3) / 0.66);
+          const legs = [this.folder3d.hinge].concat(this.folder3d.dHinges.slice(0, idx5));
+          const span = 0.5, step = legs.length > 1 ? (1 - span) / (legs.length - 1) : 0; // strong stagger — each page flips in sequence
+          legs.forEach((hg, j) => {
+            const pr = st((openP - j * step) / span);
+            // ease-in launch, easeOutBack landing — the flip overshoots a touch and settles like paper
+            const c1 = 1.2, bk = (x) => { const u = x - 1; return 1 + (c1 + 1) * u * u * u + c1 * u * u; };
+            const e5 = pr < 0.42 ? 0.34 * (pr / 0.42) * (pr / 0.42) : 0.34 + 0.66 * bk((pr - 0.42) / 0.58);
+            hg.rotation.z = Math.PI * (0.96 - 0.075 * j) * e5; // opened pages fan apart — layered, never one slab
+          });
+          this.folder3d.dHinges.forEach((hg, k5) => { if (k5 >= idx5) hg.rotation.z = 0; });
+        }
+        const fd = this.folder3d; // glides in from the right once the camera settles; retreats the same way on scroll-back
+        if (fd.restX === undefined) fd.restX = fd.obj.position.x;
+        const wantIn = (this.camSm > 0.92 && glT > 0.9) || !!this.focus; // stays put while open/opening
+        const prevT = fd.inT;
+        fd.inT = Math.max(0, Math.min(1, fd.inT + (wantIn ? dt / 1.2 : -dt / 0.7)));
+        {
+          const k4 = fd.inT, e4 = 1 - Math.pow(1 - k4, 3); // easeOutCubic in; accelerates out on rewind
+          // narrow frames crop the right-edge tabs: feedback loop nudges the folder left until every tab projects on-screen
+          if (fd.inT >= 1 && !this.focus && this.tabs && this.tabs.length) {
+            const T5 = window.__three.THREE, v5 = new T5.Vector3();
+            let mx5 = -Infinity;
+            for (const tb of this.tabs) { tb.hit.getWorldPosition(v5); v5.x += 0.04; v5.project(g.cam); mx5 = Math.max(mx5, v5.x); }
+            const err5 = mx5 - 0.9;
+            if (err5 > 0.01 || (err5 < -0.06 && (fd.fitX || 0) < 0)) fd.fitX = Math.max(-0.24, Math.min(0, (fd.fitX || 0) - err5 * 0.05));
+          }
+          fd.obj.position.x = fd.restX + (fd.fitX || 0) + 0.55 * (1 - e4);
+          fd.obj.position.y = fd.restY;
+          fd.obj.visible = fd.inT > 0;
+        }
+        // the sliding folder bulldozes anything in its path; riders get carried off only while it's actually moving
+        if (fd.obj.visible && !this.focus) this.shoveOffFolder(fd.inT !== prevT && fd.inT > 0 && fd.inT < 1);
+      }
+      cam.position.copy(cpos);
+      cam.quaternion.copy(g.qTmp);
+      { // hand-held breathing + mouse parallax once the shot has settled (fades out during the folder dive)
+        const amp = st((this.camSm - 0.85) / 0.15) * (1 - (this.focus ? this.focus.t : 0));
+        if (amp > 0.001) {
+          const px9 = this.ptrX !== undefined ? (this.ptrX / Math.max(1, this.w)) * 2 - 1 : 0;
+          const py9 = this.ptrY !== undefined ? (this.ptrY / Math.max(1, this.h)) * 2 - 1 : 0;
+          const ke = 1 - Math.exp(-3 * dt);
+          this.parX = (this.parX || 0) + (px9 - (this.parX || 0)) * ke;
+          this.parY = (this.parY || 0) + (py9 - (this.parY || 0)) * ke;
+          const bx = Math.sin(now * 0.31) * 0.0006 + Math.sin(now * 0.83 + 1.7) * 0.0003;
+          const by = Math.sin(now * 0.47 + 0.9) * 0.0004;
+          const bz = Math.cos(now * 0.27 + 2.1) * 0.0005;
+          cam.position.x += (bx + this.parX * 0.007) * amp;
+          cam.position.y += by * amp;
+          cam.position.z += (bz + this.parY * 0.007) * amp;
+          cam.rotateY(-this.parX * 0.015 * amp);
+          cam.rotateX(-this.parY * 0.010 * amp);
+        }
+      }
+      // adaptive resolution: start at 1.5x, step down toward 1x if frames run long
+      if (this.qLevel === undefined) { this.qLevel = 1.5; this.qAcc = 0; this.qN = 0; }
+      this.qAcc += dt; this.qN++;
+      if (this.qN >= 90) {
+        const avg9 = this.qAcc / this.qN;
+        if (avg9 > 0.03 && this.qLevel > 1) this.qLevel -= 0.25;
+        else if (avg9 < 0.014 && this.qLevel < 1.5) this.qLevel += 0.25;
+        this.qAcc = 0; this.qN = 0;
+      }
+      const dpr2 = Math.min(this.qLevel, window.devicePixelRatio || 1);
+      if (g.w !== w || g.h !== h || g.dpr !== dpr2) {
+        g.w = w; g.h = h; g.dpr = dpr2;
+        g.renderer.setPixelRatio(dpr2); g.renderer.setSize(w, h, false);
+      }
+      cam.aspect = w / h;
+      cam.fov = this.fovFromLens(lens, w / h);
+      cam.updateProjectionMatrix();
+      if (glT > 0.9) this.updatePicks(dt, now);
+      g.renderer.render(g.scene, cam);
+      const pvs = [this.pv0Ref, this.pv1Ref, this.pv2Ref];
+      for (let k3 = 0; k3 < pvs.length; k3++) {
+        const el3 = pvs[k3].current; if (!el3) continue;
+        let on = 0; // long crossfade — text resolves as the camera nears the paper, no pop
+        if (this.focus && this.focus.tab === k3) on = this.focus.nav ? st((this.focus.t - 0.45) / 0.35) : st((this.focus.t - 0.6) / 0.4); // nav hand-off fades to paper white sooner
+        el3.style.opacity = on.toFixed(3);
+        el3.style.transform = 'scale(' + (1.03 - 0.03 * on).toFixed(4) + ')'; // settle onto the page
+        el3.style.pointerEvents = on > 0.6 ? 'auto' : 'none';
+      }
+    }
+
+    this.raf = requestAnimationFrame(this.tick);
+  };
+
+  renderVals() {
+    return {
+      scrollerRef: this.scrollerRef, wrapRef: this.wrapRef, canvasRef: this.canvasRef,
+      heroRef: this.heroRef, netRef: this.netRef, videoRef: this.videoRef,
+      glCanvasRef: this.glCanvasRef, vigRef: this.vigRef, hintRef: this.hintRef, navRef: this.navRef,
+      hintScrollRef: this.hintScrollRef, hintTapRef: this.hintTapRef, hintLineRef: this.hintLineRef, hintLabelRef: this.hintLabelRef,
+      hintAccent: this.props.accentColor ?? '#FF6842',
+      goTop: this.goTop, goProducts: this.goProducts, goPricing: this.goPricing, goContact: this.goContact, goLogin: this.goLogin,
+      logoRef: this.logoRef, ctaRef: this.ctaRef, loginRef: this.loginRef, navMenuRef: this.navMenuRef, burgerRef: this.burgerRef, sheetRef: this.sheetRef, toggleMenu: this.toggleMenu,
+      rowDisp: this.state.compact ? 'none' : 'flex', burgerDisp: this.state.compact ? 'flex' : 'none',
+      sheetDisp: this.state.compact ? 'flex' : 'none', menuO: this.state.menu ? '1' : '0', menuPE: this.state.menu ? 'auto' : 'none',
+      bar1T: this.state.menu ? 'translateY(3px) rotate(45deg)' : 'none', bar2T: this.state.menu ? 'translateY(-3px) rotate(-45deg)' : 'none', navOn: this.navOn, navOff: this.navOff,
+      pv0Ref: this.pv0Ref, pv1Ref: this.pv1Ref, pv2Ref: this.pv2Ref,
+      closePaper: this.closePaper
+    };
+  }
+}
+</script>
+</body>
+</html>

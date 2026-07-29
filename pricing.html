@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    html,body{margin:0;padding:0;background:#f7f5f0}
+    a{color:#969696;text-decoration:none}a:hover{color:#191919}
+    input::placeholder,textarea::placeholder{color:#b8b0a6;font-family:'Victor Serif',serif;font-style:italic}
+    @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes lineX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    @keyframes lineY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+  <style>
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-30Light.otf') format('opentype');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-40Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-45RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayBold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+  </style>
+</helmet>
+<div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif;background:#f7f5f0;color:#191919;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow-x:clip">
+  <div style="position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(14px,2.2vh,22px) clamp(18px,7vw,120px);color:#191919">
+    <div style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(247,245,240,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)"></div>
+    <img onClick="{{ goHome }}" src="uploads/Brand mark Pos-dea6eb77.svg" alt="Alta Lex" style="height:clamp(13px,1.7vw,17px);flex:0 0 auto;width:auto;display:block;cursor:pointer;opacity:0.9" style-hover="opacity:1">
+    <div style="display:{{ rowDisp }};align-items:center;gap:clamp(0px,0.4vw,6px);font-size:clamp(13px,calc(0.55vw + 10px),16px);letter-spacing:0.04em;white-space:nowrap">
+      <div onClick="{{ goProducts }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+        <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+        <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span style="position:relative">Products</span>
+      </div>
+      <div data-rest="1" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:default;padding:9px clamp(7px,1.3vw,16px);opacity:1;transition:opacity 0.3s ease,color 0.3s ease">
+        <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+        <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span style="position:relative;border-bottom:1px solid currentColor;padding-bottom:2px">Pricing</span>
+      </div>
+      <div onClick="{{ goLogin }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+        <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+        <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span style="position:relative">Log in</span>
+      </div>
+      <div onClick="{{ goContact }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+        <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+        <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span style="position:relative">Contact</span>
+      </div>
+    </div>
+    <div onClick="{{ toggleMenu }}" style="display:{{ burgerDisp }};flex:0 0 auto;cursor:pointer;padding:10px 0;flex-direction:column;gap:5px">
+      <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar1T }}"></div>
+      <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar2T }}"></div>
+    </div>
+    <div style="position:absolute;top:100%;left:0;right:0;display:{{ sheetDisp }};flex-direction:column;padding:6px clamp(18px,7vw,120px) 16px;background:rgba(247,245,240,0.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:16px;letter-spacing:0.04em;opacity:{{ menuO }};pointer-events:{{ menuPE }};transition:opacity 0.28s ease">
+      <div onClick="{{ goProducts }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Products</span></div>
+      <div data-rest="1" style="position:relative;padding:17px 0;line-height:1.1;opacity:1;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><span style="position:relative;border-bottom:1px solid currentColor;padding-bottom:2px">Pricing</span></div>
+      <div onClick="{{ goLogin }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Log in</span></div>
+      <div onClick="{{ goContact }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Contact</span></div>
+    </div>
+  </div>
+
+  <div style="max-width:980px;width:100%;margin:0 auto;padding:clamp(56px,10vh,110px) clamp(20px,6vw,48px) 0;box-sizing:border-box;position:relative;z-index:1">
+    <h1 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1.08;margin:0;max-width:16ch;text-wrap:pretty;animation:riseIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.05s both">Value that scales with you.</h1>
+    <p style="font-size:16px;line-height:1.8;letter-spacing:0.03em;color:#282828;margin:22px 0 0;max-width:52ch;animation:riseIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.16s both">Choose the plan that&rsquo;s right for you. Get more from Alta Lex.</p>
+  </div>
+
+  <div style="max-width:980px;width:100%;margin:clamp(44px,7vh,72px) auto 0;padding:0 clamp(20px,6vw,48px);box-sizing:border-box;position:relative;z-index:1">
+    <div style="height:1px;background:#BCADA2;transform-origin:left center;animation:lineX 0.8s cubic-bezier(0.22,1,0.36,1) 0.34s both"></div>
+    <div style="position:relative;padding-bottom:clamp(48px,8vh,88px)">
+      <div ref="{{ spineRef }}" style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#BCADA2;transform-origin:top center;animation:lineY 1s cubic-bezier(0.22,1,0.36,1) 0.5s both;display:{{ spineDisp }};transition:background 0.35s ease"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:0 clamp(40px,6vw,90px)">
+        <div ref="{{ col0Ref }}" onMouseEnter="{{ plan0On }}" onMouseLeave="{{ planOff }}" style="display:flex;flex-direction:column;padding:clamp(30px,4vh,44px) 0 clamp(34px,5vh,52px);transition:opacity 0.35s ease">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.42s both">
+            <div style="position:relative;font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(26px,2.4vw,34px);line-height:1.1">Individual<div data-titlerule="1" data-accent="1" style="position:absolute;left:0;bottom:-9px;width:44px;height:2px;background:currentColor;color:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div></div>
+            <div style="flex:0 0 auto;display:flex;gap:16px;font-size:11px;letter-spacing:0.18em">
+              <span onClick="{{ setMonthly }}" style="cursor:pointer;padding:4px 0 3px;opacity:{{ mOp }};border-bottom:1px solid {{ mBd }};transition:opacity 0.3s ease,border-color 0.3s ease">MONTHLY</span>
+              <span onClick="{{ setAnnual }}" style="cursor:pointer;padding:4px 0 3px;opacity:{{ aOp }};border-bottom:1px solid {{ aBd }};transition:opacity 0.3s ease,border-color 0.3s ease">ANNUAL</span>
+            </div>
+          </div>
+          <p style="font-size:15px;line-height:1.8;letter-spacing:0.03em;color:#282828;margin:16px 0 0;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.48s both">For individual legal professionals who want full access to the platform.</p>
+          <div style="display:flex;flex-direction:column;margin-top:26px">
+            <sc-for list="{{ indFeatures }}" as="f" hint-placeholder-count="6">
+              <div data-feat="1" style="display:flex;gap:12px;padding:11px 0;border-top:1px solid #E8E1D7;font-size:14.5px;line-height:1.55;color:#191919;animation:rowIn 0.5s ease {{ f.d }} both"><span data-accent="1" style="flex:0 0 auto;color:#FF6842">—</span><span>{{ f.t }}</span></div>
+            </sc-for>
+          </div>
+          <div data-io="1" style="margin-top:auto;padding-top:30px;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;animation-play-state:paused">
+            <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #BCADA2;padding-top:24px">
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span ref="{{ priceRef }}" style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(26px,2.3vw,34px)">US$2,800</span>
+                <span style="font-size:14px;color:#969696">{{ priceUnit }}</span>
+              </div>
+              <sc-if value="{{ isMonthly }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:14px;color:#969696;animation:rowIn 0.4s ease both">US$3,456/yr if paid monthly</div>
+              </sc-if>
+              <sc-if value="{{ isAnnual }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:14px;color:#969696;animation:rowIn 0.4s ease both"><span style="text-decoration:line-through;opacity:0.6">US$288</span> US$233 / month</div>
+              </sc-if>
+              <div data-accent="1" style="font-size:11px;letter-spacing:0.12em;color:#FF6842">SAVE 19% WITH ANNUAL PLAN</div>
+            </div>
+            <div onClick="{{ buyClick }}" onMouseEnter="{{ btnOn }}" onMouseLeave="{{ btnOff }}" style="position:relative;margin-top:24px;border:1px solid #191919;color:#191919;text-align:center;padding:15px;font-size:13px;letter-spacing:0.18em;cursor:pointer;overflow:hidden;transition:color 0.3s ease,border-color 0.3s ease">
+              <div data-wipe="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+              <span data-label="1" style="position:relative">BUY NOW</span>
+            </div>
+            <div style="font-size:12.5px;color:#969696;text-align:center;margin-top:12px">{{ buyNote }}</div>
+            <div data-accent="1" style="display:{{ accentBarDisp }};width:34px;height:2px;background:currentColor;color:#FF6842;margin-top:30px"></div>
+          </div>
+        </div>
+
+        <div ref="{{ col1Ref }}" onMouseEnter="{{ plan1On }}" onMouseLeave="{{ planOff }}" style="display:flex;flex-direction:column;padding:clamp(30px,4vh,44px) 0 clamp(34px,5vh,52px);border-top:1px solid #E8E1D7;transition:opacity 0.35s ease">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.5s both">
+            <div style="position:relative;font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(26px,2.4vw,34px);line-height:1.1">Team<div data-titlerule="1" data-accent="1" style="position:absolute;left:0;bottom:-9px;width:44px;height:2px;background:currentColor;color:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1)"></div></div>
+            <div style="flex:0 0 auto;font-size:11px;letter-spacing:0.18em;color:#969696">CUSTOM</div>
+          </div>
+          <p style="font-size:15px;line-height:1.8;letter-spacing:0.03em;color:#282828;margin:16px 0 0;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.56s both">For teams, enterprises and power users who want more control, collaboration, and support.</p>
+          <div style="font-size:14px;font-weight:500;letter-spacing:0.02em;margin-top:26px;padding:11px 0 0;animation:rowIn 0.5s ease 0.6s both">Everything in the Individual Plan, plus:</div>
+          <div style="display:flex;flex-direction:column;margin-top:11px">
+            <sc-for list="{{ teamFeatures }}" as="f" hint-placeholder-count="6">
+              <div style="display:flex;gap:12px;padding:11px 0;border-top:1px solid #E8E1D7;font-size:14.5px;line-height:1.55;color:#191919;animation:rowIn 0.5s ease {{ f.d }} both"><span data-accent="1" style="flex:0 0 auto;color:#FF6842">—</span><span>{{ f.t }}</span></div>
+            </sc-for>
+          </div>
+          <div data-io="1" style="margin-top:auto;padding-top:30px;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.18s both;animation-play-state:paused">
+            <div style="border-top:1px solid #BCADA2;padding-top:24px">
+              <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(26px,2.3vw,34px);line-height:1.15">Custom pricing</div>
+              <div style="font-size:14px;color:#969696;margin-top:8px">Scoped to your team, quoted in writing.</div>
+            </div>
+            <div onClick="{{ buyClick }}" onMouseEnter="{{ btnOn }}" onMouseLeave="{{ btnOff }}" style="position:relative;margin-top:24px;border:1px solid #191919;color:#191919;text-align:center;padding:15px;font-size:13px;letter-spacing:0.18em;cursor:pointer;overflow:hidden;transition:color 0.3s ease,border-color 0.3s ease">
+              <div data-wipe="1" style="position:absolute;inset:0;background:#FF6842;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+              <span data-label="1" style="position:relative">CONTACT SALES</span>
+            </div>
+            <div style="font-size:12.5px;color:#969696;text-align:center;margin-top:12px">Tailored onboarding for your whole team.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="max-width:980px;width:100%;margin:0 auto;padding:0 clamp(20px,6vw,48px) clamp(56px,9vh,96px);box-sizing:border-box;position:relative;z-index:1">
+    <div data-io="1" style="border-top:1px solid #BCADA2;padding-top:clamp(30px,4vh,44px);animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both;animation-play-state:paused">
+      <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.15">Questions, answered.</div>
+      <div style="display:flex;flex-direction:column;margin-top:22px">
+        <sc-for list="{{ faq }}" as="qa" hint-placeholder-count="4">
+          <div style="border-top:1px solid #E8E1D7">
+            <div onClick="{{ qa.toggle }}" onMouseEnter="{{ faqOn }}" onMouseLeave="{{ faqOff }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:17px 0;cursor:pointer;transition:color 0.3s ease">
+              <span style="font-size:17px;font-weight:400;line-height:1.5">{{ qa.q }}</span>
+              <span style="flex:0 0 auto;font-size:17px;line-height:1;color:#969696;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ qa.iconT }}">+</span>
+            </div>
+            <div style="display:grid;grid-template-rows:{{ qa.rows }};transition:grid-template-rows 0.45s cubic-bezier(0.22,1,0.36,1)">
+              <div style="overflow:hidden">
+                <div style="font-size:14px;line-height:1.75;letter-spacing:0.02em;color:#282828;max-width:62ch;padding:0 0 20px">{{ qa.a }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:16px;padding:clamp(22px,3.5vh,32px) clamp(18px,7vw,120px);border-top:1px solid #BCADA2;font-size:12px;letter-spacing:0.14em;color:#969696;position:relative;z-index:1">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <div>&copy; 2026 ALTA LEX PTE. LTD.</div>
+      <div style="display:flex;gap:clamp(16px,2.5vw,32px)">
+        <span onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">TERM OF SERVICE</span>
+        <span onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">PRIVATE POLICY</span>
+        <a href="mailto:support@alta-lex.ai" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="color:#969696;cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">SUPPORT@ALTA-LEX.AI</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:fixed;inset:0;z-index:20;opacity:{{ ctO }};pointer-events:{{ ctPE }};transition:opacity 0.3s ease">
+    <div onClick="{{ closeContact }}" style="position:absolute;inset:0;background:rgba(25,25,25,0.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)"></div>
+    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,calc(-50% + {{ ctPanelY }}));width:min(660px,calc(100vw - 40px));max-height:88vh;overflow:auto;overscroll-behavior:contain;background:#f7f5f0;padding:clamp(28px,4vw,48px);box-sizing:border-box;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1)">
+      <div onClick="{{ closeContact }}" style="position:absolute;top:14px;right:16px;color:#969696;cursor:pointer;padding:10px;line-height:0;transition:color 0.3s ease" style-hover="color:#191919"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2" fill="none"></path></svg></div>
+      <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(26px,3vw,36px);line-height:1.1;max-width:15ch">Tell us where the matter sits.</div>
+      <div style="margin-top:26px">
+        <dc-import name="ContactForm" accent-color="{{ accentVal }}" on-sent="{{ closeContact }}" hint-size="100%,820px"></dc-import>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;accentColor&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FF6842&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FF6842&quot;, &quot;#953519&quot;, &quot;#35567C&quot;], &quot;section&quot;: &quot;Brand&quot; }
+}">
+class Component extends DCLogic {
+  state = { menu: false, compact: typeof window !== 'undefined' && window.innerWidth < 620, twoCol: typeof window !== 'undefined' && window.innerWidth > 760, billing: 'annual', faqOpen: null, contact: false };
+  openContact = () => this.setState({ contact: true, menu: false });
+  closeContact = () => this.setState({ contact: false });
+  accent() { return this.props.accentColor ?? '#FF6842'; }
+  toggleMenu = () => this.setState((s) => ({ menu: !s.menu }));
+  syncNav = () => {
+    const compact = window.innerWidth < 620, twoCol = window.innerWidth > 760;
+    if (compact !== this.state.compact || twoCol !== this.state.twoCol) this.setState({ compact, twoCol, menu: false });
+  };
+  spineRef = React.createRef(); col0Ref = React.createRef(); col1Ref = React.createRef(); priceRef = React.createRef();
+  onKey = (e) => { if (e.key === 'Escape' && this.state.contact) this.closeContact(); };
+  componentDidMount() {
+    window.addEventListener('resize', this.syncNav);
+    window.addEventListener('keydown', this.onKey);
+    this.applyAccent();
+    this.dispVal = 2800; this.tgtVal = 2800; this.prevBilling = 'annual';
+    this.io = new IntersectionObserver((es) => { es.forEach((en) => { if (en.isIntersecting) { en.target.style.animationPlayState = 'running'; this.io.unobserve(en.target); } }); }, { threshold: 0.15 });
+    document.querySelectorAll('[data-io]').forEach((el) => this.io.observe(el));
+  }
+  componentDidUpdate() {
+    this.applyAccent();
+    const tgt = this.state.billing === 'monthly' ? 288 : 2800;
+    if (tgt !== this.tgtVal) this.animatePrice(tgt);
+    this.tgtVal = tgt;
+    if (this.prevBilling !== this.state.billing) { // credits line slides back in on toggle
+      this.prevBilling = this.state.billing;
+      const rows = document.querySelectorAll('[data-feat]'), last = rows[rows.length - 1];
+      if (last) last.querySelectorAll('span').forEach((sp) => { sp.style.animation = 'none'; void sp.offsetWidth; sp.style.animation = 'rowIn 0.4s ease both'; }); // spans only — the row's divider stays put
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.syncNav);
+    window.removeEventListener('keydown', this.onKey);
+    cancelAnimationFrame(this.priceRaf);
+    if (this.io) this.io.disconnect();
+  }
+  applyAccent() { document.querySelectorAll('[data-accent],[data-wipe]').forEach((el) => { const c = this.accent(); if (el.hasAttribute('data-wipe')) el.style.background = c; else el.style.color = c; }); }
+  animatePrice = (to) => { // sharp count-up, settles fast
+    cancelAnimationFrame(this.priceRaf);
+    const from = this.dispVal, t0 = performance.now(), dur = 550;
+    const step = (ms) => {
+      const k = Math.min(1, (ms - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      const v = Math.round(from + (to - from) * e);
+      this.dispVal = v;
+      const el = this.priceRef.current;
+      if (el) el.textContent = 'US$' + v.toLocaleString('en-US');
+      if (k < 1) this.priceRaf = requestAnimationFrame(step);
+    };
+    this.priceRaf = requestAnimationFrame(step);
+  };
+  setMonthly = () => this.setState({ billing: 'monthly' });
+  setAnnual = () => this.setState({ billing: 'annual' });
+  plan0On = () => this.planHover(0);
+  plan1On = () => this.planHover(1);
+  planHover(i) { // the other column recedes; an accent rule wipes in under the hovered title
+    const cols = [this.col0Ref, this.col1Ref];
+    const o = cols[1 - i].current;
+    if (o && this.state.twoCol) o.style.opacity = '0.45';
+    const el = cols[i].current, rl = el && el.querySelector('[data-titlerule]');
+    if (rl) { rl.style.transformOrigin = 'left center'; rl.style.transform = 'scaleX(1)'; }
+  }
+  planOff = () => {
+    [this.col0Ref, this.col1Ref].forEach((r) => { if (r.current) r.current.style.opacity = '1'; });
+    document.querySelectorAll('[data-titlerule]').forEach((rl) => {
+      rl.style.transformOrigin = 'right center'; rl.style.transform = 'scaleX(0)';
+      setTimeout(() => { rl.style.transformOrigin = 'left center'; }, 460);
+    });
+  };
+  navOn = (e) => {
+    const el = e.currentTarget;
+    el.style.opacity = '1'; el.style.color = this.accent();
+    const r = el.querySelector('[data-rule]'); if (r) r.style.transform = 'scaleX(1)';
+    const pl = el.querySelector('[data-plate]'); if (pl) pl.style.opacity = '0.1';
+  };
+  navOff = (e) => {
+    const el = e.currentTarget;
+    el.style.opacity = el.getAttribute('data-rest') || '0.72';
+    el.style.color = '';
+    const r = el.querySelector('[data-rule]');
+    if (r) { r.style.transformOrigin = 'right center'; r.style.transform = 'scaleX(0)'; setTimeout(() => { if (r) r.style.transformOrigin = 'left center'; }, 460); }
+    const pl = el.querySelector('[data-plate]'); if (pl) pl.style.opacity = '0';
+  };
+  btnOn = (e) => {
+    const el = e.currentTarget;
+    el.style.color = '#f7f5f0'; el.style.borderColor = this.accent();
+    const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'left center'; w.style.transform = 'scaleX(1)'; }
+  };
+  faqOn = (e) => { e.currentTarget.style.color = this.accent(); };
+  faqOff = (e) => { e.currentTarget.style.color = ''; };
+  buyClick = () => this.openContact();
+  btnOff = (e) => {
+    const el = e.currentTarget;
+    if (el.__busy) return;
+    el.style.color = '#191919'; el.style.borderColor = '#191919';
+    const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'right center'; w.style.transform = 'scaleX(0)'; setTimeout(() => { if (w) w.style.transformOrigin = 'left center'; }, 460); }
+  };
+  goHome = () => { window.location.href = 'index.html'; };
+  goProducts = () => { window.location.href = 'index.html'; };
+  goLogin = () => { window.location.href = 'index.html'; };
+  goContact = () => this.openContact();
+  renderVals() {
+    const m = this.state.billing === 'monthly';
+    const d = (i, off) => (0.5 + off + i * 0.05).toFixed(2) + 's';
+    const ind = ['Legal Research', 'Contract Review', 'Contract Drafting', 'Legal Translation', 'AI Workflows', m ? '1,500 Credits / month' : '18,000 Credits included'];
+    const team = ['Practice-area workflows', 'Customized workflows (Optional)', 'Private Cloud (Optional)', 'Admin dashboard for team member usage management', 'Dedicated customer support and SLA', 'Onboarding and training'];
+    return {
+      toggleMenu: this.toggleMenu, navOn: this.navOn, navOff: this.navOff, btnOn: this.btnOn, btnOff: this.btnOff,
+      goHome: this.goHome, goProducts: this.goProducts, goLogin: this.goLogin, goContact: this.goContact,
+      setMonthly: this.setMonthly, setAnnual: this.setAnnual, buyClick: this.buyClick, faqOn: this.faqOn, faqOff: this.faqOff,
+      openContact: this.openContact, closeContact: this.closeContact, accentVal: this.accent(),
+      ctO: this.state.contact ? '1' : '0', ctPE: this.state.contact ? 'auto' : 'none', ctPanelY: this.state.contact ? '0px' : '14px',
+      accentBarDisp: this.state.twoCol ? 'none' : 'block',
+      faq: [
+        { q: 'How are credits counted?', a: 'Each task draws credits by document length and complexity \u2014 a typical contract review runs 5\u201315 credits, a research query 1\u20133. Your balance is always visible in the workspace.' },
+        { q: 'What happens if I run out of credits?', a: 'Top up anytime at US$10 per 100 credits, or move to a larger allowance. Annual credits are pooled across the whole year.' },
+        { q: 'Can I switch to Team mid-term?', a: 'Yes. The unused portion of your Individual plan is credited against the Team quote \u2014 nothing is paid twice.' },
+        { q: 'Is my data used to train models?', a: 'No. Matter data stays encrypted and private to your workspace, and is never used for training.' }
+      ].map((f, i) => ({ ...f, toggle: () => this.setState((s) => ({ faqOpen: s.faqOpen === i ? null : i })), rows: this.state.faqOpen === i ? '1fr' : '0fr', iconT: this.state.faqOpen === i ? 'rotate(45deg)' : 'none' })), plan0On: this.plan0On, plan1On: this.plan1On, planOff: this.planOff,
+      spineRef: this.spineRef, col0Ref: this.col0Ref, col1Ref: this.col1Ref, priceRef: this.priceRef,
+      rowDisp: this.state.compact ? 'none' : 'flex', burgerDisp: this.state.compact ? 'flex' : 'none',
+      sheetDisp: this.state.compact ? 'flex' : 'none', menuO: this.state.menu ? '1' : '0', menuPE: this.state.menu ? 'auto' : 'none',
+      bar1T: this.state.menu ? 'translateY(3px) rotate(45deg)' : 'none', bar2T: this.state.menu ? 'translateY(-3px) rotate(-45deg)' : 'none',
+      spineDisp: this.state.twoCol ? 'block' : 'none',
+      isMonthly: m, isAnnual: !m,
+      mOp: m ? '1' : '0.45', aOp: m ? '0.45' : '1',
+      mBd: m ? 'currentColor' : 'transparent', aBd: m ? 'transparent' : 'currentColor',
+      priceUnit: m ? '/ month' : '/ year',
+      buyNote: m ? 'Auto-renews monthly. Cancel anytime.' : 'Billed as a one-time annual payment.',
+      indFeatures: ind.map((t, i) => ({ t, d: d(i, 0.04) })),
+      teamFeatures: team.map((t, i) => ({ t, d: d(i, 0.16) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

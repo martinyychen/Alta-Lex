@@ -324,7 +324,7 @@ class Component extends DCLogic {
       if (this.videoDone) return;
       const t = v.currentTime;
       if (t > this.watchTime + 0.02) { this.watchTime = t; this.stalled = 0; }
-      else if (++this.stalled >= 6) this.onEnded();
+      else if (t > 0.05 && ++this.stalled >= 6) this.onEnded(); // only stalls mid-playback skip; buffering gets the full 30s failsafe
     }, 500);
     this.failsafe = setTimeout(() => { if (!this.videoDone) this.onEnded(); }, 30000);
   }

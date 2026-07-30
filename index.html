@@ -157,7 +157,6 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
   &quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FF6842&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FF6842&quot;, &quot;#953519&quot;, &quot;#35567C&quot;], &quot;section&quot;: &quot;Look&quot;},
-  &quot;scrollBoost&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot;},
   &quot;rotateSpeed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.1, &quot;min&quot;: 0, &quot;max&quot;: 0.6, &quot;step&quot;: 0.02, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;},
   &quot;arcRate&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1.2, &quot;min&quot;: 0.2, &quot;max&quot;: 3, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;}
 }">
@@ -181,7 +180,6 @@ class Component extends DCLogic {
     this.closeMenu();
     const sc = this.scrollerRef.current; if (!sc) return;
     if (!this.videoDone) { const v = this.videoRef.current; if (v) { try { v.currentTime = Math.max(0, (v.duration || 1) - 0.05); } catch (e) {} } this.onEnded(); }
-    this.rewind = 0;
     const total = Math.max(1, sc.offsetHeight - window.innerHeight);
     window.scrollTo({ top: total, behavior: 'auto' }); // no long smooth ride — the nav is a shortcut, not part of the story
     this.camSm = 1; // snap the shot to the desk instead of easing over ~1s
@@ -222,7 +220,7 @@ class Component extends DCLogic {
   ];
   yaw = 2.2; pitchU = 0; vyaw = 0; dragging = false; lastX = 0; lastY = 0;
   arcs = []; pulses = []; nextSpawn = 0; last = 0;
-  videoDone = false; boost = 1; rewind = 0; frames = [];
+  videoDone = false; rewind = 0; skipping = false;
 
   componentDidMount() {
     const el = this.wrapRef.current, cv = this.canvasRef.current;
@@ -236,6 +234,7 @@ class Component extends DCLogic {
     el.addEventListener('pointercancel', this.onUp);
     this.lockScroll();
     window.addEventListener('wheel', this.onScrollIntent, { passive: false });
+    window.addEventListener('touchstart', this.onTouchStart, { passive: true });
     window.addEventListener('touchmove', this.onScrollIntent, { passive: false });
     window.addEventListener('keydown', this.onKeyIntent);
     const v = this.videoRef.current;
@@ -245,7 +244,6 @@ class Component extends DCLogic {
       const go = () => { const p = v.play(); if (p && p.catch) p.catch(this.onEnded); };
       if (v.readyState >= 3) go(); else v.addEventListener('canplay', go, { once: true });
       this.armWatchdog();
-      this.captureFrames();
     }
     this.raf = requestAnimationFrame(this.tick);
     this.syncNav();
@@ -257,9 +255,10 @@ class Component extends DCLogic {
     if (this.ro) this.ro.disconnect();
     this.unlockScroll();
     window.removeEventListener('wheel', this.onScrollIntent);
+    window.removeEventListener('touchstart', this.onTouchStart);
     window.removeEventListener('touchmove', this.onScrollIntent);
     window.removeEventListener('keydown', this.onKeyIntent);
-    clearInterval(this.guard); clearTimeout(this.failsafe); cancelAnimationFrame(this.capRaf); clearTimeout(this.navTimer);
+    clearInterval(this.guard); clearTimeout(this.failsafe); clearTimeout(this.skipTimer); clearTimeout(this.navTimer);
     if (this.gl) { try { this.gl.renderer.dispose(); } catch (e) {} }
     const v = this.videoRef.current;
     if (v) { v.removeEventListener('ended', this.onEnded); v.removeEventListener('error', this.onEnded); }
@@ -285,35 +284,22 @@ class Component extends DCLogic {
     const v = this.videoRef.current;
     if (v) { v.playbackRate = 1; try { v.pause(); } catch (e) {} }
     this.videoDone = true;
-    this.resuming = false; this.frameResume = false; this.rewind = 0;
-    clearInterval(this.guard); clearTimeout(this.failsafe); clearTimeout(this.resumeFallback);
+    this.skipping = false;
+    clearInterval(this.guard); clearTimeout(this.failsafe); clearTimeout(this.skipTimer);
     this.unlockScroll();
   };
-  bump(amount) {
-    if (this.videoDone) return;
-    this.boost = Math.min(6, this.boost + amount);
-  }
-  // cache low-res frames during the forward playthrough so scroll-up can rewind
-  captureFrames() {
+  // scroll-down during playback: fast-forward to the last frame, then hand over to the page
+  skipToEnd() {
+    if (this.videoDone || this.skipping) return;
+    this.skipping = true;
     const v = this.videoRef.current;
-    if (!v) return;
-    const CAP = 40;
-    let next = 0, step = 0;
-    const grab = () => {
-      const cw = 720, ch = Math.max(1, Math.round(720 * (v.videoHeight || 1080) / (v.videoWidth || 1920)));
-      const c = document.createElement('canvas'); c.width = cw; c.height = ch;
-      c.getContext('2d').drawImage(v, 0, 0, cw, ch);
-      this.frames.push(c);
-    };
-    const loop = () => {
-      if (this.frames.length >= CAP) return;
-      if (this.videoDone && this.frames.length) return;
-      if (!step && isFinite(v.duration) && v.duration) step = v.duration / CAP;
-      if (v.readyState >= 2 && v.currentTime > 0 && v.currentTime + 1e-3 >= next) { grab(); next += step || 0.25; }
-      if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(loop);
-      else this.capRaf = requestAnimationFrame(loop);
-    };
-    loop();
+    if (!v) { this.onEnded(); return; }
+    try { v.playbackRate = 8; } catch (e) {}
+    this.skipTimer = setTimeout(() => { // decode can't keep up: hard-seek to the end
+      if (this.videoDone) return;
+      try { v.currentTime = Math.max(0, (v.duration || 1) - 0.05); } catch (e) {}
+      this.onEnded();
+    }, 900);
   }
   armWatchdog() { // never leave scroll locked if playback stalls
     const v = this.videoRef.current;
@@ -328,12 +314,7 @@ class Component extends DCLogic {
     }, 500);
     this.failsafe = setTimeout(() => { if (!this.videoDone) this.onEnded(); }, 30000);
   }
-  onResumed = () => {
-    clearTimeout(this.resumeFallback);
-    this.rewind = 0; this.frameResume = false; this.resuming = false;
-    const v = this.videoRef.current;
-    if (v) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-  };
+  onTouchStart = (e) => { this.touchY = e.touches && e.touches[0] ? e.touches[0].clientY : null; };
   onScrollIntent = (e) => {
     if (this.focus) { // paper open: only the overlay may scroll, and only if it actually overflows
       const pvs = [this.pv0Ref, this.pv1Ref, this.pv2Ref];
@@ -341,27 +322,16 @@ class Component extends DCLogic {
       if ((!pv || pv.scrollHeight <= pv.clientHeight + 1) && e.cancelable) e.preventDefault();
       return;
     }
-    if (this.videoDone) { // at the top, scroll-up rewinds through the cached frames
-      const d = e.deltaY;
-      if (d === undefined) return;
-      const atTop = (window.scrollY || document.documentElement.scrollTop || 0) <= 1;
-      if (!atTop || !this.frames.length) return;
-      if (d < 0 || this.rewind > 0) {
-        if (e.cancelable) e.preventDefault();
-        if (this.resuming) { // user took over again: stop the auto-resume
-          clearTimeout(this.resumeFallback);
-          this.resuming = false; this.frameResume = false;
-          const v = this.videoRef.current;
-          if (v) { v.removeEventListener('seeked', this.onResumed); try { v.pause(); } catch (er) {} }
-        }
-        this.rewind = Math.max(0, Math.min(1, this.rewind - d / 1500));
-        this.lastIntent = performance.now() / 1000;
-      }
-      return;
-    }
+    if (this.videoDone) return; // done: last frame stays put; native scroll takes over
     if (e.cancelable) e.preventDefault();
-    const d = e.deltaY !== undefined ? Math.abs(e.deltaY) : 60;
-    this.bump(Math.min(1.2, d / 260));
+    let down;
+    if (e.deltaY !== undefined) down = e.deltaY > 0;
+    else { // touchmove: finger moving up = scroll-down intent
+      const y = e.touches && e.touches[0] ? e.touches[0].clientY : null;
+      down = y !== null && this.touchY !== null && this.touchY !== undefined && this.touchY - y > 6;
+      if (y !== null) this.touchY = y;
+    }
+    if (down) this.skipToEnd();
   };
   onKeyIntent = (e) => {
     if (this.focus) {
@@ -370,7 +340,7 @@ class Component extends DCLogic {
       else if (!typing && ['ArrowDown', 'PageDown', 'Space', ' ', 'ArrowUp', 'PageUp'].indexOf(e.key) >= 0) e.preventDefault();
       return;
     }
-    if (['ArrowDown', 'PageDown', 'Space', ' ', 'ArrowUp', 'PageUp'].indexOf(e.key) >= 0) this.bump(0.9);
+    if (!this.videoDone && ['ArrowDown', 'PageDown', 'Space', ' '].indexOf(e.key) >= 0) this.skipToEnd();
   };
   resize() {
     const el = this.el, cv = this.cv, dpr = window.devicePixelRatio || 1;
@@ -940,8 +910,7 @@ class Component extends DCLogic {
     // playback: normal speed, accelerated while the user pushes to scroll
     const vid = this.videoRef.current;
     if (vid && !this.videoDone) {
-      this.boost = Math.max(1, this.boost - 2.2 * dt);
-      const target = (p.scrollBoost ?? true) ? this.boost : 1;
+      const target = this.skipping ? 8 : 1;
       if (Math.abs(vid.playbackRate - target) > 0.02) { try { vid.playbackRate = target; } catch (e) {} }
       if (isFinite(vid.duration) && vid.duration && vid.currentTime >= vid.duration - 0.05) this.onEnded();
     }
@@ -960,28 +929,9 @@ class Component extends DCLogic {
     const cT = st((s - 0.24) / 0.32);
     const flatT = st((s - 0.6) / 0.35); // globe unrolls into a flat cutting-mat grid — the final frame
 
-    // after 2s of no scrolling, hand back to the real video and let it play forward
-    if (this.rewind > 0 && now - (this.lastIntent || 0) > 2) {
-      const dur = (vid && isFinite(vid.duration) && vid.duration) || 10;
-      if (vid && !this.resuming) {
-        this.resuming = true;
-        this.videoDone = false; // must reach the last frame again before the wipe
-        this.boost = 1;
-        this.lockScroll();
-        this.armWatchdog();
-        try {
-          vid.currentTime = Math.max(0, (1 - this.rewind) * dur - 0.05);
-          const p = vid.play(); if (p && p.catch) p.catch(() => {});
-          vid.addEventListener('seeked', this.onResumed, { once: true });
-          this.resumeFallback = setTimeout(() => { this.frameResume = true; }, 1200);
-        } catch (e) { this.frameResume = true; }
-      }
-      if (this.frameResume) this.rewind = Math.max(0, this.rewind - dt / dur); // cached-frame fallback
-    }
-    const rw = this.rewind;
     if (vid) {
       vid.style.clipPath = peelT <= 0 ? 'none' : 'inset(0 ' + (peelT * 100).toFixed(2) + '% 0 0)';
-      vid.style.opacity = (peelT >= 1 || rw > 0) ? '0' : '1';
+      vid.style.opacity = peelT >= 1 ? '0' : '1';
     }
     if (this.hintRef.current) { // scroll hint rides the journey; at the desk it becomes a 'tap folder' prompt
       if (this.hintT0 === undefined) this.hintT0 = now;
@@ -1052,14 +1002,6 @@ class Component extends DCLogic {
     const bk = st((flatT - 0.5) / 0.5);
     ctx.fillStyle = 'rgb(' + Math.round(242 - 8 * bk) + ',' + Math.round(239 - 7 * bk) + ',' + Math.round(233 - 5 * bk) + ')';
     ctx.fillRect(0, 0, w, h);
-
-    if (rw > 0 && this.frames.length) { // rewound playback drawn from the frame cache
-      ctx.fillStyle = '#04070d'; ctx.fillRect(0, 0, w, h);
-      const img = this.frames[Math.max(0, Math.round((1 - rw) * (this.frames.length - 1)))];
-      const scF = Math.max(w / img.width, h / img.height);
-      const dw = img.width * scF, dh = img.height * scF;
-      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-    }
 
     const cyw = Math.cos(this.yaw), syw = Math.sin(this.yaw);
     const flatK = 1 - flatT;

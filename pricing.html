@@ -108,7 +108,6 @@
               <span data-label="1" style="position:relative">BUY NOW</span>
             </div>
             <div style="font-size:12.5px;color:#969696;text-align:center;margin-top:12px">{{ buyNote }}</div>
-            <div data-accent="1" style="display:{{ accentBarDisp }};width:34px;height:2px;background:currentColor;color:#FF6842;margin-top:30px"></div>
           </div>
         </div>
 
@@ -142,12 +141,13 @@
 
 
   <div style="max-width:980px;width:100%;margin:0 auto;padding:0 clamp(20px,6vw,48px) clamp(56px,9vh,96px);box-sizing:border-box;position:relative;z-index:1">
-    <div data-io="1" style="border-top:1px solid #BCADA2;padding-top:clamp(30px,4vh,44px);animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both;animation-play-state:paused">
-      <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.15">Questions, answered.</div>
+    <div style="border-top:1px solid #BCADA2;padding-top:clamp(30px,4vh,44px)">
+      <div data-io="1" style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.15;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both;animation-play-state:paused">Questions, answered.</div>
       <div style="display:flex;flex-direction:column;margin-top:22px">
         <sc-for list="{{ faq }}" as="qa" hint-placeholder-count="4">
-          <div style="border-top:1px solid #E8E1D7">
-            <div onClick="{{ qa.toggle }}" onMouseEnter="{{ faqOn }}" onMouseLeave="{{ faqOff }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:17px 0;cursor:pointer;transition:color 0.3s ease">
+          <div>
+            <div data-io="1" style="height:1px;background:#E8E1D7;transform-origin:left center;animation:lineX 0.7s cubic-bezier(0.22,1,0.36,1) {{ qa.lineD }} both;animation-play-state:paused"></div>
+            <div data-io="1" onClick="{{ qa.toggle }}" onMouseEnter="{{ faqOn }}" onMouseLeave="{{ faqOff }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:17px 0;cursor:pointer;transition:color 0.3s ease;animation:rowIn 0.55s cubic-bezier(0.22,1,0.36,1) {{ qa.rowD }} both;animation-play-state:paused">
               <span style="font-size:17px;font-weight:400;line-height:1.5">{{ qa.q }}</span>
               <span style="flex:0 0 auto;font-size:17px;line-height:1;color:#969696;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ qa.iconT }}">+</span>
             </div>
@@ -244,6 +244,7 @@ class Component extends DCLogic {
   plan0On = () => this.planHover(0);
   plan1On = () => this.planHover(1);
   planHover(i) { // the other column recedes; an accent rule wipes in under the hovered title
+    if (!window.matchMedia('(hover: hover)').matches) return; // touch: tap fires mouseenter but never mouseleave
     const cols = [this.col0Ref, this.col1Ref];
     const o = cols[1 - i].current;
     if (o && this.state.twoCol) o.style.opacity = '0.45';
@@ -306,7 +307,7 @@ class Component extends DCLogic {
         { q: 'What happens if I run out of credits?', a: 'Top up anytime at US$10 per 100 credits, or move to a larger allowance. Annual credits are pooled across the whole year.' },
         { q: 'Can I switch to Team mid-term?', a: 'Yes. The unused portion of your Individual plan is credited against the Team quote \u2014 nothing is paid twice.' },
         { q: 'Is my data used to train models?', a: 'No. Matter data stays encrypted and private to your workspace, and is never used for training.' }
-      ].map((f, i) => ({ ...f, toggle: () => this.setState((s) => ({ faqOpen: s.faqOpen === i ? null : i })), rows: this.state.faqOpen === i ? '1fr' : '0fr', iconT: this.state.faqOpen === i ? 'rotate(45deg)' : 'none' })), plan0On: this.plan0On, plan1On: this.plan1On, planOff: this.planOff,
+      ].map((f, i) => ({ ...f, lineD: (0.1 + i * 0.09).toFixed(2) + 's', rowD: (0.24 + i * 0.09).toFixed(2) + 's', toggle: () => this.setState((s) => ({ faqOpen: s.faqOpen === i ? null : i })), rows: this.state.faqOpen === i ? '1fr' : '0fr', iconT: this.state.faqOpen === i ? 'rotate(45deg)' : 'none' })), plan0On: this.plan0On, plan1On: this.plan1On, planOff: this.planOff,
       spineRef: this.spineRef, col0Ref: this.col0Ref, col1Ref: this.col1Ref, priceRef: this.priceRef,
       rowDisp: this.state.compact ? 'none' : 'flex', burgerDisp: this.state.compact ? 'flex' : 'none',
       sheetDisp: this.state.compact ? 'flex' : 'none', menuO: this.state.menu ? '1' : '0', menuPE: this.state.menu ? 'auto' : 'none',

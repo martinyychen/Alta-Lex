@@ -39,6 +39,7 @@
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
       "three/addons/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
+      "three/addons/loaders/DRACOLoader.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/loaders/DRACOLoader.js",
       "three/addons/lights/RectAreaLightUniformsLib.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/lights/RectAreaLightUniformsLib.js",
       "three/addons/environments/RoomEnvironment.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/environments/RoomEnvironment.js"
     }
@@ -47,9 +48,10 @@
   <script type="module">
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-    window.__three = { THREE, GLTFLoader, RectAreaLightUniformsLib, RoomEnvironment };
+    window.__three = { THREE, GLTFLoader, DRACOLoader, RectAreaLightUniformsLib, RoomEnvironment };
     window.dispatchEvent(new Event('three-ready'));
   </script>
 </helmet>
@@ -699,7 +701,9 @@ class Component extends DCLogic {
   initGL() {
     const boot = () => {
       if (this.gl || !this.glCanvasRef.current || !window.__three) return;
-      const { THREE: t, GLTFLoader, RectAreaLightUniformsLib, RoomEnvironment } = window.__three;
+      const { THREE: t, GLTFLoader, DRACOLoader, RectAreaLightUniformsLib, RoomEnvironment } = window.__three;
+      const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/libs/draco/');
+      const newLoader = () => { const l = new GLTFLoader(); l.setDRACOLoader(draco); return l; };
       const renderer = new t.WebGLRenderer({ canvas: this.glCanvasRef.current, antialias: (window.devicePixelRatio || 1) < 1.5, powerPreference: 'high-performance' });
       renderer.toneMapping = t.AgXToneMapping;
       renderer.shadowMap.enabled = true;
@@ -731,7 +735,7 @@ class Component extends DCLogic {
         scene.add(sun);
       }
       const cam = new t.PerspectiveCamera(37, 1, 0.01, 50);
-      new GLTFLoader().load('uploads/oryzo_desk.glb', (res) => {
+      newLoader().load('uploads/oryzo_desk.glb', (res) => {
         res.scene.traverse((o) => {
           if (!o.isMesh || !o.material) return;
           const mats = Array.isArray(o.material) ? o.material : [o.material];
@@ -800,7 +804,7 @@ class Component extends DCLogic {
         }
         // the manila folder — Blender-built GLB; cover and dividers pivot at the spine (-x edge)
         const FROT = 6;
-        new GLTFLoader().load('uploads/alta_lex_folder_web.glb', (fres) => {
+        newLoader().load('uploads/alta_lex_folder_web.glb', (fres) => {
           const fold = fres.scene; fold.name = 'folder';
           const cover = fold.getObjectByName('Folder_Cover');
           const dHinges = [3, 2, 1].map((n9) => fold.getObjectByName('Folder_Divider_' + n9)); // [0] = top divider

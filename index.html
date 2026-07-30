@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./vendor/react/react.production.min.js"></script>
+<script src="./vendor/react/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -21,27 +23,25 @@
     @keyframes hintLabelIn{to{opacity:0.85}}
   </style>
   <style>
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-30Light.otf') format('opentype');font-weight:300;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-40Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-45RegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-50Medium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif-60Semibold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLightItalic.ttf') format('truetype');font-weight:300;font-style:italic;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRomanItalic.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayBold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif30Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif35LightItalic.woff2') format('woff2');font-weight:300;font-style:italic;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif45RegularItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif50Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif60Semibold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLight.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLightItalic.woff2') format('woff2');font-weight:300;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRomanItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayMediu.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayBold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
   </style>
   <link rel="prefetch" href="pricing.html">
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
-      "three/addons/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
-      "three/addons/loaders/DRACOLoader.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/loaders/DRACOLoader.js",
-      "three/addons/lights/RectAreaLightUniformsLib.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/lights/RectAreaLightUniformsLib.js",
-      "three/addons/environments/RoomEnvironment.js": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/environments/RoomEnvironment.js"
+      "three": "./vendor/three/three.module.min.js",
+      "three/addons/": "./vendor/three/addons/"
     }
   }
   </script>
@@ -672,7 +672,7 @@ class Component extends DCLogic {
     const boot = () => {
       if (this.gl || !this.glCanvasRef.current || !window.__three) return;
       const { THREE: t, GLTFLoader, DRACOLoader, RectAreaLightUniformsLib, RoomEnvironment } = window.__three;
-      const draco = new DRACOLoader(); draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/libs/draco/');
+      const draco = new DRACOLoader(); draco.setDecoderPath('./vendor/three/addons/libs/draco/gltf/');
       const newLoader = () => { const l = new GLTFLoader(); l.setDRACOLoader(draco); return l; };
       const renderer = new t.WebGLRenderer({ canvas: this.glCanvasRef.current, antialias: (window.devicePixelRatio || 1) < 1.5, powerPreference: 'high-performance' });
       renderer.toneMapping = t.AgXToneMapping;

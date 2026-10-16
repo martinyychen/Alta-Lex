@@ -20,20 +20,19 @@
     @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   </style>
   <style>
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif30Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif35LightItalic.woff2') format('woff2');font-weight:300;font-style:italic;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif45RegularItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayLight.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayMediu.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayBold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif30Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif45RegularItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayLight.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayMediu.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayBold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
   </style>
 </helmet>
 <div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif;background:#f7f5f0;color:#191919;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow-x:clip">
   <div style="position:sticky;top:0;z-index:9;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(14px,2.2vh,22px) clamp(18px,7vw,120px);color:#191919">
     <div style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(247,245,240,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)"></div>
-    <img onClick="{{ goHome }}" src="uploads/Brand mark Pos-dea6eb77.svg" alt="Alta Lex" style="height:clamp(13px,1.7vw,17px);flex:0 0 auto;width:auto;display:block;cursor:pointer;opacity:0.9" style-hover="opacity:1">
+    <img onClick="{{ goHome }}" src="assets/brand/brand-mark.svg" alt="Alta Lex" style="height:clamp(13px,1.7vw,17px);flex:0 0 auto;width:auto;display:block;cursor:pointer;opacity:0.9" style-hover="opacity:1">
     <div style="display:{{ rowDisp }};align-items:center;gap:clamp(0px,0.4vw,6px);font-size:clamp(13px,calc(0.55vw + 10px),16px);letter-spacing:0.04em;white-space:nowrap">
       <div onClick="{{ goProducts }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
         <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
@@ -111,6 +110,7 @@
               <span data-label="1" style="position:relative">BUY NOW</span>
             </div>
             <div style="font-size:12.5px;color:#969696;text-align:center;margin-top:12px">{{ buyNote }}</div>
+            <div data-accent="1" style="display:{{ accentBarDisp }};width:34px;height:2px;background:currentColor;color:#FF6842;margin-top:30px"></div>
           </div>
         </div>
 
@@ -144,13 +144,12 @@
 
 
   <div style="max-width:980px;width:100%;margin:0 auto;padding:0 clamp(20px,6vw,48px) clamp(56px,9vh,96px);box-sizing:border-box;position:relative;z-index:1">
-    <div style="border-top:1px solid #BCADA2;padding-top:clamp(30px,4vh,44px)">
-      <div data-io="1" style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.15;animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both;animation-play-state:paused">Questions, answered.</div>
+    <div data-io="1" style="border-top:1px solid #BCADA2;padding-top:clamp(30px,4vh,44px);animation:riseIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both;animation-play-state:paused">
+      <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.2vw,32px);line-height:1.15">Questions, answered.</div>
       <div style="display:flex;flex-direction:column;margin-top:22px">
         <sc-for list="{{ faq }}" as="qa" hint-placeholder-count="4">
-          <div>
-            <div data-io="1" style="height:1px;background:#E8E1D7;transform-origin:left center;animation:lineX 0.7s cubic-bezier(0.22,1,0.36,1) {{ qa.lineD }} both;animation-play-state:paused"></div>
-            <div data-io="1" onClick="{{ qa.toggle }}" onMouseEnter="{{ faqOn }}" onMouseLeave="{{ faqOff }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:17px 0;cursor:pointer;transition:color 0.3s ease;animation:rowIn 0.55s cubic-bezier(0.22,1,0.36,1) {{ qa.rowD }} both;animation-play-state:paused">
+          <div style="border-top:1px solid #E8E1D7">
+            <div onClick="{{ qa.toggle }}" onMouseEnter="{{ faqOn }}" onMouseLeave="{{ faqOff }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:17px 0;cursor:pointer;transition:color 0.3s ease">
               <span style="font-size:17px;font-weight:400;line-height:1.5">{{ qa.q }}</span>
               <span style="flex:0 0 auto;font-size:17px;line-height:1;color:#969696;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ qa.iconT }}">+</span>
             </div>
@@ -165,16 +164,17 @@
     </div>
   </div>
 
-  <div style="margin-top:auto;display:flex;flex-direction:column;gap:16px;padding:clamp(22px,3.5vh,32px) clamp(18px,7vw,120px);border-top:1px solid #BCADA2;font-size:12px;letter-spacing:0.14em;color:#969696;position:relative;z-index:1">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
-      <div>&copy; 2026 ALTA LEX PTE. LTD.</div>
-      <div style="display:flex;gap:clamp(16px,2.5vw,32px)">
-        <span onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">TERM OF SERVICE</span>
-        <span onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">PRIVATE POLICY</span>
-        <a href="mailto:support@alta-lex.ai" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" data-rest="1" style="color:#969696;cursor:pointer;transition:opacity 0.3s ease,color 0.3s ease">SUPPORT@ALTA-LEX.AI</a>
-      </div>
-    </div>
-  </div>
+  <footer style="margin-top:auto;position:relative;z-index:1;display:flex;flex-direction:column;gap:clamp(56px,8vw,120px);padding:clamp(40px,5vw,72px) clamp(18px,7vw,120px) 0;border-top:1px solid rgba(29,28,25,0.16);color:#1d1c19">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:36px 4vw">
+          <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">PRODUCTS</div><div onClick="{{ goLand0 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Legal Assistant</div><div onClick="{{ goLand1 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Workflows</div><div onClick="{{ goLand2 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Knowledge Library</div><div onClick="{{ goLand3 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Tabular Review</div></div>
+          <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">GET STARTED</div><div onClick="{{ goTopP }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Pricing</div><div onClick="{{ goContact }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Contact us</div><div onClick="{{ goLogin }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Log in</div></div>
+          </div>
+        <div style="display:flex;justify-content:center;padding:clamp(12px,3vw,40px) 0"><img src="assets/brand/brand-mark.svg" alt="Alta Lex" style="display:block;width:min(560px,62%);height:auto"></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 32px;padding-bottom:28px;font-size:14px;color:#55534d">
+          <div style="display:flex;flex-wrap:wrap;gap:8px 22px"><span onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;transition:color 0.25s ease">Terms of use</span><span onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;transition:color 0.25s ease">Privacy Policy</span><a href="mailto:support@alta-lex.ai" target="_blank" rel="noopener" onClick="{{ ftMail }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;color:#55534d;text-decoration:none;transition:color 0.25s ease">support@alta-lex.ai</a></div>
+          <span>© 2026 Alta Lex. All rights reserved.</span>
+        </div>
+      </footer>
 
   <div style="position:fixed;inset:0;z-index:20;opacity:{{ ctO }};pointer-events:{{ ctPE }};transition:opacity 0.3s ease">
     <div onClick="{{ closeContact }}" style="position:absolute;inset:0;background:rgba(25,25,25,0.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)"></div>
@@ -247,7 +247,6 @@ class Component extends DCLogic {
   plan0On = () => this.planHover(0);
   plan1On = () => this.planHover(1);
   planHover(i) { // the other column recedes; an accent rule wipes in under the hovered title
-    if (!window.matchMedia('(hover: hover)').matches) return; // touch: tap fires mouseenter but never mouseleave
     const cols = [this.col0Ref, this.col1Ref];
     const o = cols[1 - i].current;
     if (o && this.state.twoCol) o.style.opacity = '0.45';
@@ -290,9 +289,16 @@ class Component extends DCLogic {
     const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'right center'; w.style.transform = 'scaleX(0)'; setTimeout(() => { if (w) w.style.transformOrigin = 'left center'; }, 460); }
   };
   goHome = () => { window.location.href = 'index.html'; };
-  goProducts = () => { window.location.href = 'index.html'; };
-  goLogin = () => { window.location.href = 'index.html'; };
+  goProducts = () => { window.location.href = 'index.html#products'; };
+  // TODO: replace with the product app login URL
+  LOGIN_URL = 'https://app.alta-lex.ai/login';
+  goLogin = () => { window.location.href = this.LOGIN_URL; };
+  ftOn = (e) => { const el = e.currentTarget; el.__c = el.__c || el.style.color; el.style.color = this.accent(); };
+  ftOff = (e) => { const el = e.currentTarget; el.style.color = el.__c || ''; };
+  ftMail = (e) => { e.preventDefault(); const u = 'mailto:support@alta-lex.ai'; try { const w = window.top || window; w.location.href = u; } catch (err) { window.location.href = u; } };
   goContact = () => this.openContact();
+  goLand = (n) => { window.location.href = 'index.html#sec-' + n; };
+  goTopP = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   renderVals() {
     const m = this.state.billing === 'monthly';
     const d = (i, off) => (0.5 + off + i * 0.05).toFixed(2) + 's';
@@ -300,7 +306,9 @@ class Component extends DCLogic {
     const team = ['Practice-area workflows', 'Customized workflows (Optional)', 'Private Cloud (Optional)', 'Admin dashboard for team member usage management', 'Dedicated customer support and SLA', 'Onboarding and training'];
     return {
       toggleMenu: this.toggleMenu, navOn: this.navOn, navOff: this.navOff, btnOn: this.btnOn, btnOff: this.btnOff,
+      ftOn: this.ftOn, ftOff: this.ftOff, ftMail: this.ftMail,
       goHome: this.goHome, goProducts: this.goProducts, goLogin: this.goLogin, goContact: this.goContact,
+      goLand0: () => this.goLand(0), goLand1: () => this.goLand(1), goLand2: () => this.goLand(2), goLand3: () => this.goLand(3), goTopP: this.goTopP,
       setMonthly: this.setMonthly, setAnnual: this.setAnnual, buyClick: this.buyClick, faqOn: this.faqOn, faqOff: this.faqOff,
       openContact: this.openContact, closeContact: this.closeContact, accentVal: this.accent(),
       ctO: this.state.contact ? '1' : '0', ctPE: this.state.contact ? 'auto' : 'none', ctPanelY: this.state.contact ? '0px' : '14px',
@@ -310,7 +318,7 @@ class Component extends DCLogic {
         { q: 'What happens if I run out of credits?', a: 'Top up anytime at US$10 per 100 credits, or move to a larger allowance. Annual credits are pooled across the whole year.' },
         { q: 'Can I switch to Team mid-term?', a: 'Yes. The unused portion of your Individual plan is credited against the Team quote \u2014 nothing is paid twice.' },
         { q: 'Is my data used to train models?', a: 'No. Matter data stays encrypted and private to your workspace, and is never used for training.' }
-      ].map((f, i) => ({ ...f, lineD: (0.1 + i * 0.09).toFixed(2) + 's', rowD: (0.24 + i * 0.09).toFixed(2) + 's', toggle: () => this.setState((s) => ({ faqOpen: s.faqOpen === i ? null : i })), rows: this.state.faqOpen === i ? '1fr' : '0fr', iconT: this.state.faqOpen === i ? 'rotate(45deg)' : 'none' })), plan0On: this.plan0On, plan1On: this.plan1On, planOff: this.planOff,
+      ].map((f, i) => ({ ...f, toggle: () => this.setState((s) => ({ faqOpen: s.faqOpen === i ? null : i })), rows: this.state.faqOpen === i ? '1fr' : '0fr', iconT: this.state.faqOpen === i ? 'rotate(45deg)' : 'none' })), plan0On: this.plan0On, plan1On: this.plan1On, planOff: this.planOff,
       spineRef: this.spineRef, col0Ref: this.col0Ref, col1Ref: this.col1Ref, priceRef: this.priceRef,
       rowDisp: this.state.compact ? 'none' : 'flex', burgerDisp: this.state.compact ? 'flex' : 'none',
       sheetDisp: this.state.compact ? 'flex' : 'none', menuO: this.state.menu ? '1' : '0', menuPE: this.state.menu ? 'auto' : 'none',

@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./vendor/react/react.production.min.js"></script>
-<script src="./vendor/react/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -15,9 +13,9 @@
     @keyframes alx-shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-3px)}40%,60%{transform:translateX(3px)}}
     @keyframes alx-clip{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
     @keyframes alx-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-    @font-face{font-family:'Victor Serif';src:url('uploads/VictorSerif45RegularItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
-    @font-face{font-family:'Neue Haas Display';src:url('uploads/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif45RegularItalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
   </style>
 </helmet>
 <div ref="{{ rootRef }}" style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif;color:#191919">
@@ -76,7 +74,7 @@
             <option value="Switzerland">Switzerland</option>
             <option value="United Arab Emirates">United Arab Emirates</option>
             <option value="Mainland China">Mainland China</option>
-            <option value="Hong Kong SAR, China">Hong Kong SAR, China</option>
+            <option value="Hong Kong SAR">Hong Kong SAR</option>
             <option value="Japan">Japan</option>
             <option value="South Korea">South Korea</option>
             <option value="Australia">Australia</option>

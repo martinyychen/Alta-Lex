@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+  html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+  canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+  canvas:active{cursor:grabbing}
+</style>
+</head>
+<body>
+<canvas id="g"></canvas>
+<script>
+// Line globe in the landing's wire style: faint ink graticule, ink coastlines, accent for the active region.
+const ACC = [255, 104, 66];
+const REGIONS = [
+  { c: [112, 12], n: ['China','Taiwan','Japan','South Korea','India','Vietnam','Thailand','Malaysia','Indonesia','Philippines','Cambodia','Laos','Myanmar','Brunei','Timor-Leste','Australia'], pts: [[116.4, 39.9], [114.17, 22.3], [103.82, 1.35], [139.7, 35.7], [127.0, 37.55], [77.2, 28.6], [100.5, 13.75], [151.2, -33.87]] },
+  { c: [10, 48], n: ['United Kingdom','Austria','Belgium','Bulgaria','Croatia','Cyprus','Czechia','Denmark','Estonia','Finland','France','Germany','Greece','Hungary','Ireland','Italy','Latvia','Lithuania','Luxembourg','Malta','Netherlands','Poland','Portugal','Romania','Slovakia','Slovenia','Spain','Sweden','Switzerland'], pts: [[-0.13, 51.5], [4.35, 50.85], [8.54, 47.37]] },
+  { c: [-78, 18], n: ['United States of America','Canada','Mexico','Guatemala','Belize','Honduras','El Salvador','Nicaragua','Costa Rica','Panama','Cuba','Dominican Rep.','Haiti','Puerto Rico','Jamaica','Colombia','Venezuela','Ecuador','Peru','Bolivia','Brazil','Paraguay','Chile','Argentina','Uruguay'], pts: [[-74.0, 40.7], [-79.4, 43.65], [-46.6, -23.55], [-81.25, 19.3], [-64.6, 18.42]] },
+  { c: [38, 12], n: ['United Arab Emirates','Saudi Arabia','Israel','South Africa'], pts: [[55.27, 25.2], [46.7, 24.7], [34.78, 32.08], [28.05, -26.2]] }
+];
+const cv = document.getElementById('g'), ctx = cv.getContext('2d');
+let W = 0, H = 0, dpr = 1, land = null, sets = [], active = 0, mix = [1, 0, 0, 0];
+let rot = [-REGIONS[0].c[0] + 120, -REGIONS[0].c[1] * 0.6 + 20, 0], target = [-REGIONS[0].c[0], -REGIONS[0].c[1] * 0.6, 0], dragging = false, last = null, t0 = performance.now(), idleSpin = 0;
+const proj = d3.geoOrthographic().clipAngle(90).precision(0.4);
+const path = d3.geoPath(proj, ctx);
+const grat = d3.geoGraticule10();
+function size() {
+  dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  proj.translate([W / 2, H / 2]).scale(sphR());
+}
+// sphere big enough to cover the pillar's corners, so the globe's own rim never shows
+function sphR() { const b = colBox(); return Math.hypot(b.w / 2, b.h / 2) * 1.03; }
+function colBox() { const h = H - 4, w = Math.min(W - 4, h * 0.88); return { w, h, x: (W - w) / 2, y: (H - h) / 2 }; }
+// the Alta Lex pillar: flared capital and base, concave shaft (same curve as the site illustrations, 78×244 source box)
+function columnPath() { const b = colBox(), X = (x) => b.x + (x - 1) / 78 * b.w, Y = (y) => b.y + (y - 1) / 244 * b.h, p = new Path2D();
+  p.moveTo(X(1), Y(1)); p.lineTo(X(79), Y(1)); p.bezierCurveTo(X(75.15), Y(20.03), X(68), Y(40.33), X(68), Y(64.44)); p.lineTo(X(68), Y(181.56)); p.bezierCurveTo(X(68), Y(205.67), X(75.15), Y(225.97), X(79), Y(245));
+  p.lineTo(X(1), Y(245)); p.bezierCurveTo(X(4.85), Y(225.97), X(12), Y(205.67), X(12), Y(181.56)); p.lineTo(X(12), Y(64.44)); p.bezierCurveTo(X(12), Y(40.33), X(4.85), Y(20.03), X(1), Y(1)); p.closePath(); return p; }
+addEventListener('resize', size); size();
+function pick(i, from) {
+  active = i; const c = REGIONS[i].c; target = [-c[0], -c[1] * 0.6, 0];
+  if (from !== 'parent') parent.postMessage({ type: 'alGlobe', region: i }, '*');
+}
+addEventListener('message', (e) => { const d = e.data || {}; if (d.type === 'alGlobeSet' && typeof d.region === 'number' && d.region !== active) pick(d.region, 'parent'); });
+const wrap = (a) => ((a + 540) % 360) - 180;
+cv.addEventListener('pointerdown', (e) => { dragging = true; last = [e.clientX, e.clientY]; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', (e) => { if (!dragging) return; const k = 90 / proj.scale(); rot[0] += (e.clientX - last[0]) * k * 0.9; rot[1] = Math.max(-60, Math.min(60, rot[1] - (e.clientY - last[1]) * k * 0.9)); target = rot.slice(); last = [e.clientX, e.clientY]; parent.postMessage({ type: 'alGlobeDrag' }, '*'); });
+cv.addEventListener('pointerup', (e) => { if (!dragging) return; dragging = false; });
+cv.addEventListener('click', (e) => {
+  if (!land) return; const ll = proj.invert([e.offsetX, e.offsetY]); if (!ll) return;
+  for (let i = 0; i < sets.length; i++) if (sets[i].some((f) => d3.geoContains(f, ll))) { pick(i); return; }
+});
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then((r) => r.json()).then((topo) => {
+  land = topojson.feature(topo, topo.objects.countries).features;
+  sets = REGIONS.map((r) => land.filter((f) => r.n.includes(f.properties.name)));
+  parent.postMessage({ type: 'alGlobeReady' }, '*');
+});
+function frame(now) {
+  const t = (now - t0) / 1000;
+  if (!dragging) {
+    const k = t < 2.4 ? 0.035 : 0.06; let dx = wrap(target[0] - rot[0]); rot[0] += dx * k; rot[1] += (target[1] - rot[1]) * k;
+  }
+  for (let i = 0; i < 4; i++) mix[i] += ((i === active ? 1 : 0) - mix[i]) * 0.08;
+  const it = Math.min(1, Math.max(0, (t - 0.4) / 1.6)), ie = 1 - Math.pow(1 - it, 3); // intro: globe swells in, wire first, land after
+  const landA = Math.min(1, Math.max(0, (t - 1.0) / 0.9)), sc0 = sphR();
+  proj.scale(sc0 * (0.94 + 0.06 * ie)); proj.rotate(rot); ctx.globalAlpha = ie;
+  ctx.clearRect(0, 0, W, H);
+  const R = proj.scale(), cx = W / 2, cy = H / 2;
+  const col = columnPath(); ctx.save(); ctx.clip(col);
+  ctx.fillStyle = '#f4f1eb'; ctx.fillRect(0, 0, W, H);
+  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(58,52,42,0.12)'; ctx.beginPath(); path(grat); ctx.stroke();
+
+  ctx.globalAlpha = ie * landA;
+  if (land) {
+    ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(58,52,42,0.2)';
+    ctx.beginPath(); land.forEach((f) => path(f)); ctx.stroke();
+    sets.forEach((fs, i) => { const m = mix[i]; if (m < 0.01) return;
+      ctx.beginPath(); fs.forEach((f) => path(f));
+      ctx.fillStyle = 'rgba(' + ACC + ',' + (0.16 * m).toFixed(3) + ')'; ctx.fill();
+      ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(' + ACC + ',' + (0.9 * m).toFixed(3) + ')'; ctx.stroke(); });
+    // small jurisdictions: pulse rings like the landing network
+    REGIONS.forEach((r, i) => { const m = mix[i]; if (m < 0.01) return; r.pts.forEach((p, k) => {
+      const v = d3.geoDistance([p[0], p[1]], [-rot[0], -rot[1]]); if (v > Math.PI / 2) return;
+      const q = proj([p[0], p[1]]); const age = ((t + k * 0.37) % 2.2) / 2.2;
+      ctx.fillStyle = 'rgba(' + ACC + ',' + m.toFixed(3) + ')'; ctx.beginPath(); ctx.arc(q[0], q[1], 2.6, 0, 7); ctx.fill();
+      ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(' + ACC + ',' + (m * 0.6 * (1 - age)).toFixed(3) + ')'; ctx.beginPath(); ctx.arc(q[0], q[1], 3 + age * 18 * (R / 300), 0, 7); ctx.stroke(); }); });
+  }
+  ctx.restore();
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

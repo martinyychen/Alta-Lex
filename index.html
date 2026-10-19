@@ -51,6 +51,8 @@
     @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayBold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
   </style>
   <link rel="prefetch" href="pricing.html">
+  <title>Alta Lex - Legal AI for Global Business</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand/brand-mark.svg">
 </helmet>
 <div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif">
   <div ref="{{ scrollerRef }}" style="height:480vh;position:relative">
@@ -77,9 +79,11 @@
           <div style="font-size:13px;letter-spacing:0.18em;opacity:0.85">Scroll</div>
         </div>
       </div>
-      <div ref="{{ heroRef }}" style="position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:480px;z-index:4;pointer-events:none;color:#f2f1ec">
-        <h1 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(40px,4.6vw,64px);line-height:1.05;margin:0">One world.<br>Many laws.</h1>
-        <p style="font-size:15px;line-height:1.7;opacity:0.72;margin:20px 0 0">The cost was never in the clauses. It's in everything that has to happen between them.</p>
+      <div ref="{{ heroRef }}" style="display:flex;flex-direction:column;position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:480px;z-index:4;pointer-events:none;color:#f2f1ec">
+        <h1 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(40px,4.6vw,64px);line-height:1.05;margin:0">No foreign jurisdiction.</h1>
+        <p style="font-family:'Victor Serif',serif;font-style:italic;font-size:clamp(20px,1.8vw,26px);line-height:1.3;margin:14px 0 0">Every market is home ground.</p>
+        <p style="font-size:15px;line-height:1.7;opacity:0.72;margin:20px 0 0">One unified legal AI operating system for corporate legal, compliance and tax teams, and the firms that advise them. Research, draft, review and run workflows across most jurisdictions worldwide, in more than 30 languages.</p>
+        <div ref="{{ heroCtaRef }}" onClick="{{ goContact }}" onMouseEnter="{{ navCtaOn }}" onMouseLeave="{{ navCtaOff }}" style="position:relative;align-self:flex-start;margin-top:32px;cursor:pointer;overflow:hidden;pointer-events:auto;padding:9px clamp(12px,1.4vw,18px);background:#1d1c19;color:#f7f5f0;border:1px solid #1d1c19;transition:color 0.3s ease,border-color 0.3s ease"><div data-wipe="1" style="position:absolute;inset:0;background:{{ hintAccent }};transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Request a demo</span></div>
       </div>
       <div ref="{{ netRef }}" style="position:absolute;left:7vw;top:50%;transform:translateY(-50%);max-width:420px;z-index:4;pointer-events:none;color:#1d1c19;opacity:0">
         <h2 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(28px,3.4vw,48px);line-height:1.1;margin:0">We draw the lines between them.</h2>
@@ -546,7 +550,7 @@
       <footer style="position:relative;z-index:1;pointer-events:auto;display:flex;flex-direction:column;gap:clamp(56px,8vw,120px);padding:clamp(40px,5vw,72px) clamp(18px,7vw,120px) 0;border-top:1px solid rgba(29,28,25,0.16);color:#1d1c19">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:36px 4vw">
           <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">PRODUCTS</div><div onClick="{{ goSec0 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Legal Assistant</div><div onClick="{{ goSec1 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Workflows</div><div onClick="{{ goSec2 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Knowledge Library</div><div onClick="{{ goSec3 }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Tabular Review</div></div>
-          <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">WHY ALTA LEX</div><div onClick="{{ goCoverage }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Coverage</div><div onClick="{{ goUseCases }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Use Cases</div><div onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Security</div></div><div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">GET STARTED</div><div onClick="{{ goPricing }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Pricing</div><div onClick="{{ goContact }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Request a demo</div><div onClick="{{ goLogin }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Log in</div><a href="mailto:support@alta-lex.ai" target="_blank" rel="noopener" onClick="{{ ftMail }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease;text-decoration:none">User Support</a></div>
+          <div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">WHY ALTA LEX</div><div onClick="{{ goCoverage }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Coverage</div><div onClick="{{ goUseCases }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Use Cases</div><div onClick="{{ goSecurity }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Security</div></div><div style="display:flex;flex-direction:column;gap:10px;min-width:0"><div style="font-size:12px;letter-spacing:0.18em;color:#7a7468;margin-bottom:6px">GET STARTED</div><div onClick="{{ goPricing }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Pricing</div><div onClick="{{ goContact }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Request a demo</div><div onClick="{{ goLogin }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease">Log in</div><a href="mailto:support@alta-lex.ai" target="_blank" rel="noopener" onClick="{{ ftMail }}" onMouseEnter="{{ ftOn }}" onMouseLeave="{{ ftOff }}" style="cursor:pointer;font-size:15px;line-height:1.5;color:#1d1c19;transition:color 0.25s ease;text-decoration:none">User Support</a></div>
           </div>
         <div style="display:flex;justify-content:center;padding:clamp(12px,3vw,40px) 0"><img src="assets/brand/brand-mark.svg" alt="Alta Lex" style="display:block;width:min(560px,62%);height:auto"></div>
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 32px;padding-bottom:28px;font-size:14px;color:#55534d">
@@ -568,13 +572,13 @@
       </div>
   <div ref="{{ navRef }}" style="position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(14px,2.2vh,22px) clamp(18px,7vw,120px);color:#f2f1ec;opacity:0;pointer-events:none">
         <div ref="{{ navPlateRef }}" style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(242,240,236,0.55);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid rgba(29,28,25,0.1);opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
-        <div style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(6,9,14,0.14);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);opacity:{{ menuO }};transition:opacity 0.28s ease;pointer-events:none"></div>
+        <div ref="{{ menuPlateRef }}" style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;background:rgba(6,9,14,0.14);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);opacity:{{ menuO }};transition:opacity 0.28s ease;pointer-events:none"></div>
         <img ref="{{ logoRef }}" onClick="{{ goTop }}" src="assets/brand/brand-mark.svg" alt="Alta Lex" style="height:clamp(13px,1.7vw,17px);flex:0 0 auto;width:auto;display:block;cursor:pointer;opacity:0.9" style-hover="opacity:1">
-        <div style="display:{{ rowDisp }};align-items:center;gap:clamp(0px,0.4vw,6px);font-size:clamp(13px,calc(0.55vw + 10px),16px);letter-spacing:0.04em;white-space:nowrap">
-          <div onClick="{{ goProducts }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+        <div style="display:{{ rowDisp }};flex:1;min-width:0;margin-left:clamp(24px,4vw,72px);align-items:center;gap:clamp(0px,0.4vw,6px);font-size:clamp(13px,calc(0.55vw + 10px),16px);letter-spacing:0.04em;white-space:nowrap">
+          <div ref="{{ navProdRef }}" onClick="{{ goProducts }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
             <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
             <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
-            <span style="position:relative">Products</span>
+            <span style="position:relative;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color 0.3s ease">Products</span>
           </div>
           <div onClick="{{ goCoverage }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
             <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
@@ -586,26 +590,32 @@
             <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
             <span style="position:relative">Use Cases</span>
           </div>
+          <div onClick="{{ goSecurity }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+        <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
+        <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
+        <span style="position:relative">Security</span>
+      </div>
           <div onClick="{{ goPricing }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
             <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
             <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
             <span style="position:relative">Pricing</span>
           </div>
-          <div onClick="{{ goLogin }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
+          <div onClick="{{ goLogin }}" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;margin-left:auto;cursor:pointer;padding:9px clamp(7px,1.3vw,16px);opacity:0.72;transition:opacity 0.3s ease,color 0.3s ease">
             <div data-plate="1" style="position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div>
             <div data-rule="1" style="position:absolute;left:-2px;right:-2px;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div>
             <span style="position:relative">Log in</span>
           </div>
-          <div onClick="{{ goContact }}" onMouseEnter="{{ navCtaOn }}" onMouseLeave="{{ navCtaOff }}" style="position:relative;cursor:pointer;overflow:hidden;margin-left:clamp(6px,1vw,14px);padding:9px clamp(12px,1.4vw,18px);background:#1d1c19;color:#f7f5f0;border:1px solid #1d1c19;transition:color 0.3s ease,border-color 0.3s ease"><div data-wipe="1" style="position:absolute;inset:0;background:{{ hintAccent }};transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Request a demo</span></div>
+          <div ref="{{ navCtaRef }}" onClick="{{ goContact }}" onMouseEnter="{{ navCtaOn }}" onMouseLeave="{{ navCtaOff }}" style="position:relative;cursor:pointer;overflow:hidden;white-space:nowrap;box-sizing:border-box;max-width:0;opacity:0;transform:translateY(-8px);pointer-events:none;margin-left:0;padding:9px 0;background:#1d1c19;color:#f7f5f0;border:1px solid #1d1c19;transition:color 0.3s ease,border-color 0.3s ease,max-width 0.6s cubic-bezier(0.22,1,0.36,1),padding 0.6s cubic-bezier(0.22,1,0.36,1),margin 0.6s cubic-bezier(0.22,1,0.36,1),opacity 0.4s ease,transform 0.6s cubic-bezier(0.22,1,0.36,1)"><div data-wipe="1" style="position:absolute;inset:0;background:{{ hintAccent }};transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Request a demo</span></div>
         </div>
         <div onClick="{{ toggleMenu }}" style="display:{{ burgerDisp }};flex:0 0 auto;cursor:pointer;padding:10px 0;flex-direction:column;gap:5px">
           <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar1T }}"></div>
           <div style="width:24px;height:1px;background:currentColor;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);transform:{{ bar2T }}"></div>
         </div>
-        <div style="position:absolute;top:100%;left:0;right:0;display:{{ sheetDisp }};flex-direction:column;padding:6px clamp(18px,7vw,120px) 16px;background:rgba(6,9,14,0.14);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);font-size:16px;letter-spacing:0.04em;opacity:{{ menuO }};pointer-events:{{ menuPE }};transition:opacity 0.28s ease">
+        <div ref="{{ menuSheetRef }}" style="position:absolute;top:100%;left:0;right:0;display:{{ sheetDisp }};flex-direction:column;padding:6px clamp(18px,7vw,120px) 16px;background:rgba(6,9,14,0.14);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);font-size:16px;letter-spacing:0.04em;opacity:{{ menuO }};pointer-events:{{ menuPE }};transition:opacity 0.28s ease">
           <div onClick="{{ goProducts }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Products</span></div>
           <div onClick="{{ goCoverage }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Coverage</span></div>
           <div onClick="{{ goUseCases }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Use Cases</span></div>
+      <div onClick="{{ goSecurity }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Security</span></div>
           <div onClick="{{ goPricing }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Pricing</span></div>
           <div onClick="{{ goLogin }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Log in</span></div>
           <div onClick="{{ goContact }}" data-rest="0.9" onMouseEnter="{{ navOn }}" onMouseLeave="{{ navOff }}" style="position:relative;cursor:pointer;padding:17px 0;line-height:1.1;opacity:0.9;transition:opacity 0.3s ease,color 0.3s ease;border-top:1px solid color-mix(in srgb, currentColor 22%, transparent)"><div data-plate="1" style="position:absolute;left:0;right:0;top:0;bottom:0;background:currentColor;opacity:0;transition:opacity 0.35s ease;pointer-events:none"></div><div data-rule="1" style="position:absolute;left:0;right:0;top:50%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);pointer-events:none"></div><span style="position:relative">Request a demo</span></div>
@@ -614,10 +624,7 @@
       </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#FF6842&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#FF6842&quot;, &quot;#953519&quot;, &quot;#35567C&quot;], &quot;section&quot;: &quot;Look&quot;}, &quot;clipSeconds&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 8, &quot;min&quot;: 4, &quot;max&quot;: 15, &quot;step&quot;: 1, &quot;unit&quot;: &quot;s&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;}, &quot;rotateSpeed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.1, &quot;min&quot;: 0, &quot;max&quot;: 0.6, &quot;step&quot;: 0.02, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;}, &quot;arcRate&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1.2, &quot;min&quot;: 0.2, &quot;max&quot;: 3, &quot;step&quot;: 0.1, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;},
-  &quot;wfPalette&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Sand&quot;, &quot;Stone&quot;, &quot;Sage&quot;, &quot;Clay&quot;, &quot;Mist&quot;], &quot;default&quot;: &quot;Stone&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Workflows&quot; }
-
-}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF6842&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FF6842&quot;,&quot;#953519&quot;,&quot;#35567C&quot;],&quot;section&quot;:&quot;Look&quot;},&quot;clipSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:8,&quot;min&quot;:4,&quot;max&quot;:15,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;rotateSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.1,&quot;min&quot;:0,&quot;max&quot;:0.6,&quot;step&quot;:0.02,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;arcRate&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0.2,&quot;max&quot;:3,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;wfPalette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sand&quot;,&quot;Stone&quot;,&quot;Sage&quot;,&quot;Clay&quot;,&quot;Mist&quot;],&quot;default&quot;:&quot;Stone&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Workflows&quot;},&quot;scrollGuard&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;B · Step&quot;,&quot;Off&quot;],&quot;default&quot;:&quot;B · Step&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Products scroll&quot;}}">
 class Component extends DCLogic {
   scrollerRef = React.createRef(); wrapRef = React.createRef(); canvasRef = React.createRef();
   heroRef = React.createRef(); netRef = React.createRef(); hintRef = React.createRef(); navRef = React.createRef();
@@ -627,6 +634,14 @@ class Component extends DCLogic {
   productsRef = React.createRef(); navPlateRef = React.createRef(); firstRef = React.createRef(); restRef = React.createRef(); typeRef = React.createRef(); wfRef = React.createRef(); demoBoxRef = React.createRef(); demoStageRef = React.createRef(); demoTextRef = React.createRef(); curtainRef = React.createRef();
   state = { wfI: 0, demoI: 0, demoPhase: 'wait', menu: false, paper: null, compact: typeof window !== 'undefined' && window.innerWidth < 620 };
 
+  heroCtaRef = React.createRef(); navCtaRef = React.createRef(); navProdRef = React.createRef();
+  setNavCta = (on) => { const n = this.navCtaRef.current, hc = this.heroCtaRef.current;
+    if (hc) hc.style.pointerEvents = on ? 'none' : 'auto';
+    if (!n) return; const st = n.style;
+    st.maxWidth = on ? '220px' : '0'; st.opacity = on ? '1' : '0'; st.transform = on ? 'translateY(0)' : 'translateY(-8px)';
+    st.marginLeft = on ? 'clamp(6px,1vw,14px)' : '0'; st.paddingLeft = st.paddingRight = on ? 'clamp(12px,1.4vw,18px)' : '0';
+    st.borderWidth = on ? '1px' : '0'; st.pointerEvents = on ? 'auto' : 'none';
+    st.transitionDelay = on ? '0.05s' : '0s'; };
   toggleMenu = () => this.setState((s) => ({ menu: !s.menu }));
   syncNav = () => {
     const compact = window.innerWidth < 620;
@@ -717,6 +732,7 @@ class Component extends DCLogic {
   goLogin = () => { window.location.href = this.LOGIN_URL; };
   goPricing = () => { window.location.href = 'pricing.html'; };
   goCoverage = () => { window.location.href = 'coverage.html'; };
+  goSecurity = () => { window.location.href = 'security.html'; };
   goUseCases = () => { window.location.href = 'use-cases.html'; };
   navCtaOn = (e) => { const el = e.currentTarget, c = this.props.accentColor ?? '#FF6842'; el.style.color = '#f7f5f0'; el.style.borderColor = c; const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'left center'; w.style.transform = 'scaleX(1)'; } };
   navCtaOff = (e) => { const el = e.currentTarget; el.style.color = '#f7f5f0'; el.style.borderColor = '#1d1c19'; const w = el.querySelector('[data-wipe]'); if (w) { w.style.transformOrigin = 'right center'; w.style.transform = 'scaleX(0)'; } };
@@ -755,6 +771,7 @@ class Component extends DCLogic {
     window.addEventListener('resize', this.syncNav);
     this.onLibW = () => { const n = window.innerWidth < 1200; if (n !== !!this.state.libNarrow) this.setState({ libNarrow: n }); };
     this.onLibW(); window.addEventListener('resize', this.onLibW);
+    this.initGuard();
     this.onUserIn = (e) => { this.lastInput = performance.now(); const L = this.firstLock; if (!L) return; if (performance.now() > L.until) { this.firstLock = null; return; }
       const down = e.type === 'wheel' ? e.deltaY > 0 : e.type === 'keydown' ? ['ArrowDown', 'PageDown', ' ', 'End'].includes(e.key) : e.type === 'touchmove' ? (this.tY != null && e.touches[0].clientY < this.tY) : false;
       if (e.type === 'touchmove') this.tY = e.touches[0].clientY;
@@ -1104,7 +1121,7 @@ class Component extends DCLogic {
     f.on = on;
     const ease = 'cubic-bezier(0.22,1,0.36,1)';
     f.el.style.pointerEvents = on ? 'auto' : 'none';
-    if (on && !instant && performance.now() > (this.navJumpUntil || 0) && performance.now() - (this.lastInput || 0) < 1500) { const pr = this.productsRef.current; const top = pr ? pr.getBoundingClientRect().top : 0; if (Math.abs(top) < window.innerHeight * 0.1) this.firstLock = { y: window.scrollY + top, until: performance.now() + 2900 }; this.hardLock(true); }
+    if (on && !instant && performance.now() > (this.navJumpUntil || 0) && performance.now() - (this.lastInput || 0) < 1500) { const pr = this.productsRef.current; const top = pr ? pr.getBoundingClientRect().top : 0; if (Math.abs(top) < window.innerHeight * 0.1) this.firstLock = { y: window.scrollY + top, until: performance.now() + ((this.props.scrollGuard ?? 'B · Step')[0] === 'O' ? 2900 : 1300) }; this.hardLock(true); }
     if (!on) { this.firstLock = null; this.hardLock(false); }
     if (on) {
       f.lines.forEach((x, i) => { x.style.transition = 'transform 1.1s ' + ease + ' ' + (0.1 + i * 0.14).toFixed(2) + 's'; x.style.transform = 'translateY(0)'; });
@@ -1121,6 +1138,49 @@ class Component extends DCLogic {
       f.fans.forEach((x) => { x.style.transition = t || 'transform 0.4s ease 0.3s, opacity 0.3s ease 0.3s'; x.style.transform = 'rotate(-' + x.getAttribute('data-fan') + 'deg)'; x.style.opacity = '0'; });
     }
   }
+  // Products scroll guard: one gesture = one stop (each card, long cards in screen-sized steps)
+  gStops(force) { const now = performance.now();
+    if (!force && this.gCache && (this.gBusy || now - this.gCacheT < 400)) return this.gCache;
+    const pr = this.productsRef.current, rs = this.restRef.current; if (!pr || !rs) return null;
+    const Y = window.scrollY, vh = window.innerHeight, nb = this.navRef.current ? this.navRef.current.getBoundingClientRect().height : 64;
+    const S = [Math.round(pr.getBoundingClientRect().top + Y)];
+    rs.querySelectorAll(':scope > [data-reveal]').forEach((g) => { const r = g.getBoundingClientRect(), top = r.top + Y - nb - 16, bot = r.bottom + Y - vh + 24;
+      S.push(Math.round(top)); for (let y = top + vh * 0.85; y < bot - vh * 0.3; y += vh * 0.85) S.push(Math.round(y)); if (bot > top + vh * 0.3) S.push(Math.round(bot)); });
+    S.sort((x, y) => x - y); const out = []; S.forEach((v) => { if (!out.length || v - out[out.length - 1] > vh * 0.28) out.push(v); else if (v > out[out.length - 1]) out[out.length - 1] = Math.max(out[out.length - 1], v); });
+    this.gCache = out; this.gCacheT = now; return out; }
+  gMode() { return (this.props.scrollGuard ?? 'B · Step')[0]; }
+  gTween(to, dur) { const from = window.scrollY, t0 = performance.now(); this.gBusy = true; this.gTo = to; cancelAnimationFrame(this.gRaf);
+    const ease = (x) => 1 - Math.pow(1 - x, 4);
+    const f = (n) => { const k = Math.min(1, (n - t0) / dur); window.scrollTo(0, Math.round(from + (to - from) * ease(k))); if (k < 1) this.gRaf = requestAnimationFrame(f); else { this.gBusy = false; this.gEnd = performance.now(); } };
+    this.gRaf = requestAnimationFrame(f); }
+  gStep(dir, S) { const y = this.gBusy && this.gTo != null ? this.gTo : window.scrollY;
+    const nx = dir > 0 ? S.find((v) => v > y + 4) : [...S].reverse().find((v) => v < y - 4); if (nx == null) return false;
+    this.gDir = dir; this.gTween(nx, 560 + 260 * Math.min(1, Math.abs(nx - window.scrollY) / window.innerHeight)); return true; }
+  initGuard() {
+    const live = (dir) => { const mode = this.gMode(); if (mode === 'O' || this.state.paper !== null || this.state.menu || this.firstLock || performance.now() < (this.navJumpUntil || 0)) return null;
+      const S = this.gStops(); if (!S) return null; const y = this.gBusy && this.gTo != null ? this.gTo : window.scrollY, lo = S[0], hi = S[S.length - 1];
+      return (dir > 0 ? y >= lo - 2 && y < hi - 2 : y > lo + 2 && y <= hi + 2) ? S : null; };
+    // one gesture = one step; a new gesture is a pause (>90ms) or a fresh rise in wheel delta (inertia only decays)
+    const handle = (e, dir, mag, fresh) => { const S = live(dir); if (!S) { this.gLastMag = 0; return; } if (e.cancelable) e.preventDefault();
+      const now = performance.now(), gap = now - (this.gLastEv || 0); this.gLastEv = now;
+      const isNew = fresh || gap > 90 || dir !== this.gLastDir || mag > (this.gLastMag || 0) * 1.5 + 6;
+      this.gLastDir = dir; this.gLastMag = mag;
+      if (!isNew) return;
+      if (this.gBusy && dir === this.gDir && performance.now() - (this.gT0 || 0) < 260) return;
+      this.gT0 = performance.now(); this.gStep(dir, S); };
+    const wheel = (e) => { const dy = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY; if (Math.abs(dy) < 1) return; handle(e, dy > 0 ? 1 : -1, Math.abs(dy), false); };
+    const ts = (e) => { this.gTy = e.touches[0].clientY; this.gAcc = 0; this.gFired = false; };
+    const tm = (e) => { if (this.gTy == null) return; const y = e.touches[0].clientY, d = this.gTy - y; this.gTy = y;
+      this.gAcc += d; const dir = this.gAcc > 0 ? 1 : -1;
+      if (this.gFired || Math.abs(this.gAcc) < 24) { if (live(dir) && e.cancelable) e.preventDefault(); return; }
+      this.gFired = true; handle(e, dir, 0, true); };
+    const te = () => { this.gTy = null; };
+    const kd = (e) => { const map = { ArrowDown: 1, PageDown: 1, ' ': 1, ArrowUp: -1, PageUp: -1 }; const dir = map[e.key];
+      if (!dir || e.shiftKey || /INPUT|TEXTAREA|SELECT/.test((e.target || {}).tagName || '')) return; handle(e, dir, 0, true); };
+    window.addEventListener('wheel', wheel, { passive: false }); this.gRz = () => { this.gCache = null; }; window.addEventListener('resize', this.gRz); window.addEventListener('touchstart', ts, { passive: true });
+    window.addEventListener('touchmove', tm, { passive: false }); window.addEventListener('touchend', te); window.addEventListener('keydown', kd);
+    this.gOff = () => { cancelAnimationFrame(this.gRaf); window.removeEventListener('resize', this.gRz); window.removeEventListener('wheel', wheel); window.removeEventListener('touchstart', ts); window.removeEventListener('touchmove', tm); window.removeEventListener('touchend', te); window.removeEventListener('keydown', kd); };
+  }
   updateProducts(vh) {
     const pr = this.productsRef.current; if (!pr) return -1;
     const top = pr.getBoundingClientRect().top; // 0 exactly when the story has finished
@@ -1136,6 +1196,7 @@ class Component extends DCLogic {
     clearTimeout(this.typeTimer); clearTimeout(this.demoTimer); if (this.roDemo) this.roDemo.disconnect();
 
     if (this.ro) this.ro.disconnect();
+    if (this.gOff) this.gOff();
     window.removeEventListener('wheel', this.onScrollIntent);
     window.removeEventListener('touchmove', this.onScrollIntent);
     window.removeEventListener('keydown', this.onKeyIntent);
@@ -1304,14 +1365,14 @@ class Component extends DCLogic {
       // any opacity < 1 on the nav makes it a backdrop root and kills the children's frosted blur, so clear it once settled
       const nvo = this.navO >= 1 ? '1' : this.navO.toFixed(3); if (nv.style.opacity !== nvo) nv.style.opacity = nvo;
       nv.style.pointerEvents = this.navO > 0.5 ? 'auto' : 'none';
-      nv.style.color = lightInk ? '#f2f1ec' : '#4a443a';
+      nv.style.color = lightInk ? '#f2f1ec' : '#2a2722';
       if (this.logoRef.current) this.logoRef.current.style.filter = lightInk ? 'invert(1) brightness(1.35)' : 'none';
       const pl = this.navPlateRef.current;
       const rs = this.restRef.current, nb = nv.getBoundingClientRect().bottom, rr = rs ? rs.getBoundingClientRect() : null;
       // frosted only while product content passes beneath
       if (pl) { const on = rr && rr.top + 1 < nb && rr.bottom > 0 ? '1' : '0'; if (pl.style.opacity !== on) pl.style.opacity = on; }
       // mobile menu: dark smoke over the video, light frost once the page turns paper-coloured
-      if (this.menuLight !== !lightInk) { this.menuLight = !lightInk; const mbg = lightInk ? 'rgba(6,9,14,0.3)' : 'rgba(242,240,236,0.82)';
+      if (this.menuLight !== !lightInk) { this.menuLight = !lightInk; const mbg = lightInk ? 'rgba(6,9,14,0.3)' : 'rgba(247,245,240,0.92)';
         [this.menuPlateRef.current, this.menuSheetRef.current].forEach((el) => { if (el) el.style.background = mbg; });
         if (this.menuSheetRef.current) this.menuSheetRef.current.style.borderBottom = lightInk ? '0' : '1px solid rgba(29,28,25,0.1)'; }
     }
@@ -1320,6 +1381,10 @@ class Component extends DCLogic {
       this.heroRef.current.style.opacity = o.toFixed(3);
       this.heroRef.current.style.transform = 'translateY(calc(-50% - ' + (40 * (1 - o)).toFixed(1) + 'px))';
     }
+    { const show = s > 0.08; if (show !== this.ctaShown) { this.ctaShown = show; this.setNavCta(show); } }
+    { const pr = this.productsRef.current, el = this.navProdRef.current; if (pr && el) { const r = pr.getBoundingClientRect(), nb = 80, on = r.top <= nb && r.bottom > nb;
+      if (on !== this.prodOn) { this.prodOn = on; el.setAttribute('data-rest', on ? '1' : '0.72'); if (!el.matches(':hover')) el.style.opacity = on ? '1' : '0.72';
+        const sp = el.querySelector('span'); if (sp) { sp.style.borderBottom = on ? '1px solid currentColor' : '1px solid transparent'; sp.style.paddingBottom = '2px'; } } } }
     if (this.netRef.current) this.netRef.current.style.opacity = (st((s - 0.4) / 0.14) * (1 - st((s - 0.58) / 0.1))).toFixed(3);
 
     if (!this.dragging && flatT < 0.999) {
@@ -1570,7 +1635,7 @@ class Component extends DCLogic {
       demoPh: ph === 'wait' || ph === 'reset' ? 'inline' : 'none', demoSendBg: typed ? 'rgb(40,40,40)' : '#F5F5F5', demoRipple: ph === 'send' ? 'block' : 'none', demoSendFg: typed ? '#fff' : 'rgba(0,0,0,0.45)',
       demoTxtO: ph === 'send' ? '0' : '1', demoTxtY: ph === 'send' ? '-14px' : '0px',
       scrollerRef: this.scrollerRef, wrapRef: this.wrapRef, canvasRef: this.canvasRef,
-      heroRef: this.heroRef, netRef: this.netRef, hintRef: this.hintRef, navRef: this.navRef,
+      heroRef: this.heroRef, heroCtaRef: this.heroCtaRef, navCtaRef: this.navCtaRef, navProdRef: this.navProdRef, netRef: this.netRef, hintRef: this.hintRef, navRef: this.navRef,
       vidWrapRef: this.vidWrapRef, v0Ref: this.v0Ref, v1Ref: this.v1Ref, v2Ref: this.v2Ref,
       logoRef: this.logoRef, pv0Ref: this.pv0Ref, pv2Ref: this.pv2Ref, productsRef: this.productsRef, navPlateRef: this.navPlateRef, menuPlateRef: this.menuPlateRef, menuSheetRef: this.menuSheetRef, firstRef: this.firstRef, restRef: this.restRef, typeRef: this.typeRef, curtainRef: this.curtainRef,
       hintAccent: this.props.accentColor ?? '#FF6842',
@@ -1618,7 +1683,7 @@ class Component extends DCLogic {
         return o; })(),
       ...(() => { const n = this.state.compact || this.state.libNarrow; return n ? { fanPos: 'relative', fanR: 'auto', fanB: 'auto', fanT: 'auto', fanW: '100%', fanFlex: '1 1 0px', fanMb: 'clamp(24px,5vh,48px)', fanOrd: '2', firstTxtMax: 'none' } : { fanPos: 'absolute', fanR: 'calc(clamp(18px,7vw,120px) + clamp(7px,1.3vw,16px))', fanB: 'clamp(56px,10vh,110px)', fanT: 'clamp(84px,13vh,132px)', fanW: 'min(38vw,600px)', fanFlex: 'none', fanMb: '0px', fanOrd: '0', firstTxtMax: 'calc(100% - min(38vw,600px) - (clamp(18px,7vw,120px) + clamp(7px,1.3vw,16px)) + 10vw - clamp(72px,7vw,120px))' }; })(), ...(this.state.wfM ? { mmDir: 'row', mmRc: 'minmax(0,1fr)', mmRg: '3px', mmJ: 'center', mmTa: 'center', mmRf: '1 1 0', mmWs: 'nowrap', mmRp: '10px 6px 11px', mmRb: '1px solid rgba(29,28,25,0.2)', mmNf: '11px', mmTf: '15px', mmDin: 'none', mmDout: 'grid', mmMx: 'calc(-1 * clamp(24px,4vw,56px))', mmBt: '1px solid rgba(29,28,25,0.2)' } : { mmDir: 'column', mmRc: '28px minmax(0,1fr)', mmRg: '0px', mmJ: 'stretch', mmTa: 'left', mmRf: '0 0 auto', mmWs: 'normal', mmRp: '14px 0 16px', mmRb: '1px solid rgba(29,28,25,0.14)', mmNf: '16px', mmTf: '22px', mmDin: 'grid', mmDout: 'none', mmMx: '0px', mmBt: '0' }),
       ctaOn: this.ctaOn, ctaOff: this.ctaOff, ftOn: this.ftOn, ftOff: this.ftOff, ftMail: this.ftMail,
-      goTop: this.goTop, goProducts: this.goProducts, goSec0: () => this.goSec(0), goSec1: () => this.goSec(1), goSec2: () => this.goSec(2), goSec3: () => this.goSec(3), goPricing: this.goPricing, goUseCases: this.goUseCases, goCoverage: this.goCoverage, goContact: this.goContact, goLogin: this.goLogin,
+      goTop: this.goTop, goProducts: this.goProducts, goSec0: () => this.goSec(0), goSec1: () => this.goSec(1), goSec2: () => this.goSec(2), goSec3: () => this.goSec(3), goPricing: this.goPricing, goUseCases: this.goUseCases, goCoverage: this.goCoverage, goSecurity: this.goSecurity, goContact: this.goContact, goLogin: this.goLogin,
       toggleMenu: this.toggleMenu, navOn: this.navOn, navOff: this.navOff, navCtaOn: this.navCtaOn, navCtaOff: this.navCtaOff, closePaper: this.closePaper,
       rowDisp: c ? 'none' : 'flex', burgerDisp: c ? 'flex' : 'none', sheetDisp: c ? 'flex' : 'none',
       menuO: m ? '1' : '0', menuPE: m ? 'auto' : 'none',

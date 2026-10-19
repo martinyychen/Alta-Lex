@@ -29,7 +29,7 @@ const proj = d3.geoOrthographic().clipAngle(90).precision(0.4);
 const path = d3.geoPath(proj, ctx);
 const grat = d3.geoGraticule10();
 function size() {
-  dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+  dpr = Math.min(2, window.devicePixelRatio || 1); const de = document.documentElement; W = de.clientWidth || innerWidth; H = de.clientHeight || innerHeight; if (!W || !H) return;
   cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   proj.translate([W / 2, H / 2]).scale(sphR());
 }
@@ -40,7 +40,7 @@ function colBox() { const h = H - 4, w = Math.min(W - 4, h * 0.88); return { w, 
 function columnPath() { const b = colBox(), X = (x) => b.x + (x - 1) / 78 * b.w, Y = (y) => b.y + (y - 1) / 244 * b.h, p = new Path2D();
   p.moveTo(X(1), Y(1)); p.lineTo(X(79), Y(1)); p.bezierCurveTo(X(75.15), Y(20.03), X(68), Y(40.33), X(68), Y(64.44)); p.lineTo(X(68), Y(181.56)); p.bezierCurveTo(X(68), Y(205.67), X(75.15), Y(225.97), X(79), Y(245));
   p.lineTo(X(1), Y(245)); p.bezierCurveTo(X(4.85), Y(225.97), X(12), Y(205.67), X(12), Y(181.56)); p.lineTo(X(12), Y(64.44)); p.bezierCurveTo(X(12), Y(40.33), X(4.85), Y(20.03), X(1), Y(1)); p.closePath(); return p; }
-addEventListener('resize', size); size();
+addEventListener('resize', size); if (window.ResizeObserver) new ResizeObserver(size).observe(document.documentElement); size(); addEventListener('load', size);
 function pick(i, from) {
   active = i; const c = REGIONS[i].c; target = [-c[0], -c[1] * 0.6, 0];
   if (from !== 'parent') parent.postMessage({ type: 'alGlobe', region: i }, '*');
@@ -49,7 +49,7 @@ addEventListener('message', (e) => { const d = e.data || {}; if (d.type === 'alG
 const wrap = (a) => ((a + 540) % 360) - 180;
 cv.addEventListener('pointerdown', (e) => { dragging = true; last = [e.clientX, e.clientY]; cv.setPointerCapture(e.pointerId); });
 cv.addEventListener('pointermove', (e) => { if (!dragging) return; const k = 90 / proj.scale(); rot[0] += (e.clientX - last[0]) * k * 0.9; rot[1] = Math.max(-60, Math.min(60, rot[1] - (e.clientY - last[1]) * k * 0.9)); target = rot.slice(); last = [e.clientX, e.clientY]; parent.postMessage({ type: 'alGlobeDrag' }, '*'); });
-cv.addEventListener('pointerup', (e) => { if (!dragging) return; dragging = false; });
+const endDrag = () => { dragging = false; }; cv.addEventListener('pointerup', endDrag); cv.addEventListener('pointercancel', endDrag); cv.addEventListener('lostpointercapture', endDrag);
 cv.addEventListener('click', (e) => {
   if (!land) return; const ll = proj.invert([e.offsetX, e.offsetY]); if (!ll) return;
   for (let i = 0; i < sets.length; i++) if (sets[i].some((f) => d3.geoContains(f, ll))) { pick(i); return; }

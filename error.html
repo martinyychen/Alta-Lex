@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./vendor/react/react.production.min.js"></script>
+<script src="./vendor/react/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    html,body{margin:0;padding:0;background:#f7f5f0}
+    a{color:#191919}a:hover{color:#FF6842}
+    @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @font-face{font-family:'Victor Serif';src:url('assets/fonts/VictorSerif40Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'Neue Haas Display';src:url('assets/fonts/NeueHaasDisplayRoman.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+  </style>
+</helmet>
+<div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif;background:#f7f5f0;color:#191919;min-height:100vh;display:flex;align-items:center;box-sizing:border-box;padding:clamp(48px,10vh,120px) clamp(20px,7vw,120px)">
+  <div style="width:100%;max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:clamp(40px,6vw,100px);align-items:center">
+    <div style="display:flex;flex-direction:column;align-items:flex-start;min-width:0">
+      <h1 style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(52px,7.2vw,112px);line-height:1;letter-spacing:-0.01em;margin:0;max-width:12ch;text-wrap:pretty;animation:riseIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s both">We’re not available in your region yet.</h1>
+      <div style="font-family:'Victor Serif',serif;font-weight:400;font-size:clamp(24px,2.4vw,36px);line-height:1.12;margin-top:clamp(36px,5vh,56px);animation:riseIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.4s both">Need Help?</div>
+      <p style="font-size:clamp(16px,1.25vw,18px);line-height:1.65;color:#55534d;margin:16px 0 0;max-width:44ch;text-wrap:pretty;animation:riseIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s both">If you have any questions, please contact our customer support team by email at <a href="mailto:support@alta-lex.ai" style="color:#191919;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px">support@alta-lex.ai</a></p>
+      <a href="index.html" style="margin-top:clamp(32px,5vh,52px);display:inline-flex;align-items:center;padding:16px 28px;border:1px solid #191919;color:#191919;text-decoration:none;font-size:15px;transition:background 0.3s ease,color 0.3s ease;animation:riseIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.6s both" style-hover="background:#191919;color:#f7f5f0">Back to Home</a>
+    </div>
+    <div style="position:relative;width:100%;height:min(76vh,640px);min-height:360px;min-width:0;animation:riseIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s both">
+      <iframe ref="{{ globeRef }}" src="globe.html" title="Coverage globe" allowtransparency="true" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent"></iframe>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;location&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto (IP)&quot;,&quot;Nigeria&quot;,&quot;Kenya&quot;,&quot;Turkey&quot;,&quot;Kazakhstan&quot;,&quot;New Zealand&quot;],&quot;default&quot;:&quot;Auto (IP)&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Globe&quot;},&quot;cycleSec&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:3.3,&quot;min&quot;:2,&quot;max&quot;:10,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Globe&quot;}}">
+class Component extends DCLogic {
+  // Reuses the coverage-page globe; cycles through the four covered regions like coverage does.
+  globeRef = React.createRef(); reg = 0;
+  // Visitor location: IP lookup (two providers), or a fixed preview country from the Tweaks panel.
+  PREVIEW = { Nigeria: [8.7, 9.1], Kenya: [37.9, 0.2], Turkey: [35.2, 39], Kazakhstan: [67, 48], 'New Zealand': [172.5, -41.5] };
+  componentDidMount() { window.addEventListener('message', this.onMsg); this.locate(); }
+  componentDidUpdate(pp) { if (pp.location !== this.props.location) { this.geo = null; this.locate(); } }
+  componentWillUnmount() { window.removeEventListener('message', this.onMsg); clearTimeout(this.t); }
+  async locate() {
+    const loc = this.props.location ?? 'Auto (IP)', p = this.PREVIEW[loc];
+    if (p) { this.geo = { lon: p[0], lat: p[1], name: loc }; return this.pushUser(); }
+    const tries = [
+      async () => { const r = await fetch('https://ipapi.co/json/'); const j = await r.json(); return { lon: +j.longitude, lat: +j.latitude, name: j.country_name, cc: j.country_code }; },
+      async () => { const r = await fetch('https://get.geojs.io/v1/ip/geo.json'); const j = await r.json(); return { lon: +j.longitude, lat: +j.latitude, name: j.country, cc: j.country_code }; }
+    ];
+    for (const f of tries) { try { const g = await f(); if (isFinite(g.lon) && isFinite(g.lat)) {
+      if (String(g.cc || '').toUpperCase() === 'TW') break; // Taiwan: no outline, use the coverage cycle
+      this.geo = { lon: g.lon, lat: g.lat, name: g.name }; return this.pushUser(); } } catch (e) {} }
+    if (this.ready) this.send(0); // lookup failed: fall back to the coverage cycle
+  }
+  pushUser() { clearTimeout(this.t); const f = this.globeRef.current; if (this.ready && this.geo && f && f.contentWindow) f.contentWindow.postMessage({ type: 'alGlobeUser', ...this.geo }, '*'); }
+  send(i) { if (this.geo) return; this.reg = i; const f = this.globeRef.current; if (f && f.contentWindow) f.contentWindow.postMessage({ type: 'alGlobeSet', region: i }, '*'); this.queue(); }
+  queue() { clearTimeout(this.t); this.t = setTimeout(() => this.send((this.reg + 1) % 4), (this.props.cycleSec ?? 3.3) * 1000); }
+  onMsg = (e) => { const d = e.data || {}; if (d.type === 'alGlobeReady') { this.ready = true; if (this.geo) this.pushUser(); } if (d.type === 'alGlobeUserCovered') { this.geo = null; this.send(0); } if (d.type === 'alGlobe' && !this.geo) { this.reg = d.region; this.queue(); } };
+  renderVals() { return { globeRef: this.globeRef }; }
+}
+</script>
+</body>
+</html>

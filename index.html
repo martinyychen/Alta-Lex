@@ -55,7 +55,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/brand/brand-mark.svg">
 </helmet>
 <div style="font-family:'Neue Haas Display','Helvetica Neue',Helvetica,sans-serif">
-  <div ref="{{ scrollerRef }}" style="height:480vh;position:relative">
+  <div ref="{{ scrollerRef }}" style="height:420vh;position:relative">
     <div style="position:fixed;top:0;left:0;right:0;height:100vh;overflow:hidden;background:#f2efe9;z-index:0">
       <div ref="{{ wrapRef }}" style="position:absolute;inset:0;cursor:grab;touch-action:pan-y;user-select:none">
         <canvas ref="{{ canvasRef }}" style="display:block;width:100%;height:100%"></canvas>
@@ -1250,7 +1250,12 @@ class Component extends DCLogic {
       const S = this.gStops(); if (!S) return null; const y = this.gBusy && this.gTo != null ? this.gTo : window.scrollY, lo = S[0], hi = S[S.length - 1];
       return (dir > 0 ? y >= lo - 2 && y < hi - 2 : y > lo + 2 && y <= hi + 2) ? S : null; };
     // one gesture = one step; a new gesture is a pause (>90ms) or a fresh rise in wheel delta (inertia only decays)
-    const handle = (e, dir, mag, fresh) => { const S = live(dir); if (!S) { this.gLastMag = 0; return; } if (e.cancelable) e.preventDefault();
+    const handle = (e, dir, mag, fresh) => { const S = live(dir); if (!S) {
+        // landed on an edge stop: swallow the same gesture's leftover inertia so it can't fight the tween / overshoot
+        const now = performance.now(), gap = now - (this.gLastEv || 0);
+        const inert = !fresh && dir === this.gDir && !this.firstLock && (this.gBusy || (now - (this.gEnd || 0) < 1200 && gap <= 90 && mag <= (this.gLastMag || 0) * 1.5 + 6));
+        if (inert) { if (e.cancelable) e.preventDefault(); this.gLastEv = now; this.gLastMag = mag; return; }
+        this.gLastMag = 0; return; } if (e.cancelable) e.preventDefault();
       const now = performance.now(), gap = now - (this.gLastEv || 0); this.gLastEv = now;
       const isNew = fresh || gap > 90 || dir !== this.gLastDir || mag > (this.gLastMag || 0) * 1.5 + 6;
       this.gLastDir = dir; this.gLastMag = mag;
@@ -1273,7 +1278,7 @@ class Component extends DCLogic {
   updateProducts(vh) {
     const pr = this.productsRef.current; if (!pr) return -1;
     const top = pr.getBoundingClientRect().top; // 0 exactly when the story has finished
-    if (this.fx) { if (top <= vh * 0.22) this.setFirst(true); else if (top > vh * 0.32) this.setFirst(false); }
+    if (this.fx) { if (top <= vh * 0.24) this.setFirst(true); else if (top > vh * 0.34) this.setFirst(false); }
     this.revealSheets(vh);
     return -top;
   }
@@ -1422,8 +1427,8 @@ class Component extends DCLogic {
     const total = sc ? Math.max(1, sc.offsetHeight - window.innerHeight) : 1;
     const top = sc ? sc.getBoundingClientRect().top : 0;
     const sAll = Math.max(0, Math.min(1, -top / total));
-    const s = Math.min(1, sAll / 0.86); // globe story
-    const matT = st((sAll - 0.82) / 0.1); // final frame: cutting-mat graph paper
+    const s = Math.min(1, sAll / 1.0); // globe story
+    const matT = st((sAll - 0.85) / 0.09); // final frame: cutting-mat graph paper
     const gFade = 1 - matT;
     const peelT = st(s / 0.28);
     const cT = st((s - 0.24) / 0.32);
@@ -1441,7 +1446,7 @@ class Component extends DCLogic {
     const open = this.state.paper !== null;
     if (this.hintRef.current) {
       if (this.hintT0 === undefined) this.hintT0 = now;
-      const shown = !open && now - this.hintT0 > 1.2 && sAll < 0.9;
+      const shown = !open && now - this.hintT0 > 1.2 && sAll < 0.8;
       this.hintO = (this.hintO || 0) + ((shown ? 0.9 : 0) - (this.hintO || 0)) * (1 - Math.exp(-3 * dt));
       this.hintRef.current.style.opacity = this.hintO.toFixed(3);
       this.hintRef.current.style.color = lightInk ? '#f2f1ec' : '#4a443a';
@@ -1492,6 +1497,7 @@ class Component extends DCLogic {
     }
 
     const ctx = this.ctx, dpr = this.dpr, w = this.w, h = this.h;
+    if (matT >= 0.999) { const dk = w + 'x' + h + ':' + st((chY - h * 0.25) / (h * 0.6)).toFixed(3); if (this.matKey === dk) { this.raf = requestAnimationFrame(this.tick); return; } this.matKey = dk; } else this.matKey = null;
     const cx = this.cx, cy = this.cy, R = this.R, f = 3.6;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = 'rgb(242,239,233)';
